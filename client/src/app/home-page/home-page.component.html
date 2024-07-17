@@ -48,13 +48,13 @@
             <div class="main-page-navbar-option open-icon"></div>
             <h1>Открытые</h1>
         </div>
-        <div class="main-page-navbar-option new-game">
+        <div class="main-page-navbar-option new-game" (click)="navigateTo('create-game')">
             <div class="main-page-navbar-option new-game-icon"></div>
             <h1>Создать игру</h1>
         </div>
     </div>
 
-    
+    <router-outlet></router-outlet>
 </div>
 
 
