@@ -5,13 +5,9 @@ import {RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-root',
+  templateUrl: 'app.component.html',
   standalone: true,
-  styles: [],
-  templateUrl: 'app.components.html',
-  imports: [
-    NewGameComponent,
-    RouterOutlet
-  ]
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
 
