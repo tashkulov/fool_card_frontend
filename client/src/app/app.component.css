@@ -1,0 +1,218 @@
+.main-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 852px;
+    background-image: url("images/main-page-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main-page-header {
+    background-image: url("images/main-page-header-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 126px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-page-header-content {
+    display: flex;
+    flex-direction: row;
+    width: 344px;
+    height: 96px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-page-header-content-data {
+    width: 242px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.main-page-header-content-data-username {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Cormorant Infant", serif;
+    font-weight: bold;
+    color: white;
+    font-size: 20px;
+
+    width: 238px;
+    height: 36px;
+    background-color: #807A7B;
+    border: #918789 solid 2px;
+    border-radius: 10px;
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.411),
+                inset 0 -4px 4px rgba(255, 255, 255, 0.4);
+}
+
+.main-page-header-content-data-credits {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 242px;
+    height: 32px;
+}
+
+.main-page-header-content-data-credits-1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 113px;
+    height: 28px;
+    background-color: #807A7B;
+    border: #918789 solid 2px;
+    border-radius: 10px;
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.411),
+                inset 0 -4px 4px rgba(255, 255, 255, 0.4);
+}
+
+.main-page-header-content-data-credits-1-icon {
+    background-image: url('images/coin.svg');
+
+    margin-left: 5px;
+    width: 22px;
+    height: 22px;
+}
+
+.main-page-header-content-data-credits-2-icon {
+    background-image: url('images/coin-2.svg');
+
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+}
+
+.main-page-header-content-data-credits-1-value {
+    font-weight: 400;
+    color: white;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+
+.main-page-header-content-avatar-border {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('images/default-avatar-border.png');
+    height: 98px;
+    width: 96px;
+}
+
+.main-page-header-content-avatar {
+    border-radius: 100%;
+    height: 76px;
+    width: 76px;
+    background-image: url('images/default-avatar.png');
+}
+
+.main-page-hands-bg {
+    position: fixed;
+    background-image: url(images/main-page-hand-bg.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 614px;
+    width: 100%;
+    margin-bottom: 30px;
+    bottom: 0;
+}
+
+.main-page-menu {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 10px;
+    z-index: 500;
+    background-image: url('images/main-page-menu-bg.png');
+    width: 267px;
+    height: 540px;
+}
+
+.main-page-menu-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 149px;
+    height: 302px;
+    margin-top: 150px;
+}
+
+.main-page-menu-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Cormorant Infant", serif;
+    font-weight: bold;
+
+    background-image: url('images/main-page-menu-button.png');
+    width: 149px;
+    height: 65px;
+}
+
+.main-page-navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 105px;
+    background-image: url("images/main-page-navbar-bg.png") ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    bottom: 0;
+}
+
+.main-page-navbar-option {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Cormorant Infant", serif;
+    font-weight: bold;
+    font-size: 6px;
+    height: 69px;
+}
+
+h1 {
+    margin: 0px;
+}
+
+.main-page-navbar-option .menu-icon {
+    width: 44px;
+    height: 46px;
+    background-image: url(images/nav-menu.png);
+}
+
+.main-page-navbar-option .quests-icon {
+    width: 49px;
+    height: 46px;
+    background-image: url(images/nav-quests.png);
+}
+
+.main-page-navbar-option .open-icon {
+    width: 45px;
+    height: 46px;
+    background-image: url(images/nav-open.svg);
+}
+
+.main-page-navbar-option .new-game-icon {
+    width: 40px;
+    height: 46px;
+    background-image: url(images/nav-new-game.png);
+}
