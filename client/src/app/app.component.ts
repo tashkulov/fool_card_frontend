@@ -3,16 +3,9 @@ import { TelegramService } from './telegram.service';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <div>Имя: {{ user?.first_name }}</div>
-    <div>Фамилия: {{ user?.last_name }}</div>
-    <div>Username: {{ user?.username }}</div>
-    <div>Язык: {{ user?.language_code }}</div>
-    <div>aksjdhkasjdh</div>
-
-  `,
+  templateUrl: 'app.component.html',
   standalone: true,
-  styles: []
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
   user: any;
