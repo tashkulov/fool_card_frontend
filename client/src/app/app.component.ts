@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { TelegramService } from './telegram.service';
-import {NewGameComponent} from "./new-game/new-game.component";
+import { NewGameComponent } from "./new-game/new-game.component";
 import {RouterOutlet} from "@angular/router";
+import { HomePageComponent } from './home-page/home-page.component';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import {RouterOutlet} from "@angular/router";
   styleUrls: ['./app.component.css'],
   imports: [
     NewGameComponent,
-    RouterOutlet
+    RouterOutlet,
+    HomePageComponent,
   ]
 })
 
@@ -24,4 +26,5 @@ export class AppComponent implements OnInit {
     console.log('User in component:', this.user); // Логирование данных пользователя в компоненте
     this.cdr.detectChanges(); // Принудительное обнаружение изменений
   }
+
 }
