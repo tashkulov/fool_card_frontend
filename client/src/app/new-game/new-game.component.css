@@ -1,0 +1,61 @@
+.game-creation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.game-card {
+  padding: 0px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.game-header h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.bet-section, .game-mode-section, .player-count-section, .create-game-section {
+  margin-bottom: 20px;
+}
+
+.bet-buttons button {
+  margin-right: 10px;
+  background-color: #381414;
+  color: white; /* Изменяем цвет текста на белый */
+  border: none; /* Убираем границу */
+  padding: 10px; /* Добавляем немного отступов внутри кнопки */
+  cursor: pointer; /* Изменяем курсор на указатель */
+  font-size: 16px; /* Устанавливаем размер шрифта */
+}
+
+
+
+.create-game-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bet-section{
+  justify-content: center;
+  align-items: center;
+}
+.input-section {
+  padding : 10px;
+  display: flex;
+  align-items: center;
+}
+
+
+
+mat-form-field {
+  flex-grow: 1;
+}
+
+mat-icon {
+  cursor: pointer;
+  background-color: #381414;
+}
+
