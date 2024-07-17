@@ -26,5 +26,4 @@ export class AppComponent implements OnInit {
     console.log('User in component:', this.user); // Логирование данных пользователя в компоненте
     this.cdr.detectChanges(); // Принудительное обнаружение изменений
   }
-
 }
