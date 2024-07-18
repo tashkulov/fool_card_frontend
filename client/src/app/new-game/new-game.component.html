@@ -3,7 +3,7 @@
     <div class="game-header">
       <img src="assets/Header.svg">
       <div class="btnClass">
-        <img src="assets/Head.png" (click)="createGame()">
+        <img src="assets/Head.png" (click)="createGame('in-game')">
       </div>
 
 
@@ -42,9 +42,10 @@
       </mat-radio-group>
     </div>
     <div class="create-game-section">
-      <button mat-raised-button (click)="createGame()">Создать</button>
+      <button mat-raised-button (click)="createGame('in-game')">Создать</button>
       <mat-checkbox [(ngModel)]="privateGame">Приватная игра</mat-checkbox>
     </div>
   </mat-card>
 </div>
 
+<router-outlet></router-outlet>
