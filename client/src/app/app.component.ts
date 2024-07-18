@@ -3,6 +3,7 @@ import { TelegramService } from './telegram.service';
 import { NewGameComponent } from "./new-game/new-game.component";
 import {RouterOutlet} from "@angular/router";
 import { HomePageComponent } from './home-page/home-page.component';
+import { PlayPageComponent } from './play-page/play-page.component';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { HomePageComponent } from './home-page/home-page.component';
     NewGameComponent,
     RouterOutlet,
     HomePageComponent,
+    PlayPageComponent
   ]
 })
 

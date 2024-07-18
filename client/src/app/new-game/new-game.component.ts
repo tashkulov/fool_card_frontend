@@ -7,7 +7,7 @@ import {MatButton} from "@angular/material/button";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatIcon} from "@angular/material/icon";
-import {RouterOutlet} from "@angular/router";
+import {RouterOutlet, Router} from "@angular/router";
 ;
 
 @Component({
@@ -39,13 +39,16 @@ export class NewGameComponent {
     this.bet = amount;
   }
 
-  createGame() {
+  constructor(private router: Router) {}
+
+  createGame(path: string) {
     console.log({
       bet: this.bet,
       gameMode: this.gameMode,
       playerCount: this.playerCount,
       privateGame: this.privateGame
     });
+    this.router.navigate([path]);
   }
   increaseBet() {
     this.bet += 100;
