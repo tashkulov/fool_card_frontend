@@ -86,7 +86,7 @@
             background: linear-gradient(0.00deg, rgb(42, 42, 42), rgb(35, 35, 35) 37%, rgb(15, 15, 15) 91%, rgb(12, 12, 12) 100%);
             display: flex;
             flex-direction: column;
-            min-height: 100%;
+            height: 100%;
         }
 
         .main {
@@ -1586,6 +1586,9 @@
         /* play-footer  */
 
         .play-footer {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
             position: relative;
             border: 0.95px solid rgb(0, 0, 0);
             background: linear-gradient(0.00deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
@@ -1594,8 +1597,10 @@
 
 
         .play-footer-wrap {
+            width: 100%;
             padding: 15px 20px;
             display: flex;
+            z-index: 100;
         }
 
 
@@ -1614,8 +1619,8 @@
         .play-footer-ava {
             margin-top: -10px;
             position: absolute;
-            width: 100%;
             text-align: center;
+            z-index: 1;
         }
 
         .play-footer-ava img {
@@ -1759,15 +1764,37 @@
         }
 
         .play-wrapper {
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
 
 
+        .play-page-play-round {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+        }
 
 
+        .play-page-card {
+            margin-bottom: -200px;
+            transition: transform 0.3s ease;
+        }
 
+        .play-page-card.clicked {
+            transform: translateY(-400px) scale(0.2);
+        }
 
+        .play-page-card.beaten {
+            transform: translateX(200px) translateY(-400px) scale(0.2);
+        }
 
 
         .wrapper-plays-header {
@@ -1972,21 +1999,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div class="main-wrapper-plays">
                 <div class="container">
                     <div class="wrapper-plays-header">
@@ -2016,12 +2028,21 @@
 
             </div>
 
-
+            <div [style.justify-content]="isReady ? 'end' : 'center'" class="play-page-play-round">
+                <h1 *ngIf="!isReady">Нажмите готов</h1>
+                <img 
+                *ngIf="isReady" 
+                class="play-page-card" 
+                [class.clicked]="isCardClicked" 
+                [class.beaten]="isCardBeaten"
+                [src]="isCardBeaten ? 'assets/img/card-cover.png' : 'assets/img/sp_14.svg'"
+                (click)="onCardClick()"
+                style="width: 225px; height: 317px;" 
+                src="assets/img/sp_14.svg">
+            </div>
 
 
             <router-outlet></router-outlet>
-
-
 
 
 
@@ -2040,8 +2061,8 @@
             </div>
 
             <div class="play-footer-wrap">
-                <div class="play-footer-btn block-obvodka" id="canvas">
-                    <p>Бито</p>
+                <div (click)="inPlayPageMainButtonHandler()" class="play-footer-btn block-obvodka">
+                    <p>{{ !isReady ? 'Готов' : ( isMyTurn ? 'Бито' : 'Пас') }}</p>
                 </div>
 
 
@@ -2100,7 +2121,6 @@
                 src: '/templates/bigshop/js/rive/ruby.riv',
                 canvas: document.getElementById('rubin'),
                 autoplay: true,
-
             });
 
 
