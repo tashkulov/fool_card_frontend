@@ -6,11 +6,13 @@
     margin-bottom: -70px;
     height: 140px;
     width: 315px;
+    overflow: visible;
 }
 
 .card-container {
     width: 315px;
     height: 127px;
+    overflow: visible;
 }
 
 * {
@@ -23,6 +25,18 @@
     transition: left 0.3s ease, top 0.3s ease, scale 0.3s ease ;
     transform-origin: bottom center;
 }
+
+.card-deck, .bot-card {
+    position: absolute;
+    scale: 0.4;
+    transition: left 0.3s ease, top 0.3s ease, scale 0.3s ease, transform 0.3s ease;
+    
+}
+
+.bot-card {
+    z-index: 3;
+}
+
 
 /* .play-page-card.clicked {
     transform: translateX(targetX) translateY(targetY) scale(0.4);

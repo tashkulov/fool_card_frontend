@@ -16,6 +16,14 @@ interface Card {
   bY?: number;// Целевые координаты Y
 }
 
+interface Deck {
+  id: number;
+  imagePath: string;
+  stX?: number;
+  stY?: number;
+  rotDeg?: number;
+}
+
 @Component({
   selector: 'app-play-page',
   standalone: true,
@@ -30,11 +38,27 @@ export class PlayPageComponent {
   isReady: boolean = false;
   isMyTurn: boolean = false;
 
+  decks: Deck[] = [
+    {
+      imagePath: 'assets/img/card-cover.png',
+      id: 0,
+      stX: -80,
+      stY: -450,
+      
+    }
+  ];
+
+  botCards: Deck[] = [
+    { id: 1, imagePath: 'assets/img/card-cover.png', stX: 113, stY: -630, rotDeg: 0},
+    { id: 2, imagePath: 'assets/img/card-cover.png', stX: 93, stY: -630, rotDeg: 20},
+    { id: 3, imagePath: 'assets/img/card-cover.png', stX: 133, stY: -630, rotDeg: -20},
+  ]
+
   cards: Card[] = [
-    { id: 1, imagePath: 'assets/img/sp_14.svg', isCardClicked: false, isCardBeaten: false, isCardDropped: false, bX: 300, bY: -400, targetX: 50,  targetY: -370, stX: 0,   stY: 0 },
-    { id: 2, imagePath: 'assets/img/sp_14.svg', isCardClicked: false, isCardBeaten: false, isCardDropped: false, bX: 300, bY: -400, targetX: 100, targetY: -370, stX: 45,  stY: 0 },
-    { id: 3, imagePath: 'assets/img/sp_14.svg', isCardClicked: false, isCardBeaten: false, isCardDropped: false, bX: 300, bY: -400, targetX: 150, targetY: -370, stX: 90,  stY: 0 },
-    { id: 4, imagePath: 'assets/img/sp_14.svg', isCardClicked: false, isCardBeaten: false, isCardDropped: false, bX: 300, bY: -400, targetX: 50,  targetY: -300, stX: 135, stY: 0 },
+    { id: 1, imagePath: 'assets/img/sp_14.svg', isCardClicked: false, isCardBeaten: false, isCardDropped: false, bX: 300, bY: -400, targetX: 50, targetY: -370, stX: 0, stY: 0 },
+    { id: 2, imagePath: 'assets/img/sp_14.svg', isCardClicked: false, isCardBeaten: false, isCardDropped: false, bX: 300, bY: -400, targetX: 100, targetY: -370, stX: 45, stY: 0 },
+    { id: 3, imagePath: 'assets/img/sp_14.svg', isCardClicked: false, isCardBeaten: false, isCardDropped: false, bX: 300, bY: -400, targetX: 150, targetY: -370, stX: 90, stY: 0 },
+    { id: 4, imagePath: 'assets/img/sp_14.svg', isCardClicked: false, isCardBeaten: false, isCardDropped: false, bX: 300, bY: -400, targetX: 50, targetY: -300, stX: 135, stY: 0 },
     { id: 5, imagePath: 'assets/img/sp_14.svg', isCardClicked: false, isCardBeaten: false, isCardDropped: false, bX: 300, bY: -400, targetX: 100, targetY: -300, stX: 180, stY: 0 },
     { id: 6, imagePath: 'assets/img/sp_14.svg', isCardClicked: false, isCardBeaten: false, isCardDropped: false, bX: 300, bY: -400, targetX: 150, targetY: -300, stX: 225, stY: 0 }
   ];

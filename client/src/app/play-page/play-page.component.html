@@ -1752,7 +1752,7 @@
 
         .plays {
             position: relative;
-            z-index: 2;
+            z-index: 5;
         }
 
         .main-wrapper-plays {
@@ -1776,7 +1776,7 @@
             justify-content: center;
             align-items: center;
 
-            overflow: hidden;
+            overflow: visible;
         }
 
 
@@ -1821,6 +1821,7 @@
 
         .user-dumaet {
             background: rgb(0, 187, 86);
+            z-index: 5;
         }
 
 
@@ -1834,7 +1835,7 @@
 
         .players-blocks {
             text-align: center;
-
+            z-index: 5;
         }
 
         .player-block img {
@@ -1981,7 +1982,7 @@
 
 
 
-            <div class="main-wrapper-plays">
+            <div style="z-index: 500;" class="main-wrapper-plays">
                 <div class="container">
                     <div class="wrapper-plays-header">
 
@@ -2010,23 +2011,43 @@
 
             </div>
 
-            <div [style.justify-content]="isReady ? 'end' : 'center'" class="play-page-play-round">
+            <div 
+            [style.justify-content]="isReady ? 'end' : 'center'" 
+            [style.overflow]="isReady ? 'visible' : 'hidden'"
+            class="play-page-play-round">
                 <h1 class="ready-text" *ngIf="!isReady">Нажмите готов</h1>
-                <div *ngIf="isReady" class="play-page-client-cards">
+                <div></div>
+                <div class="play-page-client-cards">
                     <div class="card-container">
+                        <img 
+                        *ngFor="let deck of decks"
+                        [style.top.px]="deck.stY"
+                        [style.left.px]="deck.stX"
+                        style="width: 90px; height: 127px;"
+                        class="card-deck" 
+                        [src]="deck.imagePath">
+
+                        <img
+                        class="bot-card"
+                        [style.left.px]="isReady ? botCard.stX : decks[0].stX"
+                        [style.top.px]="isReady ? botCard.stY : decks[0].stY"
+                        [style.transform]="isReady ? 'rotate(' + botCard.rotDeg + 'deg)' : 'rotate(0deg)'"
+                        *ngFor="let botCard of botCards" 
+                        style="width: 90px; height: 127px;"
+                        [src]="botCard.imagePath">
+
                         <img 
                         #cardElement
                         *ngFor="let card of cards" 
                         class="play-page-card" 
                         [class.clicked]="card.isCardClicked" 
                         [class.beaten]="card.isCardBeaten"
-                        [style.left.px]="card.isCardClicked ? (card.isCardBeaten ? card.bX : card.targetX) : card.stX" 
-                        [style.top.px]="card.isCardClicked ? (card.isCardBeaten ? card.bY : card.targetY) : card.stY"
-                        [style.scale]="card.isCardClicked ? '0.4' : '1'"
+                        [style.left.px]="isReady ? (card.isCardClicked ? (card.isCardBeaten ? card.bX : card.targetX) : card.stX) : decks[0].stX" 
+                        [style.top.px]="isReady ? (card.isCardClicked ? (card.isCardBeaten ? card.bY : card.targetY) : card.stY) : decks[0].stY" 
+                        [style.scale]="isReady ? (card.isCardClicked ? '0.4' : '1'): '0.4'"
                         [src]="card.isCardBeaten ? 'assets/img/card-cover.png' : card.imagePath"
                         (click)="onCardClick(card)"
-                        style="width: 90px; height: 127px;" 
-                        src="assets/img/sp_14.svg">
+                        style="width: 90px; height: 127px;" >
                     </div>
                     
                 </div>
