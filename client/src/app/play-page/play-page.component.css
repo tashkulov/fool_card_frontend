@@ -1,0 +1,33 @@
+.play-page-client-cards {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: -70px;
+    height: 140px;
+    width: 315px;
+}
+
+.card-container {
+    width: 315px;
+    height: 127px;
+}
+
+* {
+    font-family: "Cormorant Infant", serif;
+    font-weight: 900;
+}
+
+.play-page-card {
+    position: absolute;
+    transition: left 0.3s ease, top 0.3s ease, scale 0.3s ease ;
+    transform-origin: bottom center;
+}
+
+/* .play-page-card.clicked {
+    transform: translateX(targetX) translateY(targetY) scale(0.4);
+}
+
+.play-page-card.beaten {
+    transform: translateX(200px) translateY(-400px) scale(0.4);
+} */
