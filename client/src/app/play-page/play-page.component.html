@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="ru">
 
-<head>
     <title>Игра</title>
 
     <!-- Meta -->
@@ -1783,18 +1780,7 @@
         }
 
 
-        .play-page-card {
-            margin-bottom: -200px;
-            transition: transform 0.3s ease;
-        }
-
-        .play-page-card.clicked {
-            transform: translateY(-400px) scale(0.2);
-        }
-
-        .play-page-card.beaten {
-            transform: translateX(200px) translateY(-400px) scale(0.2);
-        }
+        
 
 
         .wrapper-plays-header {
@@ -1926,10 +1912,6 @@
 
         /**/
     </style>
-</head>
-
-<body id="contents">
-
 
     <div class="wrapper">
 
@@ -2029,16 +2011,26 @@
             </div>
 
             <div [style.justify-content]="isReady ? 'end' : 'center'" class="play-page-play-round">
-                <h1 *ngIf="!isReady">Нажмите готов</h1>
-                <img 
-                *ngIf="isReady" 
-                class="play-page-card" 
-                [class.clicked]="isCardClicked" 
-                [class.beaten]="isCardBeaten"
-                [src]="isCardBeaten ? 'assets/img/card-cover.png' : 'assets/img/sp_14.svg'"
-                (click)="onCardClick()"
-                style="width: 225px; height: 317px;" 
-                src="assets/img/sp_14.svg">
+                <h1 class="ready-text" *ngIf="!isReady">Нажмите готов</h1>
+                <div *ngIf="isReady" class="play-page-client-cards">
+                    <div class="card-container">
+                        <img 
+                        #cardElement
+                        *ngFor="let card of cards" 
+                        class="play-page-card" 
+                        [class.clicked]="card.isCardClicked" 
+                        [class.beaten]="card.isCardBeaten"
+                        [style.left.px]="card.isCardClicked ? (card.isCardBeaten ? card.bX : card.targetX) : card.stX" 
+                        [style.top.px]="card.isCardClicked ? (card.isCardBeaten ? card.bY : card.targetY) : card.stY"
+                        [style.scale]="card.isCardClicked ? '0.4' : '1'"
+                        [src]="card.isCardBeaten ? 'assets/img/card-cover.png' : card.imagePath"
+                        (click)="onCardClick(card)"
+                        style="width: 90px; height: 127px;" 
+                        src="assets/img/sp_14.svg">
+                    </div>
+                    
+                </div>
+                
             </div>
 
 
@@ -2062,7 +2054,7 @@
 
             <div class="play-footer-wrap">
                 <div (click)="inPlayPageMainButtonHandler()" class="play-footer-btn block-obvodka">
-                    <p>{{ !isReady ? 'Готов' : ( isMyTurn ? 'Бито' : 'Пас') }}</p>
+                    <p>{{ !isReady ? 'Готов' : ( !isMyTurn ? 'Бито' : 'Пас') }}</p>
                 </div>
 
 
@@ -2191,14 +2183,6 @@
 
     </script>
 
-
-
-
-
-
-
-
-
-</body>
-
-</html>
+<link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
