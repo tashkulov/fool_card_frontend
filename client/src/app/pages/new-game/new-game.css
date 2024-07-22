@@ -1,0 +1,244 @@
+body {
+    margin: 0;
+    background-color: black;
+}
+
+.main-header-new-game {
+display: flex;
+flex-direction: row;
+align-items: center;
+height: 125px;
+width: 393px;
+background-image: url("./img/header-Illustration.png");
+background-repeat: no-repeat;
+background-size: cover;
+margin-top: -109%;
+position: inherit;
+}
+
+p {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 180px;
+}
+
+.main-header-content-new-game {
+display: flex;
+margin-left: auto;
+margin-right: auto;
+margin-top: 156px;
+align-items: center;
+justify-content: space-between;
+height: 64px;
+width: 393px;
+background-image: url("./img/Vector.svg");
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+.main-header-content2 {
+display: flex;
+margin-left: auto;
+margin-right: auto;
+margin-top: 200px;
+align-items: center;
+justify-content: space-between;
+height: 104px;
+width: 345px;
+background-image: url("./img/control-panel.svg");
+background-repeat: no-repeat;
+background-size: cover;
+position: absolute;
+z-index: 100;
+width: 100%;
+}
+
+.right-up-corner {
+    margin-bottom: 50px;
+    margin-right: 20px;
+    width: 30px;
+    height: 50px;
+    visibility: hidden;
+}
+
+.left {
+    margin-left: 10px;
+    margin-bottom: 50px;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+.right {
+    margin-right: 70px;
+    margin-bottom: 50px;
+    size: 100px;
+    visibility: hidden;
+}
+
+.rejim {
+    display: flex;
+    width: 391px;
+    height: 184px;
+    justify-content: center;
+    background-image: url("./img/game-mode.svg");
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 500px;
+    flex-direction: column;
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+}
+
+label.checkbox {
+    cursor: pointer;
+    user-select: none;
+}
+
+label {
+    margin-left: 100px;
+    margin-bottom: 100px;
+    width: 40px;
+    height: 40px;
+}
+
+label.checkbox [type=checkbox] {
+    display: none;
+}
+
+.checkbox_svg {
+    width: 40px;
+}
+
+.checkbox_line {
+    fill: none;
+    stroke: #F00;
+    stroke-width: 20;
+    stroke-miterlimit: 10;
+    stroke-dasharray: 0, 154;
+}
+
+.checkbox [type=checkbox]:checked + .checkbox_svg .checkbox_line {
+    animation: checked 0.4s ease 1 forwards;
+}
+
+@keyframes checked {
+    from {
+        stroke-dasharray: 0, 154;
+    }
+    to {
+        stroke-dasharray: 140, 154;
+    }
+}
+
+.players {
+    background-image: url("./img/numbers.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+    width: 134px;
+    height: 90px;
+    display: flex;
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    bottom: 14em;
+   
+}
+
+.submit {
+    background-image: url("./img/Button.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 164px;
+    height: 44px;
+    margin-top: 1100px;
+    margin-left: 0px;
+}
+
+.private {
+    background-image: url("./img/private.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 123px;
+    height: 24px;
+    margin-top: 1100px;
+    margin-left: 0px;
+}
+
+.custom-c {
+    background-image: url(/src/app/pages/home-page/images/creat-bg.svg);
+    color: brown;
+}
+
+
+.navbar {
+    background-image: url("./img/navbar2.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+    width: 393px;
+    height: 105px;
+    display: flex;
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    bottom: 0em;
+}
+
+.nav {
+    margin-left: 20px;
+    width: 50px;
+}
+
+.button1 {
+    width: 100px;
+    height: 100px;
+    visibility: hidden;
+}
+
+.button2 {
+    width: 150px;
+    height: 50px;
+    visibility: hidden;
+}
+
+@media screen and (max-width: 620px) {
+    
+}
+
+@media screen and (min-width: 920px) {
+    .main-header-new-game {
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        width: 1080px;
+        height: 700px;
+        max-width: 100%;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .navbar {
+        width: 1552px;
+        height: 340px;
+    }
+
+    .button1 {
+        margin-top: 150px;
+        margin-left: 150px;
+        width: 100px;
+        height: 100px;
+    }
+    .players {
+        width: 1080px;
+        height: 200px;
+        margin-bottom: 1000px;
+    }
+}
