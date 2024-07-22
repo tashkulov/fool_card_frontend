@@ -1,6 +1,6 @@
 import { Telegraf, Markup } from 'telegraf'
 
-const webAppURL = 'https://tg-angular-app-87377.web.app'
+const webAppURL = 'https://fool-card-frontend.vercel.app/'
 
 const token = '7051377538:AAFVil-NoeIURCSk_3tmdPW0bQIfhz3eMWc'
 
@@ -17,7 +17,5 @@ bot.command('start', (ctx) => {
                 webAppURL
             )
         ])
-
     )
 });
-
