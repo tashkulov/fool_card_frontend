@@ -1,0 +1,140 @@
+.play-game {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+    align-items: center;
+    gap: 16px;
+    background: #236245;
+    box-shadow: inset  20px 20px 100px #0000005b, inset  -20px -20px 100px #0000005d;
+    color: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+    padding: 16px;
+}
+.table {
+    width: calc(100% - 40px);
+    max-width: 800px;
+    height: 400px;
+    margin: 0 auto;
+    background: #3b3b3b;
+    border-radius: 16px;
+    border: 3px solid #ff5722;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.my-cards {
+    width: calc(100% - 40px);
+    max-width: 800px;
+    height: 150px;
+    margin: 20px auto;
+    background: #3b3b3b;
+    border-radius: 16px;
+    border: 3px solid #ff5722;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.cards-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    pointer-events: none;
+}
+
+.card-image {
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    width: 90px;
+    height: 126px;
+    cursor: pointer;
+
+    pointer-events: all;
+}
+
+.card-image.entered {
+    
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.table-card {
+    transition: all 0.5s ease;
+    position: relative;
+    width: 45px;
+    height: 63px;
+}
+
+
+.trump-card-container {
+    position: absolute;
+    right: 0; /* Размещаем контейнер в правом краю */
+    top: 50%; /* Центрируем по вертикали */
+    transform: translateY(-50%); /* Корректируем для точного центрирования */
+    display: flex;
+    flex-direction: column; /* Позиционирование карт друг под другом */
+    align-items: center; /* Центрирование карт по горизонтали */
+}
+
+.trump-card {
+    width: 80px;
+    height: auto;
+    margin: 10px;
+    position: relative;
+    z-index: 1; /* Задний план */
+}
+
+.back-card {
+    width: 80px;
+    height: auto;
+    transform: rotate(-90deg);
+    position: absolute;
+    top: 30px;
+    left: 8px;
+    z-index: 2; /* Передний план */
+}
+.beaten-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.beaten-card {
+    width: 40px;
+    height: auto;
+    transform: rotate(30deg);
+
+}
+
+.error-message {
+    color: red;
+    font-size: 16px;
+}
+
+button {
+    background: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 16px;
+}
+
+button:disabled {
+    background: #888;
+    cursor: not-allowed;
+}
