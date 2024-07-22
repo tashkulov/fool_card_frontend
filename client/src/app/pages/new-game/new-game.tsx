@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './new-game.css'
 import headerIllustration from '../../../assets/img/header-illustration.png';
 import NewBet from '../../../assets/img/new-stavka.svg';
@@ -14,6 +15,8 @@ const CreateGameForm: React.FC = () => {
     const [selectedGameMode, setSelectedGameMode] = useState<string>('');
     const [selectedPlayerCount, setSelectedPlayerCount] = useState<string>('');
     const [isPrivate, setIsPrivate] = useState<boolean>(false);
+    const [tossMode, setTossMode] = useState<string>('');
+    const [gameEndingType, setGameEndingType] = useState<string>('');
 
     // Handle the bet amount change
     const handleBetChange = (increment: boolean, valueChange: number) => {
@@ -22,7 +25,8 @@ const CreateGameForm: React.FC = () => {
 
     // Handle the game mode change
     const handleGameModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedGameMode(event.target.value);
+        const value = event.target.value;
+        setSelectedGameMode(value === 'Подкидной' ? 'throwing' : value === 'Переводной' ? 'shifting' : value);
     };
 
     // Handle the player count change
@@ -33,6 +37,17 @@ const CreateGameForm: React.FC = () => {
     // Handle the private game checkbox
     const handlePrivateGameChange = () => {
         setIsPrivate((prev) => !prev);
+    };
+
+    const handleTossModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setTossMode(value === 'Соседи' ? 'neighbors' : value === 'Все' ? 'all' : value);
+    };
+
+    // Handle the game ending type change
+    const handleGameEndingTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setGameEndingType(value === 'Классика' ? 'classic' : value === 'Ничья' ? 'draw' : value);
     };
 
     // Initialize Rive animations
@@ -63,6 +78,28 @@ const CreateGameForm: React.FC = () => {
             });
         };
     }, []);
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const requestData = {
+            bet_value: betAmount,
+            card_amount: 0, // Update with actual value if available
+            participants_number: parseInt(selectedPlayerCount),
+            access_type: isPrivate ? 'private' : 'public',
+            status: 'finished', // This seems like a static value for now
+            game_mode: selectedGameMode,
+            toss_mode: tossMode,
+            game_ending_type: gameEndingType
+        };
+
+        try {
+            const response = await axios.post('http://77.222.37.34:8001/v1/games', requestData);
+            console.log('Game created successfully:', response.data, requestData);
+        } catch (error) {
+            console.error('Error creating game:', error, requestData);
+        }
+    };
 
     return (
         <div className="main main-wrapp">
@@ -121,7 +158,7 @@ const CreateGameForm: React.FC = () => {
                                                         className="rejim-check"
                                                         value={mode}
                                                         name="rejim-1"
-                                                        checked={selectedGameMode === mode}
+                                                        checked={selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'sharing')}
                                                         onChange={handleGameModeChange}
                                                     />
                                                     <div className="image-radio" id="images">
@@ -147,8 +184,8 @@ const CreateGameForm: React.FC = () => {
                                                         className="rejim-check"
                                                         value={mode}
                                                         name="rejim-2"
-                                                        checked={selectedGameMode === mode}
-                                                        onChange={handleGameModeChange}
+                                                        checked={tossMode === (mode === 'Соседи' ? 'neighbors' : 'all')}
+                                                        onChange={handleTossModeChange}
                                                     />
                                                     <div className="image-radio" id="images">
                                                         <img src="./img/check_.svg" alt="" />
@@ -173,8 +210,8 @@ const CreateGameForm: React.FC = () => {
                                                         className="rejim-check"
                                                         value={mode}
                                                         name="rejim-3"
-                                                        checked={selectedGameMode === mode}
-                                                        onChange={handleGameModeChange}
+                                                        checked={gameEndingType === (mode === 'Классика' ? 'classic' : 'draw')}
+                                                        onChange={handleGameEndingTypeChange}
                                                     />
                                                     <div className="image-radio" id="images">
                                                         <img src="./img/check_.svg" alt="" />
@@ -190,32 +227,6 @@ const CreateGameForm: React.FC = () => {
                                     ))}
                                 </div>
 
-
-
-                                {/* {['Соседи', 'Все', 'Классика', 'Ничья'].map((mode) => (
-                                    <div className="rejim-igry-blocks" key={mode}>
-                                        <div className="rejim-igry-block block-obvodka">
-                                            <label className="checkbox-container">
-                                                <input
-                                                    type="radio"
-                                                    className="rejim-check"
-                                                    value={mode}
-                                                    name="rejim-2"
-                                                    checked={selectedGameMode === mode}
-                                                    onChange={handleGameModeChange}
-                                                />
-                                                <div className="image-radio" id="images">
-                                                    <img src="./img/check_.svg" alt="" />
-                                                </div>
-                                                <div className="icon-rejim">
-                                                    <canvas id={mode.toLowerCase()}></canvas>
-                                                    <div className="rej-text">{mode}</div>
-                                                </div>
-                                                <div className="checkmark"></div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                ))} */}
                             </div>
                         </div>
 
@@ -259,7 +270,7 @@ const CreateGameForm: React.FC = () => {
                                         <p>Приватная игра</p>
                                     </label>
 
-                                    <input type="submit" className="create-kn block-obvodka" value="Создать" />
+                                    <input onClick={handleSubmit} type="submit" className="create-kn block-obvodka" value="Создать" />
                                 </div>
                             </div>
                         </div>
