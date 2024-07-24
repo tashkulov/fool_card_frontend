@@ -11,7 +11,7 @@ jobs:
       - name: Create SSH key
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 77.222.60.23
+          host: "77.222.60.23"
           username: "root"
           key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDC9tMzi+wrkoaXO4X9CAvtOiLYQtT21bJe655elUTF60vmPuWSfIbAMsOiXIxGdKieEx69iPGguwObzB9yzO3Yr80iv2wtZiTEPHO+LyRTCy4XhzVmB16lhWhyTb3LL8ElDUMod/W4O1QE3aj6AdWhemV+jfwXRw51fRooBVxRKQ=="
           port: 22
