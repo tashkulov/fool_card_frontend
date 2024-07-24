@@ -1,11 +1,13 @@
-import React, {useRef, useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './home-page.css';
 import Footer from "../../components/Footer/Footer.tsx";
-import {Modal} from "../../components/Modal";
+import { Modal } from "../../components/Modal";
 import Settings from "../Settings/ui/Settings.tsx";
 import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick.ts";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import MyRiveAnimation from "../../components/rive-conponents/ruby/ruby-component.tsx"
+
 
 interface User {
     photo_url: string;
@@ -19,7 +21,7 @@ interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({ user }) => {
     const [stateModeModalWindow, setSateModeModalWindow] = useState<boolean>(false)
     const refModalWindow = useRef(null)
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
 
@@ -58,6 +60,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             </div>
 
             <div className="main-page-menu">
+                <MyRiveAnimation />
                 <div className="main-page-menu-buttons">
                     <Link to={'/inGame'}>
                         <div className="main-page-menu-button">
@@ -81,14 +84,12 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                 </div>
             </div>
             <div className='main-page-hands-cards'>
-                <div className='hands'>
-
-                </div>
+                
             </div>
             <Modal mode={stateModeModalWindow} ref={refModalWindow}>
-                <Settings/>
+                <Settings />
             </Modal>
-            <Footer/>
+            <Footer />
         </div>
     );
 };

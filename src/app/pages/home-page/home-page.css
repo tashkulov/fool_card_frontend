@@ -136,7 +136,9 @@
 
 .main-page-menu {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
     color: black;
     margin-top: 10px;
     z-index: 1;
@@ -152,8 +154,7 @@
 
     width: 149px;
     height: 302px;
-    margin-top: 150px;
-
+    margin-top: 90px;
 }
 
 .main-page-menu-button {
