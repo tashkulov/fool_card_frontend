@@ -19,7 +19,7 @@ jobs:
             cd /var/www/frontend
             npm run build
             pm2 delete 0
-            pm2 serve dist 80
+            pm2 serve dist 3000
             pm2 save
 
         
