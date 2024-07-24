@@ -1,11 +1,12 @@
 import {RouteProps} from "react-router-dom"
-import HomePage from "../../pages/home-page/home-page.tsx";
-import PlayGame from "../../pages/play-game/play-game.tsx";
-import Kvesty from "../../pages/kwesty/Kvesty.tsx";
+import HomePage from "../../pages/home-page/home-page";
+import PlayGame from "../../pages/play-game/play-game";
+import Kvesty from "../../pages/kwesty/Kvesty";
 import {LeaderBoard} from "../../pages/LeaderBoard";
-import NewGame from "../../pages/new-game/new-game.tsx";
+import NewGame from "../../pages/new-game/new-game";
 import {Referrals} from "../../pages/Referrals";
-import OpenGames from "../../pages/open-games/open-games.tsx";
+import OpenGames from "../../pages/open-games/open-games";
+import React from "react";
 
 enum AppRoutes {
     HOMEPAGE = "homePage",

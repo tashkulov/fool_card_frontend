@@ -9,6 +9,7 @@ declare module '*.scss' {
 interface Window {
     Telegram: {
         WebApp: {
+            initDataUnsafe: any;
             ready(callback: () => void): void;
             setViewSize(width: number, height: number): void;
             onEvent(eventType: string, callback: () => void): void;

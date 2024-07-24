@@ -1,236 +1,338 @@
 
-    .container {
-        margin: 0 auto;
-        max-width: 500px;
-        position:relative;
-    }
-
-
-
-
-    .wrapper {
-        background: linear-gradient(0.00deg, rgb(42, 42, 42), rgb(35, 35, 35) 37%, rgb(15, 15, 15) 91%, rgb(12, 12, 12) 100%);
-        display: flex;
-        flex-direction: column;
-        min-height: 100%;
-    }
+.wrapper {
+    background: linear-gradient(0.00deg, rgb(42, 42, 42), rgb(35, 35, 35) 37%, rgb(15, 15, 15) 91%, rgb(12, 12, 12) 100%);
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
 
 
 
 
 
-    /* play-footer  */
+/* play-footer  */
 
-    .play-footer {
-        position: relative;
-        border: 0.95px solid rgb(0, 0, 0);
-        background: linear-gradient(0.00deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
-    }
-
-
-
-    .play-footer-wrap {
-        padding: 15px 20px;
-        display: flex;
-    }
+.play-footer {
+    position: relative;
+    border: 0.95px solid rgb(0, 0, 0);
+    background: linear-gradient(0.00deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
+    z-index: 2  ; /* Устанавливаем более низкий z-index, чтобы футер частично закрывал карты */
+}
 
 
-    .play-footer-btn {
-        width: 110px;
-        height: 40px;
-        border-radius: 8px;
-        background: linear-gradient(180deg, rgb(56, 20, 20), rgb(29, 8, 8) 100%);
-        color: rgb(255, 255, 255);
-        font-size: 20px;
-        font-weight: 600;
-        line-height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center; /* Центрирует контент по горизонтали */
-        text-align: center; /* Центрирует текст */
-    }
+
+.play-footer-wrap {
+    padding: 15px 20px;
+    display: flex;
+}
 
 
-    .play-footer-ava {
-        margin-top: -10px;
-        position: absolute;
-        width: 100%;
-        text-align: center;
-    }
-
-    .play-footer-ava img {
-        padding: 5px;
-    }
-    .footer-ava-wp {
-        display: inline-block;
-        border: 0.95px solid rgb(0, 0, 0);
-        height: 100%;
-        border-radius: 50%;
-        background: linear-gradient(0.00deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
-    }
-    .footer-ava-roga {
-        position: relative;
-        z-index: 1;
-        display: inline-block;
-    }
-    .footer-ava-roga::after {
-        position: absolute;
-        content: url(../img/ava-right.svg);
-        top: 12%;
-        right: -20%;
-        z-index: -1;
-    }
-    .footer-ava-roga::before {
-        position: absolute;
-        content: url(../img/ava-left.svg);
-        top: 12%;
-        left: -20%;
-        z-index: -1;
-    }
-    /*play-header*/
-
-    .play-header {
-
-        padding-bottom: 3px;
-        border: 0.95px solid rgb(0, 0, 0);
-        /* background-image: url(/../img/play-header.svg);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain; */
-        background: linear-gradient(90.00deg, rgb(128, 119, 109), rgb(145, 135, 137) 22%, rgb(187, 176, 174) 55%, rgb(215, 204, 200) 84%, rgb(226, 215, 210) 100%);
-    }
-    .play-header-wrapper {
-        padding: 8px 0;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        border-bottom: 0.95px solid rgb(0, 0, 0);
-        border-left: 0.95px solid rgb(0, 0, 0);
-        border-right: 0.95px solid rgb(0, 0, 0);
-        margin: 0 20px;
-    }
-    .play-header-block {
-        gap: 15px;
-        display: flex;
-        align-items: center;
-    }
-    .play-header-back {
-        padding: 10px;
-        border-radius: 8px;
-        background: linear-gradient(180.00deg, rgb(79, 21, 21), rgb(56, 12, 12) 100%);
-        display: flex;
-    }
-    .play-header-coin img {
-        width: 40px;
-        height: 40px;
-    }
-    .play-header-coin {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .play-header-coin p {
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 120%;
-        color: #000;
-    }
-    .play-header-rejim {
-        padding: 5px 15px;
-        border-radius: 8px;
-        background: linear-gradient(180.00deg, rgb(79, 21, 21), rgb(56, 12, 12) 100%);
-
-    }
-
-    .play-header-rejim img {
-        width: 17px;
-        height: 22px;
-    }
-    .play-header-polosa {
-        height: 8px;
-        border-bottom: 0.95px solid rgb(0, 0, 0);
-        border-left: 0.95px solid rgb(0, 0, 0);
-        border-right: 0.95px solid rgb(0, 0, 0);
-        background: linear-gradient(182.50deg, rgb(226, 215, 210) -137.682%, rgb(215, 204, 200) -87.815%, rgb(187, 176, 174) 2.569%, rgb(145, 135, 137) 105.419%, rgb(128, 119, 109) 173.986%);
-    }
-
-    /* main-wrapper-plays */
+.play-footer-btn {
+    width: 110px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgb(56, 20, 20), rgb(29, 8, 8) 100%);
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Центрирует контент по горизонтали */
+    text-align: center; /* Центрирует текст */
+}
 
 
-    .plays{
-        position: relative;
-        z-index:2;
-    }
+.play-footer-ava {
+    margin-top: -10px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
 
-    .main-wrapper-plays {
-        position: relative;
+.play-footer-ava img {
+    padding: 5px;
+}
+.footer-ava-wp {
+    display: inline-block;
+    border: 0.95px solid rgb(0, 0, 0);
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(0.00deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
+}
+.footer-ava-roga {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+}
+.footer-ava-roga::after {
+    position: absolute;
+    content: url(../img/ava-right.svg);
+    top: 12%;
+    right: -20%;
+    z-index: -1;
+}
+.footer-ava-roga::before {
+    position: absolute;
+    content: url(../img/ava-left.svg);
+    top: 12%;
+    left: -20%;
+    z-index: -1;
+}
+/*play-header*/
 
-    }
+.play-header {
+    padding-bottom: 3px;
+    border: 0.95px solid rgb(0, 0, 0);
+    background: linear-gradient(90.00deg, rgb(128, 119, 109), rgb(145, 135, 137) 22%, rgb(187, 176, 174) 55%, rgb(215, 204, 200) 84%, rgb(226, 215, 210) 100%);
+}
+.play-header-wrapper {
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 0.95px solid rgb(0, 0, 0);
+    border-left: 0.95px solid rgb(0, 0, 0);
+    border-right: 0.95px solid rgb(0, 0, 0);
+    margin: 0 20px;
+}
+.play-header-block {
+    gap: 15px;
+    display: flex;
+    align-items: center;
+}
+.play-header-back {
+    padding: 10px;
+    border-radius: 8px;
+    background: linear-gradient(180.00deg, rgb(79, 21, 21), rgb(56, 12, 12) 100%);
+    display: flex;
+}
+.play-header-coin img {
+    width: 40px;
+    height: 40px;
+}
+.play-header-coin {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.play-header-coin p {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 120%;
+    color: #000;
+}
+.play-header-rejim {
+    padding: 5px 15px;
+    border-radius: 8px;
+    background: linear-gradient(180.00deg, rgb(79, 21, 21), rgb(56, 12, 12) 100%);
 
-    .play-wrapper{
-        position: relative;
-    }
-    .wrapper-plays-game {
+}
 
-    }
+.play-header-rejim img {
+    width: 17px;
+    height: 22px;
+}
+.play-header-polosa {
+    height: 8px;
+    border-bottom: 0.95px solid rgb(0, 0, 0);
+    border-left: 0.95px solid rgb(0, 0, 0);
+    border-right: 0.95px solid rgb(0, 0, 0);
+    background: linear-gradient(182.50deg, rgb(226, 215, 210) -137.682%, rgb(215, 204, 200) -87.815%, rgb(187, 176, 174) 2.569%, rgb(145, 135, 137) 105.419%, rgb(128, 119, 109) 173.986%);
+}
 
-
-    .play-wrapper::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0px;
-        width: 20px;
-        background-image: url(../img/Left.svg);
-        background-size: cover;
-        z-index: 1;
-    }
-
-    .play-wrapper::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0px;
-        width: 20px;
-        background-image: url(../img/Right.svg);
-        background-size: cover;
-        z-index: 1;
-    }
+/* main-wrapper-plays */
 
 
-    .user-dumaet{
-        background: rgb(0, 187, 86);
-    }
+.plays{
+    position: relative;
+    z-index:2;
+}
 
-    .wrapper-plays-game {
-        background-color: #236245;
-        height: 730px; /* Высота на всю высоту окна просмотра */
-        width: 100%;
+.main-wrapper-plays {
+    position: relative;
 
-    }
 
-    .players-blocks {
-        text-align: center;
+}
 
-    }
+.play-wrapper-game{
+    position: relative;
+}
+.wrapper-plays-game {
 
-    .player-block img{
-        width:60px;
-        height:60px;
-    }
+}
 
-    .player-block {}
 
-    .footer-ava-wp {}
+.play-wrapper-game::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0px;
+    width: 20px;
+    background-image: url(../img/Left.svg);
+    background-size: cover;
+    z-index: 5;
+}
 
-    .footer-ava-wp img {
-        padding: 5px;
-    }
 
-    .players-flex {
-        margin:0px 30px;
-        display: flex;
-        justify-content: space-between;
-    }
+
+.play-wrapper-game::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0px;
+    width: 20px;
+    background-image: url(../img/Right.svg);
+    background-size: cover;
+    z-index: 5;
+}
+
+
+.user-dumaet{
+    background: rgb(0, 187, 86);
+}
+
+.wrapper-plays-game {
+    background-color: #236245;
+    height: 730px; /* Высота на всю высоту окна просмотра */
+    width: 100%;
+
+}
+
+.players-blocks {
+    text-align: center;
+
+}
+
+.player-block img{
+    width:60px;
+    height:60px;
+}
+
+.player-block {}
+
+.footer-ava-wp {}
+
+.footer-ava-wp img {
+    padding: 5px;
+}
+
+.players-flex {
+    margin:0px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*hand*/
+.hand {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 150px;
+    padding: 20px;
+    z-index: 1;
+}
+
+.hand img {
+    position: absolute;
+    bottom: -5px;
+    transform-origin: bottom center;
+    transition: transform 0.3s ease, left 0.3s ease;
+    width: 64px;
+    height: 90px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.hand img:hover {
+    transform: scale(1.1); /* Увеличивает карту при наведении */
+}
+
+.trump-card {
+    position: absolute;
+    z-index: 0;
+    transform: rotate(110deg); /* Поворот карты-рубашки */
+    top: 150px;
+    left: 0;
+}
+
+.card-container .back-card {
+    position: absolute;
+    top: 150px;
+    transform: rotate(-200deg);
+    right: -10px;
+    z-index: 1;
+}
+.back_card1 {
+    position: absolute;
+    top: 200px;
+    transform: rotate(-200deg);
+
+    right: -10px; /* Смещение карты-рубашки для наложения */
+    z-index: 2;
+}
+.back_card2 {
+    position: absolute;
+    top: 150px;
+    transform: rotate(200deg); /* Поворот карты-рубашки */
+
+    left: -10px; /* Смещение карты-рубашки для наложения */
+    z-index: 3;
+}
+.back_card3 {
+    position: absolute;
+    top: 260px;
+    transform: rotate(-200deg); /* Поворот карты-рубашки */
+
+    right: -10px; /* Смещение карты-рубашки для наложения */
+    z-index: 4;
+}
+.bita-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 360px; /* Ширина контейнера */
+    height: 240px; /* Высота контейнера */
+    display: flex;
+    flex-wrap: wrap; /* Позволяет картам переноситься на следующую строку */
+    justify-content: center; /* Центрирование карт по горизонтали */
+    align-items: center; /* Центрирование карт по вертикали */
+    overflow: hidden;
+    gap: 10px; /* Расстояние между картами */
+}
+
+.bita-card {
+    width: 64px; /* Ширина карты */
+    height: 90px; /* Высота карты */
+    /* Убедитесь, что ширина и высота карты соответствуют вашему макету */
+    transition: transform 0.5s ease; /* Плавный переход для анимации */
+    z-index: 6;
+}
+
+/* Убедитесь, что при анимации карты не перекрывают друг друга */
+.bita-card.animate {
+    transform: scale(0.5); /* Уменьшение размера при анимации */
+}
+
+.bita-card.final-position {
+    transform: scale(1); /* Обычный размер после анимации */
+}
+
+
+
+.hand .card-to-bita {
+    position: absolute;
+    transition: transform 0.5s ease;
+}
+
+.bita-container .final-position {
+    transform: translateX(0) translateY(0); /* Настройте положение по вашему усмотрению */
+}
