@@ -15,7 +15,7 @@ jobs:
           username: "root"
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          script: 
+          script: |
             cd /var/www/frontend
             npm run build
             pm2 delete 0
