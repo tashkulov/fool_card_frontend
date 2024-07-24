@@ -17,7 +17,7 @@ jobs:
           port: 22
           script: |
             cd /var/www/frontend
-            git pull https://${{ secrets.REPO_ACCESS_TOKEN }}@github.com/web112biz/fool_card_frontend.gi
+            git pull https://${{ secrets.REPO_ACCESS_TOKEN }}@github.com/web112biz/fool_card_frontend.git
             npm run build
             pm2 delete 0
             pm2 serve dist 3000
