@@ -28,6 +28,11 @@
       display: block;
       object-fit: cover;
     }
-    
+  }
+
+  .header-svg-part {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
