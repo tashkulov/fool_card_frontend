@@ -1,0 +1,30 @@
+.main {
+  width: 100%;
+  position: relative;
+  margin-bottom: 40px;
+}
+.main .titleBackgroundSvg {
+  box-sizing: content-box;
+  width: 100%;
+  position: absolute;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  top: 75%;
+  left: 0;
+  z-index: -1;
+}
+.main .titleBackgroundSvg h2 {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -125%);
+}
+.main .titleBackgroundSvg img {
+  width: 100%;
+  height: 71px;
+  display: block;
+  object-fit: cover;
+}
+
+/*# sourceMappingURL=Header.module.css.map */

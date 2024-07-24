@@ -4,14 +4,6 @@ body {
 }
 
 
-.container {
-    margin: 0 auto;
-    max-width: 393px;
-    position: relative;
-}
-
-
-
 
 .wrapper {
 
@@ -20,9 +12,15 @@ body {
     min-height: 100%;
 }
 
+.main-wrapp {
+    min-width: 100dvw;
+    min-height: 100dvh;
+    background: linear-gradient(0.00deg, rgb(42, 42, 42), rgb(35, 35, 35) 37%, rgb(15, 15, 15) 91%, rgb(12, 12, 12) 100%);
+}
+
 .main {
     flex: 1 1 auto;
-    background: linear-gradient(0.00deg, rgb(42, 42, 42), rgb(35, 35, 35) 37%, rgb(15, 15, 15) 91%, rgb(12, 12, 12) 100%);
+    
 }
 
 
@@ -143,8 +141,6 @@ body {
     display: flex;
     gap: 15px;
 }
-
-.main-menu-logo {}
 
 .main-menu-info {
     display: flex;
@@ -335,40 +331,6 @@ body {
 
 
 
-.main-wrapp {
-    position: relative;
-    width: 393px;
-    height: 852px;
-
-    margin-top: -5px;
-}
-
-
-.main-wrapp::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0px;
-    width: 10px;
-    background-image: url('./img/Frame_Left.svg');
-    background-size: cover;
-    z-index: 2;
-}
-
-
-
-.main-wrapp::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0px;
-    width: 10px;
-    background-image: url('./img/Frame_Right.svg');
-    background-size: cover;
-    z-index: 2;
-}
 
 
 
@@ -405,8 +367,6 @@ body {
 
 
 }
-
-.blocks {}
 
 .kvesty-block-img {
     margin-right: 15px;
@@ -491,8 +451,6 @@ body {
 }
 
 
-.otkrytye-main {}
-
 .otkrytye-block {
     padding-bottom: 10px;
     padding-top: 5px;
@@ -504,9 +462,10 @@ body {
 }
 
 .header-illustration-img {
-    width: 393px;
+    object-fit: cover;
+    min-width: 100dvw;
     height: 125px;
-    z-index: 999;
+    z-index: 30;
 }
 
 .otkrytye-block-opit {
@@ -521,8 +480,6 @@ body {
     line-height: 150%;
     color: #fff;
 }
-
-.otkrytye-block-name {}
 
 .otkrytye-name {
     margin-bottom: 5px;
@@ -566,28 +523,19 @@ body {
 
 /*  */
 
-
-
-
-
-
-
-
-
-/* new-game */
-
-.form-new-game {}
-
 .kvesty-title-wrapper {
     height: 73px;
     padding: 0;
+}
+
+section {
+    z-index: 5;
 }
 
 .bet-value {
     font-size: 30px;
 }
 
-.title-wrapper {}
 
 .new-game-stavkap {
     font-weight: 500;
@@ -639,8 +587,6 @@ body {
     margin-bottom: 5px;
     padding: 0 30px;
 }
-
-.new-game-blocks {}
 
 .new-game-plus {
     display: grid;
@@ -744,9 +690,9 @@ body {
     display: none;
 }
 
-.block-obvodka {}
-
-.checkbox-container {}
+.rejim-check.gameModeSelected {
+    z-index: 2;
+}
 
 .icon-rejim {
 
@@ -762,8 +708,6 @@ body {
     color: #fff;
 }
 
-
-.checkmark {}
 
 .rejim-check {
     position: absolute;
@@ -815,12 +759,18 @@ body {
 
 .col-igrok-blocks {
     display: flex;
+    justify-content: space-around;
     width: 50%;
     margin: 0 auto;
     gap: 10px;
 }
 
+.col-igrok-block.selected {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 .col-igrok-block {
+    transition: all 0.3s ease;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -866,8 +816,6 @@ body {
     margin-bottom: 25px;
 }
 
-.create-game-block {}
-
 .create-checkbox {
     display: flex;
     justify-content: space-around;
@@ -888,8 +836,6 @@ body {
     letter-spacing: 0%;
     text-align: center;
 }
-
-.checkmark {}
 
 .create-kn {
     padding: 10px 15px;
@@ -959,7 +905,9 @@ body {
 
 /*  */
 
-
+.form-new-game {
+    padding-bottom: 100px;
+}
 
 
 /* referal */
@@ -989,11 +937,6 @@ body {
     gap: 8px;
 }
 
-
-
-.referal-block-img {}
-
-.referal-block-text {}
 
 .referal-block-cost {
     font-weight: 500;
@@ -1036,8 +979,6 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
 }
-
-.block-obvodka {}
 
 .referal-frin-kn {
     text-align: center;
@@ -1243,8 +1184,6 @@ body {
     border-radius: 8px;
 }
 
-.block-obvodka {}
-
 .kn-modal-close {
     position: absolute;
     right: 0;
@@ -1382,8 +1321,6 @@ body {
     background-repeat: no-repeat;
 }
 
-.block-obvodka {}
-
 .modal-every-day-t {
     margin-bottom: 10px;
     font-weight: 700;
@@ -1436,7 +1373,6 @@ body {
     gap: 8px;
 }
 
-.referal-fr-block {}
 
 .modal-every-kn-t {
     font-weight: 400;
@@ -1475,8 +1411,6 @@ body {
     background-repeat: no-repeat;
     border-radius: 8px;
 }
-
-.block-obvodka {}
 
 .modal-prig-title {
     margin-bottom: 25px;
@@ -1520,8 +1454,6 @@ body {
     align-items: center;
     justify-content: space-around;
 }
-
-.modal-prig-bloc {}
 
 .modal-prig-bloc-t {
     margin-bottom: 8px;
@@ -1742,25 +1674,6 @@ body {
     position: relative;
 }
 
-
-
-
-
-
-
-
-
-.wrapper-plays-header {
-    /*height: 20vh;*/
-    /*background-image: url(./img/playbg.svg);*/
-    /*background-repeat: no-repeat;*/
-    /*background-position: center;*/
-    /*background-size: cover;*/
-}
-
-.wrapper-plays-game {}
-
-
 .play-wrapper::before {
     content: '';
     position: absolute;
@@ -1791,14 +1704,6 @@ body {
 }
 
 
-
-
-
-
-/**/
-
-.wrapper-plays-game {}
-
 .players-blocks {
     text-align: center;
 
@@ -1808,10 +1713,6 @@ body {
     width: 60px;
     height: 60px;
 }
-
-.player-block {}
-
-.footer-ava-wp {}
 
 .footer-ava-wp img {
     padding: 5px;
@@ -1841,11 +1742,6 @@ body {
 
 .head-svg {
     width: 100%;
-}
-
-#rubin {
-    /*position:absolute;*/
-
 }
 
 

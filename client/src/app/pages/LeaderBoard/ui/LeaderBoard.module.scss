@@ -1,0 +1,45 @@
+.main {
+  width: 100%;
+
+  .listLeaderBoard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+
+    .MVPPlayer {
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .wrapperImgWithName {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .wrapperImgWithExperience {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+  }
+
+  .leftSolid {
+    position: absolute;
+    height: 100vh;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+
+  .rightSolid {
+    position: absolute;
+    height: 100vh;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+}

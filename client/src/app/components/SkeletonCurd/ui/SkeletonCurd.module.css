@@ -1,0 +1,22 @@
+.main {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background-image: url("../../../pages/img/titus-wrapper.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 12px;
+  border: 1px solid white;
+}
+
+.noBg {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background: linear-gradient(180deg, rgb(79, 21, 21), rgb(56, 12, 12));
+  border-radius: 12px;
+  border: 1px solid white;
+}
+
+/*# sourceMappingURL=SkeletonCurd.module.css.map */

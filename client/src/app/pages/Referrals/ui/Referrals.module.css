@@ -1,0 +1,43 @@
+.main {
+  width: 100%;
+  padding: 20px;
+}
+.main p {
+  font-size: 10px;
+  text-align: center;
+}
+.main .friends {
+  text-align: center;
+  padding: 10px;
+  font-size: 24px;
+}
+.main .countsFriends {
+  padding: 20px 5px 10px;
+}
+.main .friendsList {
+  width: 100%;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  gap: 10px;
+}
+.main .friendsList .curdFriends {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.main .friendsList .curdFriends .wrapperImgWithName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.main .friendsList .curdFriends button {
+  border: 2px solid gray;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgb(56, 20, 20), rgb(29, 8, 8));
+  color: white;
+  padding: 20px 40px;
+}
+
+/*# sourceMappingURL=Referrals.module.css.map */
