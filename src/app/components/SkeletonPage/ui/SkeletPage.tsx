@@ -1,9 +1,10 @@
 import cls from "./SkeletPage.module.scss"
-import Footer from "../../../components/Footer/Footer.tsx";
+import Footer from "../../../components/Footer/Footer";
 import imgLeftSvgIcons from "../../../pages/img/Frame_Left.svg"
 import imgRightSvgIcons from "../../../pages/img/Frame_Right.svg"
-import Header from "../../../pages/Widgets/Header/ui/Header.tsx";
+import Header from "../../../pages/Widgets/Header/ui/Header";
 import {ReactNode} from "react";
+import React from "react";
 
 type TSkeletonPage = {
     textHeader: string,

@@ -1,10 +1,11 @@
 import cls from "./Referrals.module.scss"
-import SkeletonPage from "../../../components/SkeletonPage/ui/SkeletPage.tsx";
-import GetReferralBonuses from "./getReferralBonuses/ui/getReferralBonuses.tsx";
+import SkeletonPage from "../../../components/SkeletonPage/ui/SkeletPage";
+import GetReferralBonuses from "./getReferralBonuses/ui/getReferralBonuses";
 import {useState} from "react";
-import SkeletonCurd from "../../../components/SkeletonCurd/ui/SkeletonCurd.tsx";
+import SkeletonCurd from "../../../components/SkeletonCurd/ui/SkeletonCurd";
 import friendsIconSvg from "../../img/FriendsIconSvg.svg"
 import {useTranslation} from "react-i18next";
+import React from "react";
 
 const Referrals = () => {
     const [str, setStr] = useState("")

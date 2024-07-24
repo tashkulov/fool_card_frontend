@@ -1,4 +1,4 @@
-import Referrals from "./ui/Referrals.tsx";
+import Referrals from "./ui/Referrals";
 
 export {
     Referrals

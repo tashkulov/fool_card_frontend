@@ -1,9 +1,9 @@
 import cls from "./LeaderBoard.module.scss";
-import Header from "../../Widgets/Header/ui/Header.tsx";
+import Header from "../../Widgets/Header/ui/Header";
 import { useEffect, useState } from "react";
-import { ITypeLeaderBord } from "../typeLeaderBord/typeLeaderBord.ts";
-import { getLeaderBoard } from "../getLeaderBoard/getLeaderBoard.ts";
-import SkeletonCurd from "../../../components/SkeletonCurd/ui/SkeletonCurd.tsx";
+import { ITypeLeaderBord } from "../typeLeaderBord/typeLeaderBord";
+import { getLeaderBoard } from "../getLeaderBoard/getLeaderBoard";
+import SkeletonCurd from "../../../components/SkeletonCurd/ui/SkeletonCurd";
 import imgLeftSvgIcons from "../../img/Frame_Left.svg"
 import imgRightSvgIcons from "../../img/Frame_Right.svg"
 import firstMesto from "../../img/1mest.svg";
@@ -11,8 +11,9 @@ import secondMesto from "../../img/2mest.svg";
 import threeMesto from "../../img/3mest.svg";
 import lidstart from "../../img/lidstar.svg";
 import referalAva from "../../img/referal-ava.svg"
-import Footer from "../../../components/Footer/Footer.tsx";
+import Footer from "../../../components/Footer/Footer";
 import {useTranslation} from "react-i18next";
+import React from "react";
 
 const LeaderBoard = () => {
     const [leaderBoardList, setLeaderBoardList] = useState<ITypeLeaderBord[]>([]);

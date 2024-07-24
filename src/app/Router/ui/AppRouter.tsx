@@ -2,6 +2,7 @@ import  { useCallback } from 'react';
 import { Route, Routes } from "react-router-dom";
 
 import { AppRouteProps, routerConfig } from "../Config/Config";
+import React from 'react';
 
 const AppRouter = () => {
     const render = useCallback((route : AppRouteProps, id: number) => {

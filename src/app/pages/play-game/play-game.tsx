@@ -63,7 +63,7 @@ const PlayGame = () => {
                     'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
                 },
             });
-            const game = response.data.find(game => game.id === 6);
+            const game = response.data.find((game: { id: number; }) => game.id === 6);
             if (game) {
                 setBetValue(game.bet_value);
             } else {
@@ -93,7 +93,7 @@ const PlayGame = () => {
 
     const getCardImagePath = (card: string) => {
         const [suit] = card.split('_');
-        const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
+        const path = new URL(`../../../assets/cards/${suit}/${card}.svg`).href;
         return path;
     };
 

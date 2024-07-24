@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { $api } from '../../../../api';
-import {ITypeLeaderBord} from "../typeLeaderBord/typeLeaderBord.ts";
+import {ITypeLeaderBord} from "../typeLeaderBord/typeLeaderBord";
 
 
 export const getLeaderBoard = async (): Promise<AxiosResponse<ITypeLeaderBord[]> | undefined> => {

@@ -1,5 +1,6 @@
 import RiveComponent from 'rive-react';
 import "./ruby-component.css"
+import React from 'react';
 
 const HeaderRiveAnimation = () => {
   return (
