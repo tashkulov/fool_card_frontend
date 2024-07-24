@@ -1,0 +1,22 @@
+.container-kwest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 20px;
+    margin-bottom: 0;
+    padding: 0;
+    min-width: 100dvw;
+}
+
+.kvesty-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 130px;
+
+}

@@ -1,6 +1,11 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useRef, useState} from 'react';
+import {Link} from 'react-router-dom';
 import './home-page.css';
+import Footer from "../../components/Footer/Footer.tsx";
+import {Modal} from "../../components/Modal";
+import Settings from "../Settings/ui/Settings.tsx";
+import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick.ts";
+import {useTranslation} from "react-i18next";
 
 interface User {
     photo_url: string;
@@ -8,17 +13,18 @@ interface User {
 }
 
 interface HomePageProps {
-    user: User | null;
+    user?: User | null;
 }
 
 const HomePage: React.FC<HomePageProps> = ({ user }) => {
-    const navigate = useNavigate();
+    const [stateModeModalWindow, setSateModeModalWindow] = useState<boolean>(false)
+    const refModalWindow = useRef(null)
+    const {t} = useTranslation()
 
-    const navigateTo = (path: string) => {
-        navigate(path);
-    };
+    useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
 
     return (
+
         <div className="main-page-container">
             <div className="main-page-header">
                 <div className="main-page-header-content">
@@ -53,42 +59,36 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
             <div className="main-page-menu">
                 <div className="main-page-menu-buttons">
-                    <div className="main-page-menu-button" onClick={() => navigateTo('in-game')}>
-                        Играть
-                    </div>
-                    <div className="main-page-menu-button" onClick={() => navigateTo('leaderboard')}>
-                        Лидерборд
-                    </div>
-                    <div className="main-page-menu-button">Рефералы</div>
-                    <div className="main-page-menu-button">Настройки</div>
+                    <Link to={'/inGame'}>
+                        <div className="main-page-menu-button">
+                            {t("Играть")}
+                        </div>
+                    </Link>
+                    <Link to={'/leaderboard'}>
+                        <div className="main-page-menu-button">
+                            {t("Лидерборд")}
+                        </div>
+                    </Link>
+                    <Link to={"/referrals"}>
+                        <div className="main-page-menu-button">
+                            {t("Рефералы")}
+                        </div>
+                    </Link>
+
+                    <button onClick={() => setSateModeModalWindow(prev => !prev)} className="main-page-menu-button">
+                        {t("Настройки")}
+                    </button>
                 </div>
-
-
             </div>
             <div className='main-page-hands-cards'>
                 <div className='hands'>
 
                 </div>
             </div>
-            <div className="main-page-navbar">
-                <div className="main-page-navbar-option menu">
-                    <div className="main-page-navbar-option menu-icon"></div>
-                    <h1>Меню</h1>
-                </div>
-                <div className="main-page-navbar-option quests">
-                    <div className="main-page-navbar-option quests-icon"></div>
-                    <h1>Квесты</h1>
-                </div>
-                <div className="main-page-navbar-option open">
-                    <div className="main-page-navbar-option open-icon"></div>
-                    <h1>Открытые</h1>
-                </div>
-                <div className="main-page-navbar-option new-game" onClick={() => navigateTo('new-game')}>
-                    <div className="main-page-navbar-option new-game-icon"></div>
-                    <h1>Создать игру</h1>
-                </div>
-            </div>
-
+            <Modal mode={stateModeModalWindow} ref={refModalWindow}>
+                <Settings/>
+            </Modal>
+            <Footer/>
         </div>
     );
 };

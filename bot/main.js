@@ -5,7 +5,7 @@ const webAppURL = 'https://fool-card-frontend.vercel.app/'
 const token = '7051377538:AAFVil-NoeIURCSk_3tmdPW0bQIfhz3eMWc'
 
 const bot = new Telegraf(token)
-bot.launch();
+
 // bot.command()
 
 bot.command('start', (ctx) => {
@@ -19,3 +19,8 @@ bot.command('start', (ctx) => {
         ])
     )
 });
+
+bot.launch();
+
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));

@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './new-game.css'
-import headerIllustration from '../../../assets/img/header-illustration.png';
+import headerIllustration from '../../../assets/img/Header Illustration.svg';
 import NewBet from '../../../assets/img/new-stavka.svg';
 import Minus from '../../../assets/img/minus.svg';
 import Plus from '../../../assets/img/pluss.svg';
+import Check from "../../../assets/img/check_.svg"
+import Footer from '../../components/Footer/Footer';
+import {useTranslation} from "react-i18next";
 
 
 // Define the types for the props and states
 type RiveAnimation = { play: () => void };
 
 const CreateGameForm: React.FC = () => {
+    const {t} = useTranslation()
     const [betAmount, setBetAmount] = useState<number>(1200);
     const [selectedGameMode, setSelectedGameMode] = useState<string>('');
     const [selectedPlayerCount, setSelectedPlayerCount] = useState<string>('');
@@ -103,213 +107,181 @@ const CreateGameForm: React.FC = () => {
 
     return (
         <div className="main main-wrapp">
-            <div className='header-illustration'>
-                <img className='header-illustration-img' src={headerIllustration} alt="" />
-            </div>
+
+            <img className='header-illustration-img' src={headerIllustration} alt="" />
+
             <section className="kvesty-title new-games">
-                <div className="container">
-                    <form className="form-new-game">
-                        <div className="kvesty-title-wrapper new-game-wrapper title-wrapper">
-                            <p className="new-game-stavkap">Ваша ставка</p>
-                            <div className="block-obvodka new-game-sts">
-                                <img src={NewBet} alt="" />
-                                <div className='bet-value'>{betAmount}</div>
 
-                            </div>
+                <form onSubmit={handleSubmit} className="form-new-game">
+                    <div className="kvesty-title-wrapper new-game-wrapper title-wrapper">
+                        <p className="new-game-stavkap">{t("Ваша ставка")}</p>
+                        <div className="block-obvodka new-game-sts">
+                            <img src={NewBet} alt="" />
+                            <div className='bet-value'>{betAmount}</div>
+
                         </div>
+                    </div>
 
-                        <div className="new-game-main">
-                            <div className="new-game-blocks">
-                                <div className="new-game-plus">
-                                    {['100', '1К', '10К', '100К'].map((text, index) => {
-                                        const value = parseInt(text.replace('К', '000'), 10);
-                                        return (
-                                            <div className="plus-block block-obvodka" key={index}>
-                                                <div
-                                                    className="plus-block-minus block-obvodka"
-                                                    onClick={() => handleBetChange(false, value)}
-                                                >
-                                                    <img src={Minus} alt="" />
-                                                </div>
-                                                <p className="plus-block-p">{text}</p>
-                                                <div
-                                                    className="plus-block-minus plus block-obvodka"
-                                                    onClick={() => handleBetChange(true, value)}
-                                                >
-                                                    <img src={Plus} alt="" />
-                                                </div>
+                    <div className="new-game-main">
+                        <div className="new-game-blocks">
+                            <div className="new-game-plus">
+                                {['100', '1К', '10К', '100К'].map((text, index) => {
+                                    const value = parseInt(text.replace('К', '000'), 10);
+                                    return (
+                                        <div className="plus-block block-obvodka" key={index}>
+                                            <div
+                                                className="plus-block-minus block-obvodka"
+                                                onClick={() => handleBetChange(false, value)}
+                                            >
+                                                <img src={Minus} alt="" />
                                             </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="rejim-igry">
-                            <p className="rejim-igry-p">Режим игры</p>
-                            <div className="rejim-igry-blocks-flex">
-                                <div className='game-mode-selector-container'>
-                                    {['Подкидной', 'Переводной'].map((mode) => (
-                                        <div className="rejim-igry-blocks" key={mode}>
-                                            <div className="rejim-igry-block block-obvodka">
-                                                <label className="checkbox-container">
-                                                    <input
-                                                        type="radio"
-                                                        className="rejim-check"
-                                                        value={mode}
-                                                        name="rejim-1"
-                                                        checked={selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'sharing')}
-                                                        onChange={handleGameModeChange}
-                                                    />
-                                                    <div className="image-radio" id="images">
-                                                        <img src="assets/img/check_.svg" alt="" />
-                                                    </div>
-                                                    <div className="icon-rejim">
-                                                        <canvas id={mode.toLowerCase()}></canvas>
-                                                        <div className="rej-text">{mode}</div>
-                                                    </div>
-                                                    <div className="checkmark"></div>
-                                                </label>
+                                            <p className="plus-block-p">{text}</p>
+                                            <div
+                                                className="plus-block-minus plus block-obvodka"
+                                                onClick={() => handleBetChange(true, value)}
+                                            >
+                                                <img src={Plus} alt="" />
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
-                                <div className='game-mode-selector-container'>
-                                    {['Соседи', 'Все'].map((mode) => (
-                                        <div className="rejim-igry-blocks" key={mode}>
-                                            <div className="rejim-igry-block block-obvodka">
-                                                <label className="checkbox-container">
-                                                    <input
-                                                        type="radio"
-                                                        className="rejim-check"
-                                                        value={mode}
-                                                        name="rejim-2"
-                                                        checked={tossMode === (mode === 'Соседи' ? 'neighbors' : 'all')}
-                                                        onChange={handleTossModeChange}
-                                                    />
-                                                    <div className="image-radio" id="images">
-                                                        <img src="./img/check_.svg" alt="" />
-                                                    </div>
-                                                    <div className="icon-rejim">
-                                                        <canvas id={mode.toLowerCase()}></canvas>
-                                                        <div className="rej-text">{mode}</div>
-                                                    </div>
-                                                    <div className="checkmark"></div>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className='game-mode-selector-container'>
-                                    {['Классика', 'Ничья'].map((mode) => (
-                                        <div className="rejim-igry-blocks" key={mode}>
-                                            <div className="rejim-igry-block block-obvodka">
-                                                <label className="checkbox-container">
-                                                    <input
-                                                        type="radio"
-                                                        className="rejim-check"
-                                                        value={mode}
-                                                        name="rejim-3"
-                                                        checked={gameEndingType === (mode === 'Классика' ? 'classic' : 'draw')}
-                                                        onChange={handleGameEndingTypeChange}
-                                                    />
-                                                    <div className="image-radio" id="images">
-                                                        <img src="./img/check_.svg" alt="" />
-                                                    </div>
-                                                    <div className="icon-rejim">
-                                                        <canvas id={mode.toLowerCase()}></canvas>
-                                                        <div className="rej-text">{mode}</div>
-                                                    </div>
-                                                    <div className="checkmark"></div>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div className="col-igrok">
-                            <p className="rejim-igry-p">Количество игроков</p>
-                            <div className="col-igrok-blocks">
-                                {[2, 3, 4].map((count) => (
-                                    <div className="col-igrok-block btn-krug block-obvodka" key={count}>
-                                        <label className="checkbox-container">
-                                            <input
-                                                type="radio"
-                                                className="rejim-check"
-                                                value={count}
-                                                name="kolvo"
-                                                checked={selectedPlayerCount === count.toString()}
-                                                onChange={handlePlayerCountChange}
-                                            />
-                                            <div className="image-radio" id="images">
-                                                <img src="./img/check_.svg" alt="" />
-                                            </div>
-                                            <div className="icon-rejim">
-                                                <div className="kolvo-text">{count}</div>
-                                            </div>
-                                        </label>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="create-game">
-                            <div className="create-game-block">
-                                <div className="create-checkbox">
-                                    <label className="checkboxer">
-                                        <input
-                                            type="checkbox"
-                                            className="custom-c"
-                                            checked={isPrivate}
-                                            onChange={handlePrivateGameChange}
-                                        />
-                                        <span className="checkmark block-obvodka"></span>
-                                        <p>Приватная игра</p>
-                                    </label>
-
-                                    <input onClick={handleSubmit} type="submit" className="create-kn block-obvodka" value="Создать" />
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </section>
-
-            <footer className="footer">
-                <div className="footer-wrapper">
-                    <div className="container">
-                        <div className="footer-menu">
-                            <div className="footer-menu-item">
-                                <a href="/">
-                                    <canvas id="clubs"></canvas>
-                                    <p className="punkt foot-men-p">Меню</p>
-                                </a>
-                            </div>
-                            <div className="footer-menu-item">
-                                <a href="/kvesty">
-                                    <canvas id="spades"></canvas>
-                                    <p className="punkt foot-men-p">Квесты</p>
-                                </a>
-                            </div>
-                            <div className="footer-menu-item">
-                                <a href="/otkrytye">
-                                    <canvas id="hearts"></canvas>
-                                    <p className="foot-men-p">Открытые</p>
-                                </a>
-                            </div>
-                            <div className="footer-menu-item">
-                                <a href="/sozdat-igru">
-                                    <canvas id="diamond" className="active"></canvas>
-                                    <p className="foot-men-p">Создать игру</p>
-                                </a>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
-                </div>
-            </footer>
+
+                    <div className="rejim-igry">
+                        <p className="rejim-igry-p">{t("Режим игры")}</p>
+                        <div className="rejim-igry-blocks-flex">
+                            <div className='game-mode-selector-container'>
+                                {['Подкидной', 'Переводной'].map((mode) => (
+                                    <div className="rejim-igry-blocks" key={mode}>
+                                        <div className="rejim-igry-block block-obvodka">
+                                            <label className="checkbox-container">
+                                                <input
+                                                    type="radio"
+                                                    className={`rejim-check ${selectedGameMode === mode ? 'gameModeSelected' : ''}`}
+                                                    value={mode}
+                                                    name="rejim-1"
+                                                    checked={selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'shifting')}
+                                                    onChange={handleGameModeChange} />
+                                                <div className="image-radio" id="images">
+                                                    <img src={Check} alt="" />
+                                                </div>
+                                                <div className="icon-rejim">
+                                                    <canvas id={mode.toLowerCase()}></canvas>
+                                                    <div className="rej-text">{mode}</div>
+                                                </div>
+                                                <div className="checkmark"></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className='game-mode-selector-container'>
+                                {['Соседи', 'Все'].map((mode) => (
+                                    <div className="rejim-igry-blocks" key={mode}>
+                                        <div className="rejim-igry-block block-obvodka">
+                                            <label className="checkbox-container">
+                                                <input
+                                                    type="radio"
+                                                    className={`rejim-check ${tossMode === mode ? 'gameModeSelected' : ''}`}
+                                                    value={mode}
+                                                    name="rejim-2"
+                                                    checked={tossMode === (mode === 'Соседи' ? 'neighbors' : 'all')}
+                                                    onChange={handleTossModeChange} />
+                                                <div className="image-radio" id="images">
+                                                    <img src={Check} alt="" />
+                                                </div>
+                                                <div className="icon-rejim">
+                                                    <canvas id={mode.toLowerCase()}></canvas>
+                                                    <div className="rej-text">{mode}</div>
+                                                </div>
+                                                <div className="checkmark"></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className='game-mode-selector-container'>
+                                {['Классика', 'Ничья'].map((mode) => (
+                                    <div className="rejim-igry-blocks" key={mode}>
+                                        <div className="rejim-igry-block block-obvodka">
+                                            <label className="checkbox-container">
+                                                <input
+                                                    type="radio"
+                                                    className={`rejim-check ${gameEndingType === mode ? 'gameModeSelected' : ''}`}
+                                                    value={mode}
+                                                    name="rejim-3"
+                                                    checked={gameEndingType === (mode === 'Классика' ? 'classic' : 'draw')}
+                                                    onChange={handleGameEndingTypeChange} />
+                                                <div className="image-radio" id="images">
+                                                    <img src={Check} alt="" />
+                                                </div>
+                                                <div className="icon-rejim">
+                                                    <canvas id={mode.toLowerCase()}></canvas>
+                                                    <div className="rej-text">{mode}</div>
+                                                </div>
+                                                <div className="checkmark"></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div className="col-igrok">
+                        <p className="rejim-igry-p">{t("Количество игроков")}</p>
+                        <div className="col-igrok-blocks">
+                            {[2, 3, 4].map((count) => (
+                                <div
+                                    className={`col-igrok-block btn-krug block-obvodka ${selectedPlayerCount === count.toString() ? 'selected' : ''}`}
+                                    key={count}
+                                >
+                                    <label className="checkbox-container">
+                                        <input
+                                            type="radio"
+                                            className="rejim-check"
+                                            value={count}
+                                            name="kolvo"
+                                            checked={selectedPlayerCount === count.toString()}
+                                            onChange={handlePlayerCountChange} />
+                                        <div className="image-radio" id="images">
+                                            <img src={Check} alt="" />
+                                        </div>
+                                        <div className="icon-rejim">
+                                            <div className="kolvo-text">{count}</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="create-game">
+                        <div className="create-game-block">
+                            <div className="create-checkbox">
+                                <label className="checkboxer">
+                                    <input
+                                        type="checkbox"
+                                        className="custom-c"
+                                        checked={isPrivate}
+                                        onChange={handlePrivateGameChange} />
+                                    <span className="checkmark block-obvodka"></span>
+                                    <p>{t("Приватная игра")}</p>
+                                </label>
+
+                                <input type="submit" className="create-kn block-obvodka" value={t("Создать")} />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </section>
+
+            <Footer></Footer>
         </div>
     );
 };

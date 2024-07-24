@@ -1,0 +1,76 @@
+.one-kvest {
+    background-image: url("../../pages/img/titus-wrapper.svg");
+    width: 350px;
+    height: 80px;
+    gap: 16px;
+    border-radius: 10px;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 0;
+}
+
+.one-kvest .mainContent {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.one-kvest .text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 4px;
+}
+
+.one-kvest .headText {
+    font-size: 16px;
+    line-height: 16px;
+    margin: 0;
+}
+
+.one-kvest .description {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0;
+}
+
+.one-kvest .image {
+    width: 46px;
+    height: 46px;
+    margin: 0;
+    border-radius: 50%;
+}
+
+.one-kvest .kvestButton {
+    width: 82px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #380C0C;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.one-kvest .kvestButton.clicked {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #4CAF50; /* Цвет кнопки после нажатия */
+}
+
+.kvestButton .buttonText {
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+}
+
+.kvestButton .galochka {
+    width: 20px;
+    height: 20px;
+}
