@@ -68,13 +68,6 @@ const OpenGames: React.FC = () => {
                         {blocks.map((block, index) => (
                             <>
                                 <OpenGame key={index} {...block} />
-                                <OpenGame key={index} {...block} />
-                                <OpenGame key={index} {...block} />
-                                <OpenGame key={index} {...block} />
-                                <OpenGame key={index} {...block} />
-                                <OpenGame key={index} {...block} />
-                                <OpenGame key={index} {...block} />
-                                <OpenGame key={index} {...block} />
                             </>
                         ))}
 
