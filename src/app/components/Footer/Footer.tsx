@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 import { useTranslation } from "react-i18next";
+import HeartsRiveAnimation from '../rive-conponents/hearts/hearts-component';
+import ClubsRiveAnimation from '../rive-conponents/clubs/clubs-component';
+import DiamondsRiveAnimation from '../rive-conponents/diamonds/diamonds-component';
+import SpadesRiveAnimation from '../rive-conponents/spades/spades-component';
 
 const Footer: React.FC = () => {
     const { t } = useTranslation()
@@ -10,15 +14,15 @@ const Footer: React.FC = () => {
         <footer className="main-page-navbar">
             <div className="main-page-navbar-option menu">
                 <Link to="/" className="main-page-navbar-link">
-                    <div className="menu-icon"></div>
+                    <ClubsRiveAnimation />
                     <h1>
                         {t("Меню")}
                     </h1>
                 </Link>
             </div>
             <div className="main-page-navbar-option quests">
-                <Link to="/quests" className="main-page-navbar-link">   
-                    <div className="quests-icon"></div>
+                <Link to="/quests" className="main-page-navbar-link">
+                    <HeartsRiveAnimation />
                     <h1>
                         {t("Квесты")}
                     </h1>
@@ -26,7 +30,7 @@ const Footer: React.FC = () => {
             </div>
             <div className="main-page-navbar-option open">
                 <Link to="/open-games" className="main-page-navbar-link">
-                    <div className="open-icon"></div>
+                    <SpadesRiveAnimation />
                     <h1>
                         {t("Открытые")}
                     </h1>
@@ -34,7 +38,7 @@ const Footer: React.FC = () => {
             </div>
             <div className="main-page-navbar-option new-game">
                 <Link to="/newGame" className="main-page-navbar-link">
-                    <div className="new-game-icon"></div>
+                    <DiamondsRiveAnimation />
                     <h1>
                         {t("Создать игру")}
                     </h1>
