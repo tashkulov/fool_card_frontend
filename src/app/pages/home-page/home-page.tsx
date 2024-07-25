@@ -34,8 +34,8 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         const userData = {
                             "telegram_id": initDataUnsafe.user.id.toString() || "unknown",
                             "username": initDataUnsafe.user.username || "unknown",
-                            "language": initDataUnsafe.user.language_code || "ru_RU",
-                            "invited_by": 0 // Если у вас есть информация о пригласившем пользователе, замените это значение
+                            "language": "ru_RU",
+                            "invited_by": null // Если у вас есть информация о пригласившем пользователе, замените это значение
                         };
 
                         // Отправка данных на сервер
