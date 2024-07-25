@@ -98,7 +98,7 @@ const CreateGameForm: React.FC = () => {
         };
 
         try {
-            const response = await axios.post('http://77.222.37.34:8001/v1/games', requestData);
+            const response = await axios.post('https://foolcard2.shop/v1/games', requestData);
             console.log('Game created successfully:', response.data, requestData);
         } catch (error) {
             console.error('Error creating game:', error, requestData);

@@ -43,7 +43,7 @@ const PlayGame = () => {
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get<GameData>('http://77.222.37.34:8001/v1/games/6/get_current_table', {
+            const response = await axios.get<GameData>('https://foolcard2.shop/v1/games/6/get_current_table', {
                 headers: {
                     'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
                 },
@@ -59,7 +59,7 @@ const PlayGame = () => {
 
     const fetchGameList = async () => {
         try {
-            const response = await axios.get<GameListItem[]>('http://77.222.37.34:8001/v1/games', {
+            const response = await axios.get<GameListItem[]>('https://foolcard2.shop/v1/games', {
                 headers: {
                     'Authorization': 'ea5419dc0909da30f8ceafd76149b7e0e38b5b5e91830923'
                 },

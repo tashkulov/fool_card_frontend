@@ -38,7 +38,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         };
 
                         // Отправка данных на сервер
-                        const response = await axios.post('http://77.222.37.34:8001/v1/auth/register', userData);
+                        const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
                         console.log('Ответ:', response.data, userData);
                     } else {
                         console.error('Не удалось получить данные пользователя');
@@ -63,7 +63,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         };
 
                         // Отправка данных на сервер
-                        const response = await axios.post('http://77.222.37.34:8001/v1/auth/sign-in', userData);
+                        const response = await axios.post('https://foolcard2.shop/v1/auth/sign-in', userData);
                         console.log('Ответ:', response.data, userData);
                     } else {
                         console.error('Не удалось получить данные пользователя');
