@@ -31,10 +31,10 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
                     if (initDataUnsafe && initDataUnsafe.user) {
                         const userData = {
-                            telegram_id: initDataUnsafe.user.id.toString(),
-                            username: initDataUnsafe.user.username || "unknown",
-                            language: initDataUnsafe.user.language_code || "ru_RU",
-                            invited_by: 0 // Если у вас есть информация о пригласившем пользователе, замените это значение
+                            "telegram_id": initDataUnsafe.user.id.toString() || "unknown",
+                            "username": initDataUnsafe.user.username || "unknown",
+                            "language": initDataUnsafe.user.language_code || "ru_RU",
+                            "invited_by": 0 // Если у вас есть информация о пригласившем пользователе, замените это значение
                         };
 
                         // Отправка данных на сервер
@@ -59,7 +59,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
                     if (initDataUnsafe && initDataUnsafe.user) {
                         const userData = {
-                            telegram_id: initDataUnsafe.user.id.toString()
+                            "telegram_id": initDataUnsafe.user.id.toString()
                         };
 
                         // Отправка данных на сервер
