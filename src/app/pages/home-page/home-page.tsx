@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import MyRiveAnimation from "../../components/rive-conponents/ruby/ruby-component"
 import axios from 'axios';
 
-
 interface User {
     photo_url: string;
     first_name: string;

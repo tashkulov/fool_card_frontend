@@ -1,0 +1,11 @@
+.spades-animation {
+    width: 50px;
+    height: 50px;
+    z-index: 5;
+}
+
+.spades-animation canvas {
+    width: 50px;
+    height: 50px;
+    z-index: 5;
+}

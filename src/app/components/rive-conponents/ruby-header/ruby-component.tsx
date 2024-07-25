@@ -3,7 +3,7 @@ import "./ruby-component.css"
 
 const HeaderRiveAnimation = () => {
   return (
-      <RiveComponent className='header-ruby-animation' src="/ruby.riv" />
+      <RiveComponent className='header-ruby-animation' src="/animations/ruby.riv" />
   );
 };
 
