@@ -100,29 +100,31 @@ const PlayGame = () => {
 
 
     const handleCardClick = async (card: string, e: React.MouseEvent<HTMLImageElement>) => {
-        if (!cardAnimationContainerRef.current || !handRef.current) return;
-
-        // Добавляем карту в состояние cardsInBita
-
+        if (!cardAnimationContainerRef.current || !handRef.current || !e.currentTarget) return;
+    
         // Клонируем карту для анимации
         const cardClone = e.currentTarget.cloneNode(true) as HTMLImageElement;
         cardClone.classList.add('bita-card', 'animate');
         document.body.appendChild(cardClone);
-
+    
         setSelectedCard(card);
-
+    
         // Удаление карты из hand
-        e.currentTarget.style.display = 'none';
-
+        if (e.currentTarget) {
+            e.currentTarget.style.display = 'none';
+        }
+    
         setTimeout(() => {
             setIsAnimating(false);
             setSelectedCard(null);
             cardAnimationContainerRef.current?.appendChild(cardClone);
             cardClone.classList.remove('animate');
             cardClone.classList.add('final-position');
-
+    
             // Восстановление карты в hand
-            e.currentTarget.style.display = 'block';
+            if (e.currentTarget) {
+                e.currentTarget.style.display = 'block';
+            }
         }, 500);
     };
 
