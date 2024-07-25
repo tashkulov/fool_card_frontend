@@ -56,31 +56,31 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
         // };
 
         // RegisterUser();
-        const LoginUser = async () => {
-            try {
-                if (window.Telegram && window.Telegram.WebApp) {
-                    const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+        // const LoginUser = async () => {
+        //     try {
+        //         if (window.Telegram && window.Telegram.WebApp) {
+        //             const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
 
-                    if (initDataUnsafe && initDataUnsafe.user) {
-                        const userData = {
-                            "telegram_id": initDataUnsafe.user.id.toString()
-                        };
+        //             if (initDataUnsafe && initDataUnsafe.user) {
+        //                 const userData = {
+        //                     "telegram_id": initDataUnsafe.user.id.toString()
+        //                 };
 
-                        // Отправка данных на сервер
-                        const response = await axios.post('https://foolcard2.shop/v1/auth/sign-in', userData);
-                        console.log('Ответ:', response.data, userData);
-                    } else {
-                        console.error('Не удалось получить данные пользователя');
-                    }
-                } else {
-                    console.error('Telegram Web App SDK не загружен');
-                }
-            } catch (error) {
-                console.error('Ошибка при отправке запроса:', error);
-            }
-        };
+        //                 // Отправка данных на сервер
+        //                 const response = await axios.post('https://foolcard2.shop/v1/auth/sign-in', userData);
+        //                 console.log('Ответ:', response.data, userData);
+        //             } else {
+        //                 console.error('Не удалось получить данные пользователя');
+        //             }
+        //         } else {
+        //             console.error('Telegram Web App SDK не загружен');
+        //         }
+        //     } catch (error) {
+        //         console.error('Ошибка при отправке запроса:', error);
+        //     }
+        // };
 
-        LoginUser();
+        // LoginUser();
     }, []);
 
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
