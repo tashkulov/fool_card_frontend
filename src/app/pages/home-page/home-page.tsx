@@ -24,35 +24,38 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
     const { t } = useTranslation()
 
     useEffect(() => {
-        const RegisterUser = async () => {
-            try {
-                if (window.Telegram && window.Telegram.WebApp) {
-                    const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-                    console.log(initDataUnsafe.user.username);
+        const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+        console.log(initDataUnsafe.user.username);
 
-                    if (initDataUnsafe && initDataUnsafe.user) {
-                        const userData = {
-                            "telegram_id": initDataUnsafe.user.id.toString() || "unknown",
-                            "username": initDataUnsafe.user.username || "unknown",
-                            "language": initDataUnsafe.user.language_code || "ru_RU",
-                            "invited_by": 0 // Если у вас есть информация о пригласившем пользователе, замените это значение
-                        };
+        // const RegisterUser = async () => {
+        //     try {
+        //         if (window.Telegram && window.Telegram.WebApp) {
+        //             const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+        //             console.log(initDataUnsafe.user.username);
 
-                        // Отправка данных на сервер
-                        const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
-                        console.log('Ответ:', response.data, userData);
-                    } else {
-                        console.error('Не удалось получить данные пользователя');
-                    }
-                } else {
-                    console.error('Telegram Web App SDK не загружен');
-                }
-            } catch (error) {
-                console.error('Ошибка при отправке запроса:', error);
-            }
-        };
+        //             if (initDataUnsafe && initDataUnsafe.user) {
+        //                 const userData = {
+        //                     "telegram_id": initDataUnsafe.user.id.toString() || "unknown",
+        //                     "username": initDataUnsafe.user.username || "unknown",
+        //                     "language": initDataUnsafe.user.language_code || "ru_RU",
+        //                     "invited_by": 0 // Если у вас есть информация о пригласившем пользователе, замените это значение
+        //                 };
 
-        RegisterUser();
+        //                 // Отправка данных на сервер
+        //                 const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
+        //                 console.log('Ответ:', response.data, userData);
+        //             } else {
+        //                 console.error('Не удалось получить данные пользователя');
+        //             }
+        //         } else {
+        //             console.error('Telegram Web App SDK не загружен');
+        //         }
+        //     } catch (error) {
+        //         console.error('Ошибка при отправке запроса:', error);
+        //     }
+        // };
+
+        // RegisterUser();
         const LoginUser = async () => {
             try {
                 if (window.Telegram && window.Telegram.WebApp) {
