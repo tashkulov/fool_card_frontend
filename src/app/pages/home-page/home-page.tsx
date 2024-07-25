@@ -28,6 +28,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             try {
                 if (window.Telegram && window.Telegram.WebApp) {
                     const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+                    console.log(initDataUnsafe.user.username);
 
                     if (initDataUnsafe && initDataUnsafe.user) {
                         const userData = {
