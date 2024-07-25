@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const BASE_URL = ' https://foolcard2.shop/v1';
 
 const AUTH_TOKEN = '461cc7f4f326092bd3967341eda52b594d0cee1932a3759e';
