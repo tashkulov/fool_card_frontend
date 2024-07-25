@@ -1,9 +1,10 @@
 import axios from "axios";
+import { useCookies } from 'react-cookie';
 
-
+const [cookies] = useCookies(['authorization']);
 export const $api = axios.create({
     baseURL: "https://foolcard2.shop",
     headers: {
-        Authorization: "a76ebbfebe37774fa03f277bc4d3ea14fea16a24c117271f"
+        Authorization: cookies.authorization
     }
 });
