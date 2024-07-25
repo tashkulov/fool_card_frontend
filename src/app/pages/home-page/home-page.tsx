@@ -77,7 +77,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             }
         };
 
-        RegisterUser();
+        LoginUser();
     }, []);
 
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))

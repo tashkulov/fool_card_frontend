@@ -2,7 +2,6 @@ import cls from "./Header.module.scss"
 import HeaderMainSvgIcon from "./SvgIcons/HeaderMainSvgIcon";
 import TitleBackgroundSvg from "./SvgIcons/TitleBackgroundSvg";
 import HeaderRiveAnimation from "../../../../components/rive-conponents/ruby-header/ruby-component";
-import React from "react";
 
 type THeader = {
     text: string;

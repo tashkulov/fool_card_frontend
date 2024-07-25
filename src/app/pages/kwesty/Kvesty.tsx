@@ -5,7 +5,6 @@ import kvest3 from '../img/kvesty3.svg';
 import OneKvest from "../../components/OneKvest/OneKvest";
 import SkeletonPage from "../../components/SkeletonPage/ui/SkeletPage";
 import {useTranslation} from "react-i18next";
-import React from 'react';
 
 const Kvesty = () => {
     const {t} = useTranslation()

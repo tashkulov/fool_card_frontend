@@ -2,7 +2,6 @@ import cls from "./getReferralBonuses.module.scss"
 import SkeletonCurd from "../../../../../components/SkeletonCurd/ui/SkeletonCurd";
 import IconBonuses from "../../../../img/IconBonuses.svg"
 import {useTranslation} from "react-i18next";
-import React from "react";
 
 type TGetReferralBonuses = {
     bonuses: string,

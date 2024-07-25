@@ -2,7 +2,6 @@ import cls from "./Settings.module.scss"
 import {useState} from "react";
 import chekedIcon from "../../img/checedIcon.svg"
 import {useTranslation} from "react-i18next";
-import React from "react";
 
 const Settings = () => {
     const [stateLanguage, setStateLanguage] = useState<boolean>(localStorage.getItem('i18nextLng') == "ru" ? false : true)

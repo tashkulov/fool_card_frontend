@@ -6,7 +6,6 @@ import {LeaderBoard} from "../../pages/LeaderBoard";
 import NewGame from "../../pages/new-game/new-game";
 import {Referrals} from "../../pages/Referrals";
 import OpenGames from "../../pages/open-games/open-games";
-import React from "react";
 
 enum AppRoutes {
     HOMEPAGE = "homePage",

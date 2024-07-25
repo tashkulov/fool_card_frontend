@@ -1,4 +1,3 @@
-import React from "react";
 import img from "../../../../img/titus-wrapper.svg"
 
 type TTitleBackgroundSvg = {

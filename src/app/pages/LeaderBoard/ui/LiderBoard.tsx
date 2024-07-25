@@ -13,7 +13,6 @@ import lidstart from "../../img/lidstar.svg";
 import referalAva from "../../img/referal-ava.svg"
 import Footer from "../../../components/Footer/Footer";
 import {useTranslation} from "react-i18next";
-import React from "react";
 
 const LeaderBoard = () => {
     const [leaderBoardList, setLeaderBoardList] = useState<ITypeLeaderBord[]>([]);

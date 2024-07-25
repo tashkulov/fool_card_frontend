@@ -11,6 +11,7 @@ import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 import React from 'react';
 
+
 // Define a type for the game data structure
 interface GameData {
     trump_card: string;
@@ -93,7 +94,7 @@ const PlayGame = () => {
 
     const getCardImagePath = (card: string) => {
         const [suit] = card.split('_');
-        const path = new URL(`../../../assets/cards/${suit}/${card}.svg`).href;
+        const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
         return path;
     };
 

@@ -5,7 +5,6 @@ import {useState} from "react";
 import SkeletonCurd from "../../../components/SkeletonCurd/ui/SkeletonCurd";
 import friendsIconSvg from "../../img/FriendsIconSvg.svg"
 import {useTranslation} from "react-i18next";
-import React from "react";
 
 const Referrals = () => {
     const [str, setStr] = useState("")
