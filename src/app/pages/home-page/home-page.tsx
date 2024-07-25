@@ -7,7 +7,7 @@ import Settings from "../Settings/ui/Settings";
 import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick";
 import { useTranslation } from "react-i18next";
 import MyRiveAnimation from "../../components/rive-conponents/ruby/ruby-component"
-// import axios from 'axios';
+import axios from 'axios';
 
 interface User {
     photo_url: string;
@@ -24,63 +24,60 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
     const { t } = useTranslation()
 
     useEffect(() => {
-        const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-        console.log(initDataUnsafe.user.username);
+        const RegisterUser = async () => {
+            try {
+                if (window.Telegram && window.Telegram.WebApp) {
+                    const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+                    console.log(initDataUnsafe.user.username);
 
-        // const RegisterUser = async () => {
-        //     try {
-        //         if (window.Telegram && window.Telegram.WebApp) {
-        //             const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-        //             console.log(initDataUnsafe.user.username);
+                    if (initDataUnsafe && initDataUnsafe.user) {
+                        const userData = {
+                            "telegram_id": initDataUnsafe.user.id.toString() || "unknown",
+                            "username": initDataUnsafe.user.username || "unknown",
+                            "language": initDataUnsafe.user.language_code || "ru_RU",
+                            "invited_by": 0 // Если у вас есть информация о пригласившем пользователе, замените это значение
+                        };
 
-        //             if (initDataUnsafe && initDataUnsafe.user) {
-        //                 const userData = {
-        //                     "telegram_id": initDataUnsafe.user.id.toString() || "unknown",
-        //                     "username": initDataUnsafe.user.username || "unknown",
-        //                     "language": initDataUnsafe.user.language_code || "ru_RU",
-        //                     "invited_by": 0 // Если у вас есть информация о пригласившем пользователе, замените это значение
-        //                 };
+                        // Отправка данных на сервер
+                        const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
+                        console.log('Ответ:', response.data, userData);
+                    } else {
+                        console.error('Не удалось получить данные пользователя');
+                    }
+                } else {
+                    console.error('Telegram Web App SDK не загружен');
+                }
+            } catch (error) {
+                console.error('Ошибка при отправке запроса:', error);
+            }
+        };
 
-        //                 // Отправка данных на сервер
-        //                 const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
-        //                 console.log('Ответ:', response.data, userData);
-        //             } else {
-        //                 console.error('Не удалось получить данные пользователя');
-        //             }
-        //         } else {
-        //             console.error('Telegram Web App SDK не загружен');
-        //         }
-        //     } catch (error) {
-        //         console.error('Ошибка при отправке запроса:', error);
-        //     }
-        // };
+        RegisterUser();
+        const LoginUser = async () => {
+            try {
+                if (window.Telegram && window.Telegram.WebApp) {
+                    const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
 
-        // RegisterUser();
-        // const LoginUser = async () => {
-        //     try {
-        //         if (window.Telegram && window.Telegram.WebApp) {
-        //             const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+                    if (initDataUnsafe && initDataUnsafe.user) {
+                        const userData = {
+                            "telegram_id": initDataUnsafe.user.id.toString()
+                        };
 
-        //             if (initDataUnsafe && initDataUnsafe.user) {
-        //                 const userData = {
-        //                     "telegram_id": initDataUnsafe.user.id.toString()
-        //                 };
+                        // Отправка данных на сервер
+                        const response = await axios.post('https://foolcard2.shop/v1/auth/sign-in', userData);
+                        console.log('Ответ:', response.data, userData);
+                    } else {
+                        console.error('Не удалось получить данные пользователя');
+                    }
+                } else {
+                    console.error('Telegram Web App SDK не загружен');
+                }
+            } catch (error) {
+                console.error('Ошибка при отправке запроса:', error);
+            }
+        };
 
-        //                 // Отправка данных на сервер
-        //                 const response = await axios.post('https://foolcard2.shop/v1/auth/sign-in', userData);
-        //                 console.log('Ответ:', response.data, userData);
-        //             } else {
-        //                 console.error('Не удалось получить данные пользователя');
-        //             }
-        //         } else {
-        //             console.error('Telegram Web App SDK не загружен');
-        //         }
-        //     } catch (error) {
-        //         console.error('Ошибка при отправке запроса:', error);
-        //     }
-        // };
-
-        // LoginUser();
+        LoginUser();
     }, []);
 
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
