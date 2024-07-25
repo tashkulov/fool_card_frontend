@@ -52,7 +52,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             }
         };
 
-        // RegisterUser();
+        RegisterUser();
         const LoginUser = async () => {
             try {
                 if (window.Telegram && window.Telegram.WebApp) {
