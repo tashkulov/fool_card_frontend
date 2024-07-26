@@ -96,7 +96,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
         if (!hasRegistered.current) {
             RegisterUser();
             hasRegistered.current = true;
-        } else if (!hasLoggedIn.current) {
+        } else {
             LoginUser();
             hasLoggedIn.current = true;
         }
