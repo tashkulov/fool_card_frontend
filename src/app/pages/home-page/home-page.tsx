@@ -8,7 +8,7 @@ import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick";
 import { useTranslation } from "react-i18next";
 import MyRiveAnimation from "../../components/rive-conponents/ruby/ruby-component"
 import axios from 'axios';
-// import { useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 
 interface User {
     photo_url: string;
@@ -24,7 +24,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
     const refModalWindow = useRef(null)
     const { t } = useTranslation()
 
-    // const [cookies, setCookie] = useCookies(['authorization']);
+    const [cookies, setCookie] = useCookies(['authorization']);
 
     useEffect(() => {
         const RegisterUser = async () => {
@@ -78,7 +78,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
 
                         
-                        // setCookie('authorization', response.data.Authorization, { path: '/' });
+                        setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         // localStorage.setItem("token", response.data.Authorization)
                     } else {
@@ -94,7 +94,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
         LoginUser();
 
         
-    }, []);
+    }, [cookies.authorization, setCookie]);
 
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
 
