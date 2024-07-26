@@ -65,7 +65,7 @@ const PlayGame = () => {
                     'Authorization': localStorage.getItem('authorization')
                 },
             });
-            const game = response.data.find(game => game.id === 15);
+            const game = response.data.find(game => game.id === 16);
             if (game) {
                 setBetValue(game.bet_value);
             } else {
