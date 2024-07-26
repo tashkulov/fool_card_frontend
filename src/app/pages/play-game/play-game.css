@@ -160,10 +160,6 @@
 .play-wrapper-game{
     position: relative;
 }
-.wrapper-plays-game {
-
-}
-
 
 .play-wrapper-game::before {
     content: '';
@@ -210,11 +206,6 @@
     width:60px;
     height:60px;
 }
-
-.player-block {}
-
-.footer-ava-wp {}
-
 .footer-ava-wp img {
     padding: 5px;
 }

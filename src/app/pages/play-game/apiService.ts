@@ -4,7 +4,7 @@ import axios from 'axios';
 // Определите базовый URL и общие заголовки
 const BASE_URL = 'https://foolcard2.shop/v1';
 const HEADERS = {
-    Authorization: '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+    Authorization: localStorage.getItem('authorization'),
 };
 
 // Получение данных текущего стола
