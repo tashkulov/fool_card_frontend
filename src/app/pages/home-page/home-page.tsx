@@ -24,6 +24,9 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
     const refModalWindow = useRef(null)
     const { t } = useTranslation()
 
+    const hasRegistered = useRef(false);
+    const hasLoggedIn = useRef(false);
+
     const [cookies, setCookie] = useCookies(['authorization']);
 
     useEffect(() => {
@@ -59,7 +62,6 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             }
         };
 
-        RegisterUser();
         const LoginUser = async () => {
             try {
                 if (window.Telegram && window.Telegram.WebApp) {
@@ -89,8 +91,16 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             }
         };
 
-        LoginUser();
-    }, [cookies, setCookie]);
+        if (!cookies.authorization && !hasRegistered.current) {
+            RegisterUser();
+            hasRegistered.current = true;
+        } else if (cookies.authorization && !hasLoggedIn.current) {
+            LoginUser();
+            hasLoggedIn.current = true;
+        }
+
+        
+    }, [cookies.authorization, setCookie]);
 
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
 
