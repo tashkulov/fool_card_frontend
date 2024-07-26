@@ -43,7 +43,7 @@ const PlayGame = () => {
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get<GameData>(`https://foolcard2.shop/v1/games/16/get_current_table`, {
+            const response = await axios.get<GameData>(`https://foolcard2.shop/v1/games/21/get_current_table`, {
                 headers: {
                     'Authorization': localStorage.getItem('authorization')
                 },
@@ -65,7 +65,7 @@ const PlayGame = () => {
                     'Authorization': localStorage.getItem('authorization')
                 },
             });
-            const game = response.data.find(game => game.id === 16);
+            const game = response.data.find(game => game.id === 21);
             if (game) {
                 setBetValue(game.bet_value);
             } else {
@@ -103,7 +103,7 @@ const PlayGame = () => {
         return path;
     };
     const endTurn = async () => {
-        await axios.post(`https://foolcard2.shop/v1/games/16/end_turn`, {}, {
+        await axios.post(`https://foolcard2.shop/v1/games/21/end_turn`, {}, {
             headers: {
                 'Authorization': localStorage.getItem('authorization')
             }
@@ -115,7 +115,7 @@ const PlayGame = () => {
         if (attackMode) {
             try {
                 await axios.post(
-                    `https://foolcard2.shop/v1/games/16/place_card_on_table?card=${card}`,
+                    `https://foolcard2.shop/v1/games/21/place_card_on_table?card=${card}`,
                     {},
                     {
                         headers: {
@@ -146,7 +146,7 @@ const PlayGame = () => {
             if (cardToBeat) {
                 try {
                     await axios.post(
-                        `https://foolcard2.shop/v1/games/16/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
+                        `https://foolcard2.shop/v1/games/21/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
                         {},
                         {
                             headers: {
