@@ -48,7 +48,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
                         console.log('Ответ:', response.data, response.data.Authorization, userData);
                         
-                        hasRegistered = useRef(true);
+                        hasRegistered.current = true
 
                         
                         
@@ -81,7 +81,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         console.log('Ответ:', response.data, response.data.Authorization, userData);
 
 
-                        hasLoggedIn = useRef(true);
+                        hasLoggedIn.current = true
                         setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         localStorage.setItem("token", response.data.Authorization)
