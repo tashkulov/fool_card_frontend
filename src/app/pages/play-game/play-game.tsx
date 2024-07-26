@@ -45,7 +45,7 @@ const PlayGame = () => {
         try {
             const response = await axios.get<GameData>(`https://foolcard2.shop/v1/games/11/get_current_table`, {
                 headers: {
-                    'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
+                    'Authorization': localStorage.getItem('authorization')
                 },
             });
             setGameData(response.data);
@@ -62,7 +62,7 @@ const PlayGame = () => {
         try {
             const response = await axios.get<GameListItem[]>('https://foolcard2.shop/v1/games', {
                 headers: {
-                    'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
+                    'Authorization': localStorage.getItem('authorization')
                 },
             });
             const game = response.data.find(game => game.id === 10);
@@ -105,7 +105,7 @@ const PlayGame = () => {
     const endTurn = async () => {
         await axios.post(`https://foolcard2.shop/v1/games/11/end_turn`, {}, {
             headers: {
-                'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+                'Authorization': localStorage.getItem('authorization')
             }
         })
         setTableCards([]);
@@ -119,7 +119,7 @@ const PlayGame = () => {
                     {},
                     {
                         headers: {
-                            'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+                            'Authorization': localStorage.getItem('authorization')
                         },
                     }
                 );
@@ -150,7 +150,7 @@ const PlayGame = () => {
                         {},
                         {
                             headers: {
-                                'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+                                'Authorization': localStorage.getItem('authorization')
                             },
                         }
                     );
