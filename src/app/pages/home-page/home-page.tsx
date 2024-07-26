@@ -84,6 +84,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
 
                         hasLoggedIn.current = true
+                        hasRegistered.current = true
                         setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         localStorage.setItem("token", response.data.Authorization)
