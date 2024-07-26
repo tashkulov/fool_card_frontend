@@ -8,7 +8,7 @@ import arrow from "../img/Arrow1.svg";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface GameData {
     trump_card: string;
@@ -78,8 +78,12 @@ const PlayGame = () => {
     };
 
     useEffect(() => {
-        setInterval(fetchGameData, 500);
+        const intervalId = setInterval(fetchGameData, 500);
+
         fetchGameList();
+
+        // Очистка интервала при размонтировании компонента
+        return () => clearInterval(intervalId);
     }, []);
 
     useEffect(() => {
@@ -99,7 +103,7 @@ const PlayGame = () => {
         return path;
     };
     const endTurn = async () => {
-        await axios.post(`https://foolcard2.shop/v1/games/11/end_turn`,{},{
+        await axios.post(`https://foolcard2.shop/v1/games/11/end_turn`, {}, {
             headers: {
                 'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
             }
@@ -184,11 +188,11 @@ const PlayGame = () => {
                     <div className="play-header-wrapper">
 
                         <div className="play-header-block">
-                            <Link  to={'/'}>
-                            <a className="play-header-back block-obvodka">
+                            <Link to={'/'}>
+                                <a className="play-header-back block-obvodka">
 
-                                    <img src={arrow} alt="Back"/>
-                                 </a>
+                                    <img src={arrow} alt="Back" />
+                                </a>
                             </Link>
 
                             <div className="play-header-coin">
@@ -212,15 +216,15 @@ const PlayGame = () => {
                     <div className="wrapper-plays-game">
                         <div className="players-blocks">
                             <div className="player-block user-dumaet footer-ava-wp">
-                                <img src={GamePlay} alt="Gameplay Avatar"/>
+                                <img src={GamePlay} alt="Gameplay Avatar" />
                             </div>
 
                             <div className="players-flex">
                                 <div className="player-block footer-ava-wp">
-                                    <img src={GamePlay} alt="Gameplay Avatar"/>
+                                    <img src={GamePlay} alt="Gameplay Avatar" />
                                 </div>
                                 <div className="player-block footer-ava-wp">
-                                    <img src={GamePlay} alt="Gameplay Avatar"/>
+                                    <img src={GamePlay} alt="Gameplay Avatar" />
                                 </div>
                             </div>
                         </div>
@@ -278,7 +282,7 @@ const PlayGame = () => {
                     </div>
 
                     <div className="table-card" ref={cardAnimationContainerRef}>
-                        {tableCards.map(({card, beaten_by_card}, index) => (
+                        {tableCards.map(({ card, beaten_by_card }, index) => (
                             <div key={index} className="table-card-item">
                                 <img
                                     src={getCardImagePath(card)}
@@ -329,7 +333,7 @@ const PlayGame = () => {
                 <div className="play-footer-ava">
                     <div className="footer-ava-roga">
                         <div className="footer-ava-wp">
-                            <img src={GamePlay} alt="Gameplay Avatar"/>
+                            <img src={GamePlay} alt="Gameplay Avatar" />
                         </div>
                     </div>
                 </div>
