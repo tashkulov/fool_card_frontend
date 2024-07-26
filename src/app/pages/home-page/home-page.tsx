@@ -45,7 +45,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
                         console.log('Ответ:', response.data, userData);
                         
-                        setCookie('authorization', response.headers['set-cookie'], { path: '/' });
+                        // setCookie('authorization', response.headers['set-cookie'], { path: '/' });
                     } else {
                         console.error('Не удалось получить данные пользователя');
                     }
