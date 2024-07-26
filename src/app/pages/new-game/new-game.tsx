@@ -87,14 +87,14 @@ const CreateGameForm: React.FC = () => {
         event.preventDefault();
 
         const requestData = {
-            bet_value: betAmount,
-            card_amount: 0, // Update with actual value if available
-            participants_number: parseInt(selectedPlayerCount),
-            access_type: isPrivate ? 'private' : 'public',
-            status: 'finished', // This seems like a static value for now
-            game_mode: selectedGameMode,
-            toss_mode: tossMode,
-            game_ending_type: gameEndingType
+            "bet_value": betAmount,
+            "card_amount": 0, // Update with actual value if available
+            "participants_number": parseInt(selectedPlayerCount),
+            "access_type": isPrivate ? 'private' : 'public',
+            "status": 'finished', // This seems like a static value for now
+            "game_mode": selectedGameMode,
+            "toss_mode": tossMode,
+            "game_ending_type": gameEndingType
         };
 
         try {
