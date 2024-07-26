@@ -43,7 +43,7 @@ const PlayGame = () => {
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get<GameData>('https://foolcard2.shop/v1/games/6/get_current_table', {
+            const response = await axios.get<GameData>('https://foolcard2.shop/v1/games/11/get_current_table', {
                 headers: {
                     'Authorization': localStorage.getItem('authorization')
                 },
