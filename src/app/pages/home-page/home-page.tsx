@@ -51,12 +51,8 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         hasRegistered.current = true
 
                         console.log(Cookies)
-
                         
-                        
-                        setCookie('authorization', response.data.Authorization, { path: '/' });
-                        
-                        localStorage.setItem("token", response.data.Authorization)
+                        localStorage.setItem("authorization", response.data.Authorization)
                     } else {
                         console.error('Не удалось получить данные пользователя');
                     }
@@ -87,7 +83,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         hasRegistered.current = true
                         setCookie('authorization', response.data.Authorization, { path: '/' });
                         
-                        localStorage.setItem("token", response.data.Authorization)
+                        localStorage.setItem("authorization", response.data.Authorization)
                     } else {
                         console.error('Не удалось получить данные пользователя');
                     }
