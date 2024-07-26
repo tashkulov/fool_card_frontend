@@ -4,9 +4,11 @@ import axios from "axios";
 // const [cookies] = useCookies(['authorization']);
 export const $api = axios.create({
     baseURL: "https://foolcard2.shop",
+
+    
+    headers: {
+        Authorization: localStorage.getItem('authorization')
+    }
 });
 
-$api.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`
-    return config
-})
+
