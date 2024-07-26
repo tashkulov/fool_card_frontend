@@ -8,7 +8,7 @@ import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick";
 import { useTranslation } from "react-i18next";
 import MyRiveAnimation from "../../components/rive-conponents/ruby/ruby-component"
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
+import { Cookies, useCookies } from 'react-cookie';
 
 interface User {
     photo_url: string;
@@ -49,8 +49,10 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         console.log('Ответ:', response.data, response.data.Authorization, userData);
                         
                         hasRegistered = useRef(true);
+
                         
-                        localStorage.setCookie('authorization', response.data.Authorization, { path: '/' });
+                        
+                        setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         localStorage.setItem("token", response.data.Authorization)
                     } else {
@@ -80,7 +82,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
 
                         hasLoggedIn = useRef(true);
-                        localStorage.setCookie('authorization', response.data.Authorization, { path: '/' });
+                        setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         localStorage.setItem("token", response.data.Authorization)
                     } else {
@@ -96,7 +98,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
         
         if (!hasRegistered.current) {
             RegisterUser();
-        } else if (!hasLoggedIn.current) {
+        } else if (hasRegistered.current) {
             LoginUser();
         }
     }, [cookies.authorization, setCookie]);
