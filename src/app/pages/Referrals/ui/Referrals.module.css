@@ -21,6 +21,7 @@
   flex-direction: column;
   overflow-y: auto;
   gap: 10px;
+  padding-bottom: 80px;
 }
 .main .friendsList .curdFriends {
   width: 100%;

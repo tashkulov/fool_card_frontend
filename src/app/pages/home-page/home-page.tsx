@@ -93,7 +93,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                 console.error('Ошибка при отправке запроса:', error);
             }
         };
-        
+
         if (!hasLoggedIn.current) {
             LoginUser();
         }
@@ -113,7 +113,6 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                             {user?.photo_url}
                         </div>
                     </div>
-
                     <div className="main-page-header-content-data">
                         <div className="main-page-header-content-data-username">
                             {user?.first_name || "Guest"}
@@ -136,7 +135,6 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                     </div>
                 </div>
             </div>
-
             <div className="main-page-menu">
                 <MyRiveAnimation />
                 <div className="main-page-menu-buttons">
@@ -155,14 +153,12 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                             {t("Рефералы")}
                         </div>
                     </Link>
-
                     <button onClick={() => setSateModeModalWindow(prev => !prev)} className="main-page-menu-button">
                         {t("Настройки")}
                     </button>
                 </div>
             </div>
             <div className='main-page-hands-cards'>
-
             </div>
             <Modal mode={stateModeModalWindow} ref={refModalWindow}>
                 <Settings />
