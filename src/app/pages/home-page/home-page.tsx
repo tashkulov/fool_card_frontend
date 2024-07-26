@@ -50,6 +50,8 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         
                         hasRegistered.current = true
 
+                        console.log(Cookies)
+
                         
                         
                         setCookie('authorization', response.data.Authorization, { path: '/' });
@@ -99,7 +101,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
         if (!hasRegistered.current) {
             LoginUser();
         } else {
-            LoginUser();
+            RegisterUser();
         }
     }, [cookies.authorization, setCookie]);
 
