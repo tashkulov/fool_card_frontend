@@ -50,7 +50,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         
                         hasRegistered = useRef(true);
                         
-                        setCookie('authorization', response.data.Authorization, { path: '/' });
+                        localStorage.setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         localStorage.setItem("token", response.data.Authorization)
                     } else {
@@ -80,7 +80,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
 
                         hasLoggedIn = useRef(true);
-                        setCookie('authorization', response.data.Authorization, { path: '/' });
+                        localStorage.setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         localStorage.setItem("token", response.data.Authorization)
                     } else {
