@@ -24,9 +24,6 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
     const refModalWindow = useRef(null)
     const { t } = useTranslation()
 
-    const hasRegistered = useRef(false);
-    const hasLoggedIn = useRef(false);
-
     const [cookies, setCookie] = useCookies(['authorization']);
 
     useEffect(() => {
@@ -49,7 +46,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         console.log('Ответ:', response.data, response.data.Authorization, userData);
                         
                         
-                            setCookie('authorization', response.data.Authorization, { path: '/' });
+                        localStorage.setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         localStorage.setItem("token", response.data.Authorization)
                     } else {
