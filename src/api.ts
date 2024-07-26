@@ -4,11 +4,6 @@ import axios from "axios";
 // const [cookies] = useCookies(['authorization']);
 export const $api = axios.create({
     baseURL: "https://foolcard2.shop",
-
-    
-    // headers: {
-    //     Authorization: cookies.authorization
-    // }
 });
 
 $api.interceptors.request.use((config) => {
