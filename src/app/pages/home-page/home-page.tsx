@@ -64,6 +64,10 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             }
         };
 
+        if (!hasRegistered.current) {
+            RegisterUser();
+        }
+
         const LoginUser = async () => {
             try {
                 if (window.Telegram && window.Telegram.WebApp) {
@@ -80,7 +84,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
 
                         hasLoggedIn.current = true
-                        hasRegistered.current = true
+                        
                         setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         localStorage.setItem("authorization", response.data.Authorization)
@@ -95,12 +99,12 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             }
         };
         
-        if (!hasRegistered.current) {
+        if (!hasLoggedIn.current) {
             LoginUser();
-        } else {
-            RegisterUser();
         }
+        
     }, [cookies.authorization, setCookie]);
+
 
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
 
