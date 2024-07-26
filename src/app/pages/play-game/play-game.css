@@ -348,4 +348,57 @@
 .final-position {
     transform: scale(1);
 }
+.second-player-hand {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px; /* Adjust based on your design */
+    width: 100%; /* Ensure the container takes full width */
+    overflow: hidden; /* Prevents cards from overflowing the container */
+    z-index: 1;
+}
 
+.second-player-hand img {
+    position: absolute;
+    width: 64px;
+    height: 90px;
+    cursor: pointer;
+    transition: transform 0.6s ease, left 0.6s ease;
+}
+
+.second-player-hand img {
+    transform-origin: bottom center; /* Set the origin for rotation */
+}
+
+.second-player-hand img:nth-child(1) {
+    transform: rotate(30deg) translateX(-60px);
+    z-index: 1;
+}
+
+.second-player-hand img:nth-child(2) {
+    transform: rotate(20deg) translateX(-40px);
+}
+
+.second-player-hand img:nth-child(3) {
+    transform: rotate(10deg) translateX(-20px);
+}
+
+.second-player-hand img:nth-child(4) {
+    transform: rotate(0deg) translateX(0px);
+}
+
+.second-player-hand img:nth-child(5) {
+    transform: rotate(-10deg) translateX(20px);
+}
+
+.second-player-hand img:nth-child(6) {
+    transform: rotate(-20deg) translateX(40px);
+}
+
+.second-player-hand img:nth-child(7) {
+    transform: rotate(-30deg) translateX(-60px);
+}
