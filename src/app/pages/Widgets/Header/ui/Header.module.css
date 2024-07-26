@@ -2,6 +2,7 @@
   width: 100%;
   position: relative;
   margin-bottom: 40px;
+  z-index: 4;
 }
 .main .titleBackgroundSvg {
   box-sizing: content-box;
@@ -26,7 +27,6 @@
   display: block;
   object-fit: cover;
 }
-
 .main .header-svg-part {
   display: flex;
   flex-direction: column;

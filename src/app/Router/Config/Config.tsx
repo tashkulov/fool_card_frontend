@@ -5,7 +5,7 @@ import Kvesty from "../../pages/kwesty/Kvesty";
 import {LeaderBoard} from "../../pages/LeaderBoard";
 import NewGame from "../../pages/new-game/new-game";
 import {Referrals} from "../../pages/Referrals";
-import OpenGames from "../../pages/open-games/open-games";
+import OpenGames from "../../pages/open-games/ui/open-games.tsx";
 
 enum AppRoutes {
     HOMEPAGE = "homePage",

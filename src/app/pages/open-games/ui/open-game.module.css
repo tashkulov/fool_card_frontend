@@ -1,0 +1,12 @@
+.error {
+  padding: 20px;
+}
+
+.main {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  height: 63.6vh;
+}
+
+/*# sourceMappingURL=open-game.module.css.map */
