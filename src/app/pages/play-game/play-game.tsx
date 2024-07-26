@@ -1,4 +1,3 @@
-
 import './play-game.css';
 import card1 from '../img/card1.svg';
 import card2 from '../img/card2.svg';
@@ -9,10 +8,8 @@ import arrow from "../img/Arrow1.svg";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
-import React from 'react';
+import {Link} from 'react-router-dom';
 
-
-// Define a type for the game data structure
 interface GameData {
     trump_card: string;
     hand: string[];
@@ -40,16 +37,19 @@ const PlayGame = () => {
     const [isAnimating, setIsAnimating] = useState(false);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
     const handRef = useRef<HTMLDivElement | null>(null);
+    const [myCards, setMyCards] = useState<string[]>([]);
+    const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
+    const [attackMode, setAttackMode] = useState<boolean>(true); // Новое состояние для режима атаки
 
     const fetchGameData = async () => {
         try {
-            const response = await axios.get<GameData>('https://foolcard2.shop/v1/games/11/get_current_table', {
+            const response = await axios.get<GameData>(`https://foolcard2.shop/v1/games/11/get_current_table`, {
                 headers: {
-                    'Authorization': localStorage.getItem('authorization')
-
+                    'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
                 },
             });
             setGameData(response.data);
+            setMyCards(response.data.hand);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching game data:', error);
@@ -62,10 +62,10 @@ const PlayGame = () => {
         try {
             const response = await axios.get<GameListItem[]>('https://foolcard2.shop/v1/games', {
                 headers: {
-                    'Authorization': localStorage.getItem('authorization'),
+                    'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
                 },
             });
-            const game = response.data.find((game: { id: number; }) => game.id === 11);
+            const game = response.data.find(game => game.id === 10);
             if (game) {
                 setBetValue(game.bet_value);
             } else {
@@ -98,36 +98,76 @@ const PlayGame = () => {
         const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
         return path;
     };
-
-
-    const handleCardClick = async (card: string, e: React.MouseEvent<HTMLImageElement>) => {
-        if (!cardAnimationContainerRef.current || !handRef.current || !e.currentTarget) return;
-    
-        // Клонируем карту для анимации
-        const cardClone = e.currentTarget.cloneNode(true) as HTMLImageElement;
-        cardClone.classList.add('bita-card', 'animate');
-        document.body.appendChild(cardClone);
-    
-        setSelectedCard(card);
-    
-        // Удаление карты из hand
-        if (e.currentTarget) {
-            e.currentTarget.style.display = 'none';
-        }
-    
-        setTimeout(() => {
-            setIsAnimating(false);
-            setSelectedCard(null);
-            cardAnimationContainerRef.current?.appendChild(cardClone);
-            cardClone.classList.remove('animate');
-            cardClone.classList.add('final-position');
-    
-            // Восстановление карты в hand
-            if (e.currentTarget) {
-                e.currentTarget.style.display = 'block';
+    const endTurn = async () => {
+        await axios.post(`https://foolcard2.shop/v1/games/11/end_turn`,{},{
+            headers: {
+                'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
             }
-        }, 500);
+        })
+        setTableCards([]);
+
+    }
+    const handleCardClick = async (card: string) => {
+        if (attackMode) {
+            try {
+                await axios.post(
+                    `https://foolcard2.shop/v1/games/11/place_card_on_table?card=${card}`,
+                    {},
+                    {
+                        headers: {
+                            'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+                        },
+                    }
+                );
+
+                setSelectedCard(card);
+                setIsAnimating(true);
+
+                setTimeout(() => {
+                    setIsAnimating(false);
+                    setSelectedCard(null);
+
+                    setMyCards(prevCards => prevCards.filter(c => c !== card));
+                    setTableCards(prevTableCards => [...prevTableCards, { card, beaten_by_card: null }]);
+
+                    console.log('Updated Table Cards:', [...tableCards, { card, beaten_by_card: null }]);
+                    setAttackMode(false); // Переключаемся в режим побития
+                }, 500);
+            } catch (error) {
+                console.error('Error placing card on table:', error);
+            }
+        } else {
+            const cardToBeat = tableCards.find(t => t.beaten_by_card === null)?.card;
+
+            if (cardToBeat) {
+                try {
+                    await axios.post(
+                        `https://foolcard2.shop/v1/games/11/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${card}`,
+                        {},
+                        {
+                            headers: {
+                                'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+                            },
+                        }
+                    );
+
+                    setTableCards(prevTableCards =>
+                        prevTableCards.map(t =>
+                            t.card === cardToBeat ? { ...t, beaten_by_card: card } : t
+                        )
+                    );
+
+                    setMyCards(prevCards => prevCards.filter(c => c !== card));
+
+                    console.log(`Card ${cardToBeat} beaten by ${card}`);
+                    setAttackMode(true); // Переключаемся обратно в режим атаки
+                } catch (error) {
+                    console.error('Error beating card:', error);
+                }
+            }
+        }
     };
+
 
 
     if (loading) return <div>Loading...</div>;
@@ -138,157 +178,168 @@ const PlayGame = () => {
     const middle = gameData ? Math.floor(gameData.hand.length / 2) : 0;
 
     return (
-        <>
-            <div className="wrapper">
-                <div className="plays">
-                    <section className="play-header">
-                        <div className="play-header-wrapper">
-                            <div className="play-header-block">
-                                <a className="play-header-back block-obvodka">
-                                    <img src={arrow} alt="Back" />
-                                </a>
-                                <div className="play-header-coin">
-                                    <img src={coins} alt="Coins" />
-                                    <p>{betValue !== null ? `${betValue}` : 'N/A'}</p> {/* Display the bet value */}
-                                </div>
-                            </div>
-                            <div className="play-header-rejim block-obvodka">
-                                <img src={card1} alt="Card 1" />
-                                <img src={card2} alt="Card 2" />
-                                <img src={card3} alt="Card 3" />
+        <div className="wrapper">
+            <div className="plays">
+                <section className="play-header">
+                    <div className="play-header-wrapper">
+
+                        <div className="play-header-block">
+                            <Link  to={'/'}>
+                            <a className="play-header-back block-obvodka">
+
+                                    <img src={arrow} alt="Back"/>
+                                 </a>
+                            </Link>
+
+                            <div className="play-header-coin">
+                                <img src={coins} alt="Coins" />
+                                <p>{betValue !== null ? `${betValue}` : 'N/A'}</p>
                             </div>
                         </div>
-                    </section>
-                    <div className="play-header-polosa"></div>
-                    <div className="play-header-polosa"></div>
-                </div>
-                <div className="main play-wrapper-game play-krug">
-                    <div className="main-wrapper-plays">
-                        <div className="wrapper-plays-header"></div>
-                        <div className="wrapper-plays-game">
-                            <div className="players-blocks">
-                                <div className="player-block user-dumaet footer-ava-wp">
+                        <div className="play-header-rejim block-obvodka">
+                            <img src={card1} alt="Card 1" />
+                            <img src={card2} alt="Card 2" />
+                            <img src={card3} alt="Card 3" />
+                        </div>
+                    </div>
+                </section>
+                <div className="play-header-polosa"></div>
+                <div className="play-header-polosa"></div>
+            </div>
+            <div className="main play-wrapper-game play-krug">
+                <div className="main-wrapper-plays">
+                    <div className="wrapper-plays-header"></div>
+                    <div className="wrapper-plays-game">
+                        <div className="players-blocks">
+                            <div className="player-block user-dumaet footer-ava-wp">
+                                <img src={GamePlay} alt="Gameplay Avatar"/>
+                            </div>
+
+                            <div className="players-flex">
+                                <div className="player-block footer-ava-wp">
                                     <img src={GamePlay} alt="Gameplay Avatar"/>
                                 </div>
-
-                                <div className="players-flex">
-                                    <div className="player-block footer-ava-wp">
-                                        <img src={GamePlay} alt="Gameplay Avatar"/>
-                                    </div>
-                                    <div className="player-block footer-ava-wp">
-                                        <img src={GamePlay} alt="Gameplay Avatar"/>
-                                    </div>
+                                <div className="player-block footer-ava-wp">
+                                    <img src={GamePlay} alt="Gameplay Avatar"/>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="deck">
-                            <div className="card-container">
-                                {gameData && (
-                                    <img
-                                        key={'trump_card'}
-                                        src={getCardImagePath(gameData.trump_card)}
-                                        alt={"card"}
-                                        width={64}
-                                        height={90}
-                                        className="trump-card"
-                                    />
-                                )}
+                    <div className="deck">
+                        <div className="card-container">
+                            {gameData && (
                                 <img
-                                    key={'back_card'}
-                                    src={back_card}
+                                    key={'trump_card'}
+                                    src={getCardImagePath(gameData.trump_card)}
                                     alt={"card"}
                                     width={64}
                                     height={90}
-                                    className="back-card"
+                                    className="trump-card"
                                 />
-                            </div>
+                            )}
+                            <img
+                                key={'back_card_in_deck'}
+                                src={back_card}
+                                alt={"back_card_in_deck"}
+                                width={64}
+                                height={90}
+                                className="back-card-in-deck"
+                            />
                         </div>
-
-                        <div className="bita">
-                            <div className="card-container">
-                                <img
-                                    key={'bita1'}
-                                    src={back_card}
-                                    alt={"back_card"}
-                                    width={64}
-                                    height={90}
-                                    className="back_card1"
-                                />
-                                <img
-                                    key={'bita2'}
-                                    src={back_card}
-                                    alt={"back_card"}
-                                    width={64}
-                                    height={90}
-                                    className="back_card2"
-                                />
-                                <img
-                                    key={'bita3'}
-                                    src={back_card}
-                                    alt={"back_card"}
-                                    width={64}
-                                    height={90}
-                                    className="back_card3"
-                                />
-                            </div>
+                    </div>
+                    <div className="bita">
+                        <div className="card-container">
+                            <img
+                                key={'bita1'}
+                                src={back_card}
+                                alt={"back_card"}
+                                width={64}
+                                height={90}
+                                className="back_card1"
+                            />
+                            <img
+                                key={'bita2'}
+                                src={back_card}
+                                alt={"back_card"}
+                                width={64}
+                                height={90}
+                                className="back_card2"
+                            />
+                            <img
+                                key={'bita3'}
+                                src={back_card}
+                                alt={"back_card"}
+                                width={64}
+                                height={90}
+                                className="back_card3"
+                            />
                         </div>
+                    </div>
 
-                        <div className="bita-container" ref={cardAnimationContainerRef}>
-                            {selectedCard && (
+                    <div className="table-card" ref={cardAnimationContainerRef}>
+                        {tableCards.map(({card, beaten_by_card}, index) => (
+                            <div key={index} className="table-card-item">
                                 <img
-                                    src={getCardImagePath(selectedCard)}
-                                    alt={selectedCard}
+                                    src={getCardImagePath(card)}
+                                    alt={card}
                                     className={`bita-card ${isAnimating ? 'animate' : ''}`}
                                     onAnimationEnd={() => {
                                         setIsAnimating(false);
                                         setSelectedCard(null);
                                     }}
                                 />
-                            )}
-                        </div>
-
-                        <div className="hand" ref={handRef}>
-                            {gameData && gameData.hand.map((card: string, index: number) => {
-                                const rotation = (index - middle) * angle;
-                                const position = (index - middle) * offset;
-
-                                return (
+                                {beaten_by_card && (
                                     <img
-                                        key={card}
-                                        src={getCardImagePath(card)}
-                                        alt={card}
-                                        style={{
-                                            left: `calc(50% + ${position}px)`,
-                                            transform: `rotate(${rotation}deg)`,
-                                            transition: 'transform 0.2s ease',
-                                            zIndex: 10,
-                                        }}
-                                        onClick={(e) => handleCardClick(card, e)}
+                                        src={getCardImagePath(beaten_by_card)}
+                                        alt={beaten_by_card}
+                                        className="beaten-card"
                                     />
-                                );
-                            })}
-                        </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
 
+                    <div className="hand" ref={handRef}>
+                        {myCards.map((card: string, index: number) => {
+                            const rotation = (index - middle) * angle;
+                            const position = (index - middle) * offset;
+
+                            return (
+                                <img
+                                    key={card}
+                                    src={getCardImagePath(card)}
+                                    alt={card}
+                                    style={{
+                                        left: `calc(50% + ${position}px)`,
+                                        transform: `rotate(${rotation}deg)`,
+                                        transition: 'transform 0.2s ease',
+                                        zIndex: 10,
+                                    }}
+                                    onClick={() => handleCardClick(card)}
+                                />
+                            );
+                        })}
+                    </div>
+
+                </div>
+            </div>
+
+            <div className="play-footer">
+                <div className="play-footer-ava">
+                    <div className="footer-ava-roga">
+                        <div className="footer-ava-wp">
+                            <img src={GamePlay} alt="Gameplay Avatar"/>
+                        </div>
                     </div>
                 </div>
-
-                <div className="play-footer">
-                    <div className="play-footer-ava">
-                        <div className="footer-ava-roga">
-                            <div className="footer-ava-wp">
-                                <img src={GamePlay} alt="Gameplay Avatar"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="play-footer-wrap">
-                        <div className="play-footer-block">
-                            <div className="play-footer-btn">Бито</div>
-                        </div>
+                <div className="play-footer-wrap">
+                    <div className="play-footer-block">
+                        <button className="play-footer-btn" onClick={endTurn}>Бито</button>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
