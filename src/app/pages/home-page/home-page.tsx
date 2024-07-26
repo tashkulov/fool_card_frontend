@@ -46,7 +46,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
                         // Отправка данных на сервер
                         const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
-                        console.log('Ответ:', response.data, userData);
+                        console.log('Ответ:', response.data, response.data.Authorization, userData);
                         
                         if (response.data.Authorization) {
                             setCookie('authorization', response.data.Authorization, { path: '/' });
@@ -74,7 +74,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
                         // Отправка данных на сервер
                         const response = await axios.post(`https://foolcard2.shop/v1/auth/sign_in?telegram_id=${initDataUnsafe.user.id.toString()}`, userData);
-                        console.log('Ответ:', response.data, userData);
+                        console.log('Ответ:', response.data, response.data.Authorization, userData);
 
 
                         if (response.data.Authorization) {
