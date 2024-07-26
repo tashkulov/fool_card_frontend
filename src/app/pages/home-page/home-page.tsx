@@ -81,6 +81,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         if (response.data.Authorization) {
                             setCookie('authorization', response.data.Authorization, { path: '/' });
                         }
+                        localStorage.setItem("token", response.data.Authorization)
                     } else {
                         console.error('Не удалось получить данные пользователя');
                     }
