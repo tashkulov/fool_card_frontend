@@ -8,7 +8,6 @@ import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick";
 import { useTranslation } from "react-i18next";
 import MyRiveAnimation from "../../components/rive-conponents/ruby/ruby-component"
 import axios from 'axios';
-import { Cookies, useCookies } from 'react-cookie';
 
 interface User {
     photo_url: string;
@@ -23,8 +22,6 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
     const [stateModeModalWindow, setSateModeModalWindow] = useState<boolean>(false)
     const refModalWindow = useRef(null)
     const { t } = useTranslation()
-
-    const [cookies, setCookie] = useCookies(['authorization']);
 
     let hasRegistered = useRef(false);
     let hasLoggedIn = useRef(false);
@@ -50,9 +47,8 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         
                         hasRegistered.current = true
 
-                        console.log(Cookies)
-                        
                         localStorage.setItem("authorization", response.data.Authorization)
+                        console.log(localStorage.getItem("authorization"));
                     } else {
                         console.error('Не удалось получить данные пользователя');
                     }
@@ -85,9 +81,8 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
                         hasLoggedIn.current = true
                         
-                        setCookie('authorization', response.data.Authorization, { path: '/' });
-                        
                         localStorage.setItem("authorization", response.data.Authorization)
+                        console.log(localStorage.getItem("authorization"));
                     } else {
                         console.error('Не удалось получить данные пользователя');
                     }
@@ -103,7 +98,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             LoginUser();
         }
         
-    }, [cookies.authorization, setCookie]);
+    }, []);
 
 
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
