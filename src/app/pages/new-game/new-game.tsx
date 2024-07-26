@@ -8,12 +8,15 @@ import Plus from '../../../assets/img/pluss.svg';
 import Check from "../../../assets/img/check_.svg"
 import Footer from '../../components/Footer/Footer';
 import {useTranslation} from "react-i18next";
+import { useNavigate } from 'react-router-dom';
 
 
 // Define the types for the props and states
 type RiveAnimation = { play: () => void };
 
 const CreateGameForm: React.FC = () => {
+
+    const navigate = useNavigate();
     const {t} = useTranslation()
     const [betAmount, setBetAmount] = useState<number>(1200);
     const [selectedGameMode, setSelectedGameMode] = useState<string>('');
@@ -104,6 +107,7 @@ const CreateGameForm: React.FC = () => {
                 }
             });
             console.log('Game created successfully:', response.data, requestData);
+            navigate('/inGame');
         } catch (error) {
             console.error('Error creating game:', error, requestData);
         }
