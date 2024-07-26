@@ -45,7 +45,9 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
                         console.log('Ответ:', response.data, userData);
                         
-                        setCookie('authorization', response.data.Authorization, { path: '/' });
+                        if (response.data.Authorization) {
+                            setCookie('authorization', response.data.Authorization, { path: '/' });
+                        }
                     } else {
                         console.error('Не удалось получить данные пользователя');
                     }
@@ -71,7 +73,11 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         // Отправка данных на сервер
                         const response = await axios.post(`https://foolcard2.shop/v1/auth/sign_in?telegram_id=${initDataUnsafe.user.id.toString()}`, userData);
                         console.log('Ответ:', response.data, userData);
-                        setCookie('authorization', response.data.Authorization, { path: '/' });
+
+
+                        if (response.data.Authorization) {
+                            setCookie('authorization', response.data.Authorization, { path: '/' });
+                        }
                     } else {
                         console.error('Не удалось получить данные пользователя');
                     }
