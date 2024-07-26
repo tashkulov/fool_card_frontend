@@ -26,6 +26,9 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
     const [cookies, setCookie] = useCookies(['authorization']);
 
+    let hasRegistered = useRef(false);
+    let hasLoggedIn = useRef(false);
+
     useEffect(() => {
         const RegisterUser = async () => {
             try {
@@ -45,8 +48,9 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
                         console.log('Ответ:', response.data, response.data.Authorization, userData);
                         
+                        hasRegistered = useRef(true);
                         
-                        // localStorage.setCookie('authorization', response.data.Authorization, { path: '/' });
+                        setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         // localStorage.setItem("token", response.data.Authorization)
                     } else {
@@ -59,8 +63,6 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                 console.error('Ошибка при отправке запроса:', error);
             }
         };
-
-        RegisterUser();
 
         const LoginUser = async () => {
             try {
@@ -77,7 +79,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         console.log('Ответ:', response.data, response.data.Authorization, userData);
 
 
-                        
+                        hasLoggedIn = useRef(true);
                         setCookie('authorization', response.data.Authorization, { path: '/' });
                         
                         // localStorage.setItem("token", response.data.Authorization)
@@ -91,9 +93,12 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                 console.error('Ошибка при отправке запроса:', error);
             }
         };
-        LoginUser();
-
         
+        if (!hasRegistered.current) {
+            RegisterUser();
+        } else if (!hasLoggedIn.current) {
+            LoginUser();
+        }
     }, [cookies.authorization, setCookie]);
 
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
