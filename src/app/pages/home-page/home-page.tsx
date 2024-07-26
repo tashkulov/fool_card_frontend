@@ -91,13 +91,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             }
         };
 
-        if (!hasRegistered.current) {
-            RegisterUser();
-            hasRegistered.current = true;
-        } else if (!hasLoggedIn.current) {
-            LoginUser();
-            hasLoggedIn.current = true;
-        }
+        LoginUser();
 
         
     }, [cookies.authorization, setCookie]);
