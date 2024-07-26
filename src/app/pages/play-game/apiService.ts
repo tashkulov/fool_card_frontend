@@ -1,13 +1,10 @@
-// src/api.ts
 import axios from 'axios';
 
-// Определите базовый URL и общие заголовки
 const BASE_URL = 'https://foolcard2.shop/v1';
 const HEADERS = {
-    Authorization: '559e56961cf9aa99f19f0a0f116683ba234c32203005c284',
+    Authorization: 'c3b45eba3c480aa4d1ea38023a9189c557a59c8013336f07',
 };
 
-// Получение данных текущего стола
 export const fetchGameData = async (gameId: number) => {
     try {
         const response = await axios.get(`${BASE_URL}/games/${gameId}/get_current_table`, {

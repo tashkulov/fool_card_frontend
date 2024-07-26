@@ -9,7 +9,7 @@ import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 import {Link} from 'react-router-dom';
 import { fetchGameData, fetchGameList, placeCardOnTable, beatCard, endTurn } from './apiService'; // Импортируем функции API
-import { GameData, GameListItem } from './interface'; // Импортируем интерфейсы
+import { GameData, GameListItem } from './interface';
 
 const PlayGame = () => {
     const [gameData, setGameData] = useState<GameData | null>(null);
