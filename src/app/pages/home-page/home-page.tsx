@@ -63,6 +63,8 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             }
         };
 
+        RegisterUser();
+
         const LoginUser = async () => {
             try {
                 if (window.Telegram && window.Telegram.WebApp) {
@@ -92,11 +94,11 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                 console.error('Ошибка при отправке запроса:', error);
             }
         };
-
+        LoginUser();
         console.log(hasRegistered.current, 'fkjfgsldgjsfdlgskdfjgsldhgfsdkfjghsdlfgkjshfglsdkfjghslfgksjfhg')
 
-        RegisterUser()
-        LoginUser()
+        
+        
 
         
     }, [cookies.authorization, setCookie]);
