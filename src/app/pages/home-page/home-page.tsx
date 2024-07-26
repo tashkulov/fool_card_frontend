@@ -93,6 +93,8 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
             }
         };
 
+        console.log(hasRegistered.current, 'fkjfgsldgjsfdlgskdfjgsldhgfsdkfjghsdlfgkjshfglsdkfjghslfgksjfhg')
+
         if (!hasRegistered.current) {
             RegisterUser();
             hasRegistered.current = true;
