@@ -1,17 +1,17 @@
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
-const [cookies] = useCookies(['authorization']);
+// import { useCookies } from 'react-cookie';
+// const [cookies] = useCookies(['authorization']);
 
 
 const BASE_URL = ' https://foolcard2.shop/v1';
 
-const AUTH_TOKEN = cookies.authorization;
+// const AUTH_TOKEN = cookies.authorization;
 
 const axiosInstance = axios.create({
     baseURL: BASE_URL,
-    headers: {
-        Authorization: AUTH_TOKEN,
-    },
+    // headers: {
+    //     Authorization: AUTH_TOKEN,
+    // },
 });
 
 // Define a type for the game data structure
