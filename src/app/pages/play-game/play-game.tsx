@@ -78,7 +78,7 @@ const PlayGame = () => {
     };
 
     useEffect(() => {
-        fetchGameData();
+        setInterval(fetchGameData, 500);
         fetchGameList();
     }, []);
 
