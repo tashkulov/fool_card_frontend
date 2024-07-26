@@ -45,7 +45,9 @@ const PlayGame = () => {
         try {
             const response = await axios.get<GameData>('https://foolcard2.shop/v1/games/11/get_current_table', {
                 headers: {
-                    'Authorization': localStorage.getItem('authorization')
+                    // 'Authorization': localStorage.getItem('authorization')
+                    'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
+
                 },
             });
             setGameData(response.data);
@@ -61,7 +63,8 @@ const PlayGame = () => {
         try {
             const response = await axios.get<GameListItem[]>('https://foolcard2.shop/v1/games', {
                 headers: {
-                    'Authorization': localStorage.getItem('authorization'),
+                    // 'Authorization': localStorage.getItem('authorization'),
+                    'Authorization': '559e56961cf9aa99f19f0a0f116683ba234c32203005c284'
                 },
             });
             const game = response.data.find((game: { id: number; }) => game.id === 11);
