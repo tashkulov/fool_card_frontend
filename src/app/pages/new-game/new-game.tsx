@@ -91,10 +91,9 @@ const CreateGameForm: React.FC = () => {
 
         const requestData = {
             "bet_value": betAmount,
-            "card_amount": 36, // Update with actual value if available
+            "card_amount": 36,
             "participants_number": parseInt(selectedPlayerCount),
             "access_type": isPrivate ? 'private' : 'public',
-            "status": 'ongoing', // This seems like a static value for now
             "game_mode": selectedGameMode,
             "toss_mode": tossMode,
             "game_ending_type": gameEndingType
