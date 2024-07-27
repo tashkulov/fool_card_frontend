@@ -1,3 +1,4 @@
+
 export interface GameData {
     trump_card: string;
     hand: string[];
