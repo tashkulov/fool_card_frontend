@@ -8,11 +8,12 @@ import coins from "../img/coins.svg";
 import arrow from "../img/Arrow1.svg";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import { fetchGameData, fetchGameList, placeCardOnTable, beatCard, endTurn } from './apiService'; // Импортируем функции API
 import { GameData, GameListItem } from './interface'; // Импортируем интерфейсы
 
 const PlayGame = () => {
+    const { gameId } = useParams<{ gameId: string }>();
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [betValue, setBetValue] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
@@ -25,11 +26,9 @@ const PlayGame = () => {
     const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
     const [attackMode, setAttackMode] = useState<boolean>(true);
 
-    const gameId = 24;
-
     const loadGameData = async () => {
         try {
-            const data = await fetchGameData(gameId);
+            const data = await fetchGameData(Number(gameId));
             setGameData(data);
             setMyCards(data.hand);
             setLoading(false);
@@ -43,7 +42,7 @@ const PlayGame = () => {
     const loadGameList = async () => {
         try {
             const gameList = await fetchGameList();
-            const game = gameList.find((game: GameListItem) => game.id === gameId);
+            const game = gameList.find((game: GameListItem) => game.id === Number(gameId));
             if (game) {
                 setBetValue(game.bet_value);
             } else {
@@ -66,7 +65,7 @@ const PlayGame = () => {
         const intervalId = setInterval(loadGameDataInterval, 1000);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [gameId]);
 
     useEffect(() => {
         if (selectedCard) {
@@ -87,7 +86,7 @@ const PlayGame = () => {
 
     const endTurnHandler = async () => {
         try {
-            await endTurn(gameId);
+            await endTurn(Number(gameId));
             setTableCards([]);
         } catch (error) {
             console.error('Error ending turn:', error);
@@ -98,7 +97,7 @@ const PlayGame = () => {
     const handleCardClick = async (card: string) => {
         if (attackMode) {
             try {
-                await placeCardOnTable(gameId, card);
+                await placeCardOnTable(Number(gameId), card);
 
                 setSelectedCard(card);
                 setIsAnimating(true);
@@ -121,7 +120,7 @@ const PlayGame = () => {
 
             if (cardToBeat) {
                 try {
-                    await beatCard(gameId, cardToBeat, card);
+                    await beatCard(Number(gameId), cardToBeat, card);
 
                     setTableCards(prevTableCards =>
                         prevTableCards.map(t =>
