@@ -16,6 +16,7 @@ body {
     min-width: 100dvw;
     min-height: 100dvh;
     background: linear-gradient(0.00deg, rgb(42, 42, 42), rgb(35, 35, 35) 37%, rgb(15, 15, 15) 91%, rgb(12, 12, 12) 100%);
+    z-index: -10;
 }
 
 .main {
@@ -526,12 +527,16 @@ body {
 .kvesty-title-wrapper {
     height: 73px;
     padding: 0;
+    z-index: 0;
+}
+
+.header {
+    z-index: 888;
 }
 
 section {
-    z-index: 5;
+    z-index: 0;
 }
-
 .bet-value {
     font-size: 30px;
 }
@@ -907,6 +912,7 @@ section {
 
 .form-new-game {
     padding-bottom: 100px;
+    z-index: 0;
 }
 
 

@@ -59,10 +59,3 @@ h1 {
     height: 46px;
     background-image: url('../../pages/home-page/images/nav-new-game.png');
 }
-    /*@media screen and (max-width: 600px) {*/
-    /*    .main-page-container {*/
-    /*        width: 100vw; !* Используйте 100vw вместо фиксированных значений *!*/
-    /*        height: 100vh; !* Используйте 100vh вместо фиксированных значений *!*/
-    /*    }*/
-    /*}*/
-
