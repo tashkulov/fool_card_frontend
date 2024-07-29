@@ -8,7 +8,7 @@ type THeader = {
 }
 
 const Header = (props: THeader) => {
-    const {text} = props
+    const { text } = props
 
 
     return (
@@ -17,8 +17,8 @@ const Header = (props: THeader) => {
                 <HeaderRiveAnimation />
                 <HeaderMainSvgIcon />
             </div>
-            
-            <TitleBackgroundSvg text={text} className={cls.titleBackgroundSvg}/>
+
+            <TitleBackgroundSvg text={text} className={cls.titleBackgroundSvg} />
 
         </header>
     );
