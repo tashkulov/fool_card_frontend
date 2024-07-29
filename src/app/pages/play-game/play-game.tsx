@@ -24,7 +24,7 @@ const PlayGame = () => {
     const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
     const [attackMode, setAttackMode] = useState<boolean>(true);
 
-    const gameId = 34;
+    const gameId = 39;
 
 
     const loadGameData = async () => {
@@ -184,7 +184,7 @@ const PlayGame = () => {
                     <div className="wrapper-plays-header"></div>
                     <div className="wrapper-plays-game">
                         <div className="players-blocks">
-                            <div className="player-block user-dumaet footer-ava-wp">
+                            <div id="user-dumaet" style={{borderRadius:'50%'}}>
                                 <img src={GamePlay} alt="Gameplay Avatar" />
                                 <div className="second-player-hand">
                                     {myCards.map((card, index) => {
@@ -207,10 +207,10 @@ const PlayGame = () => {
                             </div>
 
                             <div className="players-flex">
-                                <div className="player-block footer-ava-wp">
+                                <div className="player-block1 footer-ava-wp1">
                                     <img src={GamePlay} alt="Gameplay Avatar" />
                                 </div>
-                                <div className="player-block footer-ava-wp">
+                                <div className="player-block1 footer-ava-wp1">
                                     <img src={GamePlay} alt="Gameplay Avatar" />
                                 </div>
                             </div>
@@ -319,15 +319,13 @@ const PlayGame = () => {
             <div className="play-footer">
                 <div className="play-footer-ava">
                     <div className="footer-ava-roga">
-                        <div className="footer-ava-wp">
+                        <div className="footer-ava-wp1">
                             <img src={GamePlay} alt="Gameplay Avatar" />
                         </div>
                     </div>
                 </div>
                 <div className="play-footer-wrap">
-                    <div className="play-footer-block">
                         <button className="play-footer-btn" onClick={endTurnHandler}>Бито</button>
-                    </div>
                 </div>
             </div>
         </div>
