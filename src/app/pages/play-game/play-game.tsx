@@ -16,7 +16,7 @@ type TParams = {
 }
 
 const PlayGame = () => {
-    const { gameId } = useParams<{ gameId: string }>();
+    // const { gameId } = useParams<{ gameId: string }>();
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [betValue, setBetValue] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
