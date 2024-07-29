@@ -119,9 +119,11 @@ const CreateGameForm: React.FC = () => {
 
     return (
         <div className="main main-wrapp">
+            <div className='header'>
+                <HeaderRiveAnimation />
+                <HeaderMainSvgIcon />
+            </div>
 
-            <HeaderRiveAnimation />
-            <HeaderMainSvgIcon />
 
             <section className="kvesty-title new-games">
 

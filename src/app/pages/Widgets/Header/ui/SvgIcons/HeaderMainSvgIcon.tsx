@@ -1,3 +1,5 @@
+import "./header.css"
+
 
 const HeaderMainSvgIcon = () => {
     return (
