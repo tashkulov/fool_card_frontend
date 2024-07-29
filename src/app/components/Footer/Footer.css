@@ -1,13 +1,10 @@
-
 .main-page-navbar {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    position: fixed;
-    z-index: 100;
-    width: 100%;
-    height: 105px;
+    width: 100vw;
+    height: 12vh;
     background-image: url("../../pages/home-page/images/main-page-navbar-bg.png") ;
     background-repeat: no-repeat;
     background-size: cover;

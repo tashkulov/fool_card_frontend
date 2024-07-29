@@ -1,5 +1,6 @@
 .main {
   width: 100%;
+  height: 69.5vh;
   padding: 20px;
 }
 .main p {
@@ -16,7 +17,7 @@
 }
 .main .friendsList {
   width: 100%;
-  height: 340px;
+  height: 44vh;
   display: flex;
   flex-direction: column;
   overflow-y: auto;

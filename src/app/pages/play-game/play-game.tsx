@@ -1,4 +1,3 @@
-
 import './play-game.css';
 import card1 from '../img/card1.svg';
 import card2 from '../img/card2.svg';
@@ -10,7 +9,11 @@ import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 import {Link, useParams} from 'react-router-dom';
 import { fetchGameData, fetchGameList, placeCardOnTable, beatCard, endTurn } from './apiService'; // Импортируем функции API
-import { GameData, GameListItem } from './interface'; // Импортируем интерфейсы
+import { GameData, GameListItem } from './interface';
+
+type TParams = {
+    id: string
+}
 
 const PlayGame = () => {
     const { gameId } = useParams<{ gameId: string }>();
@@ -25,12 +28,34 @@ const PlayGame = () => {
     const [myCards, setMyCards] = useState<string[]>([]);
     const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
     const [attackMode, setAttackMode] = useState<boolean>(true);
+    const { id } = useParams<TParams>()
+
+
+    let gameId: string | number = 34;
+
+    if (id) {
+        gameId = +id
+    } else {
+        gameId = 0
+        return (
+            <div>
+                что то не так с id
+            </div>
+        )
+    }
 
     const loadGameData = async () => {
         try {
             const data = await fetchGameData(Number(gameId));
             setGameData(data);
             setMyCards(data.hand);
+
+            // Обновление tableCards, если данные получены из API
+            console.log(data)
+            if (data.tableCards) {
+                setTableCards(data.tableCards);
+            }
+
             setLoading(false);
         } catch (error) {
             console.error('Error fetching game data:', error);
@@ -139,14 +164,12 @@ const PlayGame = () => {
         }
     };
 
-
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
     const angle = 20;
     const offset = 30;
     const middle = gameData ? Math.floor(gameData.hand.length / 2) : 0;
-
 
     return (
         <div className="wrapper">
@@ -155,8 +178,8 @@ const PlayGame = () => {
                     <div className="play-header-wrapper">
 
                         <div className="play-header-block">
-                            <Link  to={'/'} className="play-header-back block-obvodka">
-                                    <img src={arrow} alt="Back"/>
+                            <Link to={'/'} className="play-header-back block-obvodka">
+                                <img src={arrow} alt="Back" />
                             </Link>
 
                             <div className="play-header-coin">
@@ -180,7 +203,7 @@ const PlayGame = () => {
                     <div className="wrapper-plays-game">
                         <div className="players-blocks">
                             <div className="player-block user-dumaet footer-ava-wp">
-                                <img src={GamePlay} alt="Gameplay Avatar"/>
+                                <img src={GamePlay} alt="Gameplay Avatar" />
                                 <div className="second-player-hand">
                                     {myCards.map((card, index) => {
 
@@ -191,8 +214,8 @@ const PlayGame = () => {
                                                 alt="back_card_second_player"
                                                 style={{
                                                     zIndex: index + 1,
-                                                    width:64,
-                                                    height:90
+                                                    width: 64,
+                                                    height: 90
                                                 }}
                                             />
                                         );
@@ -203,10 +226,10 @@ const PlayGame = () => {
 
                             <div className="players-flex">
                                 <div className="player-block footer-ava-wp">
-                                    <img src={GamePlay} alt="Gameplay Avatar"/>
+                                    <img src={GamePlay} alt="Gameplay Avatar" />
                                 </div>
                                 <div className="player-block footer-ava-wp">
-                                    <img src={GamePlay} alt="Gameplay Avatar"/>
+                                    <img src={GamePlay} alt="Gameplay Avatar" />
                                 </div>
                             </div>
                         </div>
@@ -264,7 +287,7 @@ const PlayGame = () => {
                     </div>
 
                     <div className="table-card" ref={cardAnimationContainerRef}>
-                        {tableCards.map(({card, beaten_by_card}, index) => (
+                        {tableCards.map(({ card, beaten_by_card }, index) => (
                             <div key={index} className="table-card-item">
                                 <img
                                     src={getCardImagePath(card)}
@@ -315,7 +338,7 @@ const PlayGame = () => {
                 <div className="play-footer-ava">
                     <div className="footer-ava-roga">
                         <div className="footer-ava-wp">
-                            <img src={GamePlay} alt="Gameplay Avatar"/>
+                            <img src={GamePlay} alt="Gameplay Avatar" />
                         </div>
                     </div>
                 </div>

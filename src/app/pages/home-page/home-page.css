@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     min-height: 100dvh;
-    
 
     background-image: url("./images/main-page-bg.png");
     background-repeat: no-repeat;
@@ -142,7 +141,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
     color: black;
     margin-top: 10px;
     z-index: 1;

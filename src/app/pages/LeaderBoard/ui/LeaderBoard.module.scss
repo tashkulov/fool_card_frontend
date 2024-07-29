@@ -1,11 +1,14 @@
 .main {
-  width: 100%;
+  width: 100vw;
+  height: auto;
 
   .listLeaderBoard {
     display: flex;
     flex-direction: column;
+    overflow: auto;
     gap: 10px;
     padding: 20px;
+    height: 69.5vh;
 
     .MVPPlayer {
       padding: 0 20px;
@@ -25,21 +28,5 @@
         gap: 10px;
       }
     }
-  }
-
-  .leftSolid {
-    position: absolute;
-    height: 100vh;
-    left: 0;
-    bottom: 0;
-    z-index: -1;
-  }
-
-  .rightSolid {
-    position: absolute;
-    height: 100vh;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
   }
 }

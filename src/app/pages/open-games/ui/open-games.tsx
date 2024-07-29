@@ -4,6 +4,7 @@ import cls from "./open-game.module.scss"
 
 import OpenGame from "./opneGeme/ui/OpenGame.tsx";
 import { getDateOpenGames, TResponse } from "../getDateOpenGames/getDateOpenGames.ts";
+import {Link} from "react-router-dom";
 
 const OpenGames: React.FC = () => {
     const [games, setGames] = useState<TResponse[] | null>(null);
@@ -32,7 +33,8 @@ const OpenGames: React.FC = () => {
         <SkeletonPage textHeader='Открытые'>
             <div className={cls.main}>
                 {games ? (
-                    games.map((game) => (
+                    games.sort((a, b) => b.id - a.id).map((game) => (
+                        <Link to={`/inGame/${game.id}`}>
                         <OpenGame
                             key={game.id}
                             experience={game.bet_value}
@@ -41,6 +43,7 @@ const OpenGames: React.FC = () => {
                             currentMembers={3}
 
                         />
+                        </Link>
                     ))
                 ) : (
                     <div>Загрузка...</div>
