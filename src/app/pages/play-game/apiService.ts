@@ -5,7 +5,7 @@ const HEADERS = {
     Authorization: 'c3b45eba3c480aa4d1ea38023a9189c557a59c8013336f07',
 };
 
-export const fetchGameData = async (gameId: number) => {
+export const fetchGameData = async (gameId: number | string) => {
     try {
         const response = await axios.get(`${BASE_URL}/games/${gameId}/get_current_table`, {
             headers: HEADERS,
@@ -29,7 +29,7 @@ export const fetchGameList = async () => {
 };
 
 // Размещение карты на столе
-export const placeCardOnTable = async (gameId: number, card: string) => {
+export const placeCardOnTable = async (gameId: number | string, card: string) => {
     try {
         await axios.post(
             `${BASE_URL}/games/${gameId}/place_card_on_table?card=${card}`,
@@ -42,7 +42,7 @@ export const placeCardOnTable = async (gameId: number, card: string) => {
 };
 
 // Побитие карты
-export const beatCard = async (gameId: number, cardToBeat: string, cardToBeatBy: string) => {
+export const beatCard = async (gameId: number | string, cardToBeat: string, cardToBeatBy: string) => {
     try {
         await axios.post(
             `${BASE_URL}/games/${gameId}/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${cardToBeatBy}`,
@@ -55,7 +55,7 @@ export const beatCard = async (gameId: number, cardToBeat: string, cardToBeatBy:
 };
 
 // Окончание хода
-export const endTurn = async (gameId: number) => {
+export const endTurn = async (gameId: number | string) => {
     try {
         await axios.post(
             `${BASE_URL}/games/${gameId}/end_turn`,

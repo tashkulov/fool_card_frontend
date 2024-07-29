@@ -1,5 +1,7 @@
 .main {
   width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 .main .leftSolid {
   position: fixed;
@@ -17,6 +19,7 @@
 }
 .main .mainContent {
   width: 100%;
+  height: 69.5%;
 }
 
 /*# sourceMappingURL=SkeletPage.module.css.map */
