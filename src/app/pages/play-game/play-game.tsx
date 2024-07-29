@@ -7,13 +7,9 @@ import coins from "../img/coins.svg";
 import arrow from "../img/Arrow1.svg";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
-import {Link, useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { fetchGameData, fetchGameList, placeCardOnTable, beatCard, endTurn } from './apiService'; // Импортируем функции API
 import { GameData, GameListItem } from './interface';
-
-type TParams = {
-    id: string
-}
 
 const PlayGame = () => {
     const [gameData, setGameData] = useState<GameData | null>(null);
@@ -27,20 +23,9 @@ const PlayGame = () => {
     const [myCards, setMyCards] = useState<string[]>([]);
     const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
     const [attackMode, setAttackMode] = useState<boolean>(true);
-    const { id } = useParams<TParams>()
 
-    let gameId: string | number = 32;
+    const gameId = 34;
 
-    if (id) {
-        gameId = +id
-    } else {
-        gameId = 0
-        return (
-            <div>
-                что то не так с id
-            </div>
-        )
-    }
 
     const loadGameData = async () => {
         try {
@@ -49,7 +34,6 @@ const PlayGame = () => {
             setMyCards(data.hand);
 
             // Обновление tableCards, если данные получены из API
-            console.log(data)
             if (data.tableCards) {
                 setTableCards(data.tableCards);
             }
@@ -65,7 +49,7 @@ const PlayGame = () => {
     const loadGameList = async () => {
         try {
             const gameList = await fetchGameList();
-            const game = gameList.find((game: GameListItem) => game.id == gameId);
+            const game = gameList.find((game: GameListItem) => game.id === gameId);
             if (game) {
                 setBetValue(game.bet_value);
             } else {
