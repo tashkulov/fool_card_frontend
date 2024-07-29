@@ -7,9 +7,11 @@ import coins from "../img/coins.svg";
 import arrow from "../img/Arrow1.svg";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { fetchGameData, fetchGameList, placeCardOnTable, beatCard, endTurn } from './apiService'; // Импортируем функции API
 import { GameData, GameListItem } from './interface';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PlayGame = () => {
 
@@ -28,7 +30,6 @@ const PlayGame = () => {
     const [attackMode, setAttackMode] = useState<boolean>(true);
 
     const gameId = 41;
-
 
     const loadGameData = async () => {
         try {
@@ -95,6 +96,11 @@ const PlayGame = () => {
     };
 
     const endTurnHandler = async () => {
+        if (hasUnbeatenCards()) {
+            toast.error('Необходимо побить все карты на столе, прежде чем завершить ход.');
+            return;
+        }
+
         try {
             await endTurn(gameId);
             setTableCards([]);
@@ -111,7 +117,6 @@ const PlayGame = () => {
 
                 setSelectedCard(card);
                 setIsAnimating(true);
-
                 setTimeout(() => {
                     setIsAnimating(false);
                     setSelectedCard(null);
@@ -147,6 +152,10 @@ const PlayGame = () => {
                 }
             }
         }
+    };
+
+    const hasUnbeatenCards = () => {
+        return tableCards.some(card => card.beaten_by_card === null);
     };
 
     if (loading) return <div>Loading...</div>;
@@ -191,7 +200,6 @@ const PlayGame = () => {
                                 <img src={GamePlay} alt="Gameplay Avatar" />
                                 <div className="second-player-hand">
                                     {myCards.map((card, index) => {
-
                                         return (
                                             <img
                                                 key={card}
@@ -270,7 +278,6 @@ const PlayGame = () => {
                             />
                         </div>
                     </div>
-
                     <div className="table-card" ref={cardAnimationContainerRef}>
                         {tableCards.map(({ card, beaten_by_card }, index) => (
                             <div key={index} className="table-card-item">
@@ -328,9 +335,17 @@ const PlayGame = () => {
                     </div>
                 </div>
                 <div className="play-footer-wrap">
-                        <button className="play-footer-btn" onClick={endTurnHandler}>Бито</button>
+                    <button
+                        className="play-footer-btn"
+                        onClick={endTurnHandler}
+                        disabled={hasUnbeatenCards()}
+                    >
+                        Бито
+                    </button>
                 </div>
             </div>
+
+            <ToastContainer />
         </div>
     );
 };
