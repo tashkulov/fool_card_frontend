@@ -106,11 +106,13 @@ const CreateGameForm: React.FC = () => {
                     'Authorization': localStorage.getItem('authorization')
                 }
             });
-            console.log('Game created successfully:', response.data);
+            console.log('Game created successfully:', response.data.id);
             navigate('/inGame');
+            const ID = response.data.id;
         } catch (error) {
             console.error('Error creating game:', error, requestData);
         }
+
     };
 
     return (
