@@ -16,10 +16,18 @@
       align-items: center;
       justify-content: space-between;
 
-      .wrapperImgWithName {
+      .wrapperIdAndImgName {
         display: flex;
-        align-items: center;
-        gap: 10px;
+
+        h3 {
+          margin-right: 40px;
+        }
+
+        .wrapperImgWithName {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
       }
 
       .wrapperImgWithExperience {

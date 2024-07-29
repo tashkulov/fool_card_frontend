@@ -7,16 +7,14 @@ import coins from "../img/coins.svg";
 import arrow from "../img/Arrow1.svg";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
-import {Link, useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { fetchGameData, fetchGameList, placeCardOnTable, beatCard, endTurn } from './apiService'; // Импортируем функции API
 import { GameData, GameListItem } from './interface';
 
-type TParams = {
-    id: string
-}
-
 const PlayGame = () => {
+
     // const { gameId } = useParams<{ gameId: string }>();
+
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [betValue, setBetValue] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
@@ -28,30 +26,17 @@ const PlayGame = () => {
     const [myCards, setMyCards] = useState<string[]>([]);
     const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
     const [attackMode, setAttackMode] = useState<boolean>(true);
-    const { id } = useParams<TParams>()
 
+    const gameId = 39;
 
-    let gameId: string | number = 34;
-
-    if (id) {
-        gameId = +id
-    } else {
-        gameId = 0
-        return (
-            <div>
-                что то не так с id
-            </div>
-        )
-    }
 
     const loadGameData = async () => {
         try {
-            const data = await fetchGameData(Number(gameId));
+            const data = await fetchGameData(gameId);
             setGameData(data);
             setMyCards(data.hand);
 
             // Обновление tableCards, если данные получены из API
-            console.log(data)
             if (data.tableCards) {
                 setTableCards(data.tableCards);
             }
@@ -67,7 +52,7 @@ const PlayGame = () => {
     const loadGameList = async () => {
         try {
             const gameList = await fetchGameList();
-            const game = gameList.find((game: GameListItem) => game.id === Number(gameId));
+            const game = gameList.find((game: GameListItem) => game.id === gameId);
             if (game) {
                 setBetValue(game.bet_value);
             } else {
@@ -90,7 +75,7 @@ const PlayGame = () => {
         const intervalId = setInterval(loadGameDataInterval, 1000);
 
         return () => clearInterval(intervalId);
-    }, [gameId]);
+    }, []);
 
     useEffect(() => {
         if (selectedCard) {
@@ -111,7 +96,7 @@ const PlayGame = () => {
 
     const endTurnHandler = async () => {
         try {
-            await endTurn(Number(gameId));
+            await endTurn(gameId);
             setTableCards([]);
         } catch (error) {
             console.error('Error ending turn:', error);
@@ -122,7 +107,7 @@ const PlayGame = () => {
     const handleCardClick = async (card: string) => {
         if (attackMode) {
             try {
-                await placeCardOnTable(Number(gameId), card);
+                await placeCardOnTable(gameId, card);
 
                 setSelectedCard(card);
                 setIsAnimating(true);
@@ -145,7 +130,7 @@ const PlayGame = () => {
 
             if (cardToBeat) {
                 try {
-                    await beatCard(Number(gameId), cardToBeat, card);
+                    await beatCard(gameId, cardToBeat, card);
 
                     setTableCards(prevTableCards =>
                         prevTableCards.map(t =>
@@ -202,7 +187,7 @@ const PlayGame = () => {
                     <div className="wrapper-plays-header"></div>
                     <div className="wrapper-plays-game">
                         <div className="players-blocks">
-                            <div className="player-block user-dumaet footer-ava-wp">
+                            <div id="user-dumaet" style={{borderRadius:'50%'}}>
                                 <img src={GamePlay} alt="Gameplay Avatar" />
                                 <div className="second-player-hand">
                                     {myCards.map((card, index) => {
@@ -225,10 +210,10 @@ const PlayGame = () => {
                             </div>
 
                             <div className="players-flex">
-                                <div className="player-block footer-ava-wp">
+                                <div className="player-block1 footer-ava-wp1">
                                     <img src={GamePlay} alt="Gameplay Avatar" />
                                 </div>
-                                <div className="player-block footer-ava-wp">
+                                <div className="player-block1 footer-ava-wp1">
                                     <img src={GamePlay} alt="Gameplay Avatar" />
                                 </div>
                             </div>
@@ -337,15 +322,13 @@ const PlayGame = () => {
             <div className="play-footer">
                 <div className="play-footer-ava">
                     <div className="footer-ava-roga">
-                        <div className="footer-ava-wp">
+                        <div className="footer-ava-wp1">
                             <img src={GamePlay} alt="Gameplay Avatar" />
                         </div>
                     </div>
                 </div>
                 <div className="play-footer-wrap">
-                    <div className="play-footer-block">
                         <button className="play-footer-btn" onClick={endTurnHandler}>Бито</button>
-                    </div>
                 </div>
             </div>
         </div>

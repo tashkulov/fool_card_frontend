@@ -45,10 +45,12 @@ const LeaderBoard = () => {
             return (
                 <SkeletonCurd key={id}>
                     <div className={cls.MVPPlayer}>
-                        <h3>1</h3>
-                        <div className={cls.wrapperImgWithName}>
-                            <img src={referalAva} alt=""/>
-                            <div>{item.username}</div>
+                        <div className={cls.wrapperIdAndImgName}>
+                            <h3>1</h3>
+                            <div className={cls.wrapperImgWithName}>
+                                <img src={referalAva} alt=""/>
+                                <div>{item.username}</div>
+                            </div>
                         </div>
                         <div className={cls.wrapperImgWithExperience}>
                             <img src={firstMesto} alt=""/>
@@ -61,10 +63,12 @@ const LeaderBoard = () => {
             return (
                 <SkeletonCurd key={id}>
                     <div className={cls.MVPPlayer}>
-                        <h3>2</h3>
-                        <div className={cls.wrapperImgWithName}>
-                            <img src={referalAva} alt=""/>
-                            <div>{item.username}</div>
+                        <div className={cls.wrapperIdAndImgName}>
+                            <h3>2</h3>
+                            <div className={cls.wrapperImgWithName}>
+                                <img src={referalAva} alt=""/>
+                                <div>{item.username}</div>
+                            </div>
                         </div>
                         <div className={cls.wrapperImgWithExperience}>
                             <img src={secondMesto} alt=""/>
@@ -77,10 +81,12 @@ const LeaderBoard = () => {
             return (
                 <SkeletonCurd key={id}>
                     <div className={cls.MVPPlayer}>
-                        <h3>3</h3>
-                        <div className={cls.wrapperImgWithName}>
-                            <img src={referalAva} alt=""/>
-                            <div>{item.username}</div>
+                        <div className={cls.wrapperIdAndImgName}>
+                            <h3>3</h3>
+                            <div className={cls.wrapperImgWithName}>
+                                <img src={referalAva} alt=""/>
+                                <div>{item.username}</div>
+                            </div>
                         </div>
                         <div className={cls.wrapperImgWithExperience}>
                             <img src={threeMesto} alt=""/>
@@ -103,10 +109,12 @@ const LeaderBoard = () => {
                             :
                             <SkeletonCurd key={id}>
                                 <div className={cls.MVPPlayer}>
-                                    <h3>{id + 1}</h3>
-                                    <div className={cls.wrapperImgWithName}>
-                                        <img src={referalAva} alt=""/>
-                                        <div>{item.username}</div>
+                                    <div className={cls.wrapperIdAndImgName}>
+                                        <h3>{id + 1}</h3>
+                                        <div className={cls.wrapperImgWithName}>
+                                            <img src={referalAva} alt=""/>
+                                            <div>{item.username}</div>
+                                        </div>
                                     </div>
                                     <div className={cls.wrapperImgWithExperience}>
                                         <img src={lidstart} alt=""/>

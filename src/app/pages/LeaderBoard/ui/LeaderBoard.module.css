@@ -16,7 +16,13 @@
   align-items: center;
   justify-content: space-between;
 }
-.main .listLeaderBoard .MVPPlayer .wrapperImgWithName {
+.main .listLeaderBoard .MVPPlayer .wrapperIdAndImgName {
+  display: flex;
+}
+.main .listLeaderBoard .MVPPlayer .wrapperIdAndImgName h3 {
+  margin-right: 40px;
+}
+.main .listLeaderBoard .MVPPlayer .wrapperIdAndImgName .wrapperImgWithName {
   display: flex;
   align-items: center;
   gap: 10px;
