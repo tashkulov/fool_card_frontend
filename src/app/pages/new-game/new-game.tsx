@@ -107,10 +107,12 @@ const CreateGameForm: React.FC = () => {
                 }
             });
             console.log('Game created successfully:', response.data);
-            navigate('/inGame');
+            const gameId = response.data.id;
+            navigate(`/inGame/${gameId}`);
         } catch (error) {
             console.error('Error creating game:', error, requestData);
         }
+
     };
 
     return (

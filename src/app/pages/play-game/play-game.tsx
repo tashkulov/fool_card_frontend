@@ -16,6 +16,7 @@ type TParams = {
 }
 
 const PlayGame = () => {
+    const { gameId } = useParams<{ gameId: string }>();
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [betValue, setBetValue] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
@@ -29,7 +30,8 @@ const PlayGame = () => {
     const [attackMode, setAttackMode] = useState<boolean>(true);
     const { id } = useParams<TParams>()
 
-    let gameId: string | number = 32;
+
+    let gameId: string | number = 34;
 
     if (id) {
         gameId = +id
@@ -44,7 +46,7 @@ const PlayGame = () => {
 
     const loadGameData = async () => {
         try {
-            const data = await fetchGameData(gameId);
+            const data = await fetchGameData(Number(gameId));
             setGameData(data);
             setMyCards(data.hand);
 
@@ -65,7 +67,7 @@ const PlayGame = () => {
     const loadGameList = async () => {
         try {
             const gameList = await fetchGameList();
-            const game = gameList.find((game: GameListItem) => game.id == gameId);
+            const game = gameList.find((game: GameListItem) => game.id === Number(gameId));
             if (game) {
                 setBetValue(game.bet_value);
             } else {
@@ -88,7 +90,7 @@ const PlayGame = () => {
         const intervalId = setInterval(loadGameDataInterval, 1000);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [gameId]);
 
     useEffect(() => {
         if (selectedCard) {
@@ -109,7 +111,7 @@ const PlayGame = () => {
 
     const endTurnHandler = async () => {
         try {
-            await endTurn(gameId);
+            await endTurn(Number(gameId));
             setTableCards([]);
         } catch (error) {
             console.error('Error ending turn:', error);
@@ -120,7 +122,7 @@ const PlayGame = () => {
     const handleCardClick = async (card: string) => {
         if (attackMode) {
             try {
-                await placeCardOnTable(gameId, card);
+                await placeCardOnTable(Number(gameId), card);
 
                 setSelectedCard(card);
                 setIsAnimating(true);
@@ -143,7 +145,7 @@ const PlayGame = () => {
 
             if (cardToBeat) {
                 try {
-                    await beatCard(gameId, cardToBeat, card);
+                    await beatCard(Number(gameId), cardToBeat, card);
 
                     setTableCards(prevTableCards =>
                         prevTableCards.map(t =>
