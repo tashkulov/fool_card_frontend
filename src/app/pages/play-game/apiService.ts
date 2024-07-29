@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'https://foolcard2.shop/v1';
 const HEADERS = {
-    Authorization: 'c3b45eba3c480aa4d1ea38023a9189c557a59c8013336f07',
+    Authorization: 'cd449c39700f42c038ce283683bc9b3a6557a644c86d175a',
 };
 
 export const fetchGameData = async (gameId: number) => {

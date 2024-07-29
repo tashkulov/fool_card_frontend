@@ -24,7 +24,7 @@ const PlayGame = () => {
     const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
     const [attackMode, setAttackMode] = useState<boolean>(true);
 
-    const gameId = 32;
+    const gameId = 34;
 
 
     const loadGameData = async () => {
