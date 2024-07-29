@@ -336,9 +336,9 @@
     transform: rotate(-200deg);
     right: -10px;
     z-index: 4;
-    width: 10vw; /* Сделано относительным */
-    max-width: 64px; /* Ограничение максимальной ширины */
-    height: auto; /* Поддержка соотношения сторон */
+    width: 10vw;
+    max-width: 64px;
+    height: auto;
 }
 
 .table-card {
@@ -471,17 +471,17 @@
     .hand img,
     .second-player-hand img {
         width: 12vw;
-        max-width: 50px;
+        max-width: 60px;
     }
 
     .bita-card,
     .beaten-card {
         width: 12vw;
-        max-width: 50px;
+        max-width: 60px;
     }
     .deck,.deck img{
         width: 12vw;
-        max-width: 50px;
+        max-width: 60px;
     }
     .table-card {
         width: 80vw;
@@ -511,18 +511,18 @@
     .hand img,
     .second-player-hand img {
         width: 15vw;
-        max-width: 45px;
+        max-width: 65px;
     }
 
     .bita-card img,
     .beaten-card {
         width: 15vw;
 
-        max-width: 45px;
+        max-width: 65px;
     }
     .deck,.deck img{
         width: 12vw;
-        max-width: 50px;
+        max-width: 60px;
     }
 
     .table-card {
