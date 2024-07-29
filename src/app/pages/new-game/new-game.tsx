@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './new-game.css'
-import headerIllustration from '../../../assets/img/Header Illustration.svg';
+// import headerIllustration from '../../../assets/img/Header Illustration.svg';
 import NewBet from '../../../assets/img/new-stavka.svg';
 import Minus from '../../../assets/img/minus.svg';
 import Plus from '../../../assets/img/pluss.svg';
 import Check from "../../../assets/img/check_.svg"
 import Footer from '../../components/Footer/Footer';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from 'react-router-dom';
+import HeaderRiveAnimation from '../../components/rive-conponents/ruby-header/ruby-component';
+import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 
 
 // Define the types for the props and states
@@ -17,7 +19,7 @@ type RiveAnimation = { play: () => void };
 const CreateGameForm: React.FC = () => {
 
     const navigate = useNavigate();
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const [betAmount, setBetAmount] = useState<number>(1200);
     const [selectedGameMode, setSelectedGameMode] = useState<string>('');
     const [selectedPlayerCount, setSelectedPlayerCount] = useState<string>('');
@@ -118,7 +120,8 @@ const CreateGameForm: React.FC = () => {
     return (
         <div className="main main-wrapp">
 
-            <img className='header-illustration-img' src={headerIllustration} alt="" />
+            <HeaderRiveAnimation />
+            <HeaderMainSvgIcon />
 
             <section className="kvesty-title new-games">
 

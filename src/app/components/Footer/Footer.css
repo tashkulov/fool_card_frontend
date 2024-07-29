@@ -62,27 +62,3 @@ h1 {
     height: 46px;
     background-image: url('../../pages/home-page/images/nav-new-game.png');
 }
-@media screen and (max-width: 600px) {
-    .main-page-container {
-        width: 393px;
-        height: 852px;
-    }
-
-
-}
-
-@media screen and (min-width: 920px) {
-    .main-page-container {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 1600px;
-        height: 768px;
-    }
-
-    .main-page-menu {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-}
