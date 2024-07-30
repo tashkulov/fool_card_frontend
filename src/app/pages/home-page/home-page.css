@@ -23,7 +23,7 @@
     width: 100%;
     position: fixed;
     top: 0;
-    
+
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -37,7 +37,7 @@
     display: flex;
     flex-direction: row;
     width: 80%;
-    
+
     height: 96px;
     align-items: center;
     justify-content: center;
@@ -47,7 +47,7 @@
 .main-page-header-content-data {
 
     width: 65%;
-    
+
     height: 80px;
     display: flex;
     flex-direction: column;
@@ -63,20 +63,20 @@
     color: white;
     font-size: 20px;
 
-    
+
     height: 36px;
     background-color: #807A7B;
     border: #918789 solid 2px;
     border-radius: 10px;
     box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.411),
-    inset 0 -4px 4px rgba(255, 255, 255, 0.4);
+        inset 0 -4px 4px rgba(255, 255, 255, 0.4);
 }
 
 .main-page-header-content-data-credits {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    
+
     height: 32px;
 }
 
@@ -86,13 +86,13 @@
     align-items: center;
     width: 48%;
 
-    
+
     height: 28px;
     background-color: #807A7B;
     border: #918789 solid 2px;
     border-radius: 10px;
     box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.411),
-    inset 0 -4px 4px rgba(255, 255, 255, 0.4);
+        inset 0 -4px 4px rgba(255, 255, 255, 0.4);
 }
 
 .main-page-header-content-data-credits-1-icon {
@@ -139,8 +139,8 @@
     position: fixed;
     height: 614px;
     width: 100%;
-    
-    
+
+
     bottom: 0;
     z-index: 0;
 }
@@ -149,15 +149,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
 
     color: black;
-    
+
     z-index: 1;
     background-image: url('./images/main-page-menu-bg.png');
     width: 267px;
     height: 540px;
 }
+
+
 
 .main-page-menu-buttons {
     display: flex;
@@ -192,7 +194,7 @@
 
     position: absolute;
     z-index: 100;
-    
+
     height: 105px;
     background-image: url("./images/main-page-navbar-bg.png");
     background-repeat: no-repeat;
@@ -201,6 +203,7 @@
     vertical-align: top;
 
 }
+
 .main-page-navbar-option {
     display: flex;
     flex-direction: column;
@@ -239,4 +242,33 @@ h1 {
     width: 40px;
     height: 46px;
     background-image: url('./images/nav-new-game.png');
+}
+
+@media (max-height: 750px) {
+    .main-page-menu {
+        background-image: url('./images/main-page-mini-menu-bg.png');
+        width: 237px;
+        height: 478px;
+    }
+
+    .main-page-menu-button {
+        
+        background-image: url('./images/main-page-mini-menu-button.png');
+        width: 132px;
+        height: 59px;
+
+        font-size: 14px;
+        
+    }
+
+    .main-page-menu-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    
+        width: 149px;
+        height: 302px;
+        margin-top: 50px;
+    }
 }
