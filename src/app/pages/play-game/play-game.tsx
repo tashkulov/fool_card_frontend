@@ -8,15 +8,13 @@ import arrow from "../img/Arrow1.svg";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 import { Link } from 'react-router-dom';
-import { fetchGameData, fetchGameList, placeCardOnTable, beatCard, endTurn } from './apiService'; // Импортируем функции API
+import { fetchGameData, fetchGameList, placeCardOnTable, beatCard, endTurn } from './apiService';
 import { GameData, GameListItem } from './interface';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 const PlayGame = () => {
-
-    // const { gameId } = useParams<{ gameId: string }>();
-
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [betValue, setBetValue] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
@@ -25,19 +23,18 @@ const PlayGame = () => {
     const [isAnimating, setIsAnimating] = useState(false);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
     const handRef = useRef<HTMLDivElement | null>(null);
-    const [myCards, setMyCards] = useState<string[]>([]);
+    const [myCards, setMyCards] = useState<{ card: string, visible: boolean }[]>([]);
     const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
     const [attackMode, setAttackMode] = useState<boolean>(true);
 
-    const gameId = 41;
+    const gameId = 47;
 
     const loadGameData = async () => {
         try {
             const data = await fetchGameData(gameId);
             setGameData(data);
-            setMyCards(data.hand);
+            setMyCards(data.hand.map(card => ({ card, visible: false })));
 
-            // Обновление tableCards, если данные получены из API
             if (data.tableCards) {
                 setTableCards(data.tableCards);
             }
@@ -66,17 +63,28 @@ const PlayGame = () => {
     };
 
     useEffect(() => {
-        const loadGameDataInterval = () => {
-            loadGameData();
-        };
-
         loadGameData();
-        loadGameList()
+        loadGameList();
 
-        const intervalId = setInterval(loadGameDataInterval, 1000);
-
+        const intervalId = setInterval(loadGameData, 1000);
         return () => clearInterval(intervalId);
     }, []);
+
+    useEffect(() => {
+        if (myCards.length > 0) {
+            const animateCards = async () => {
+                for (let i = 0; i < myCards.length; i++) {
+                    setMyCards(prevCards => {
+                        const updatedCards = [...prevCards];
+                        updatedCards[i].visible = true;
+                        return updatedCards;
+                    });
+                    await new Promise(resolve => setTimeout(resolve, 300)); // Задержка 300мс между картами
+                }
+            };
+            animateCards();
+        }
+    }, [myCards]);
 
     useEffect(() => {
         if (selectedCard) {
@@ -87,7 +95,7 @@ const PlayGame = () => {
             }, 500);
             return () => clearTimeout(timer);
         }
-    }, [selectedCard]);
+    }, []);
 
     const getCardImagePath = (card: string) => {
         const [suit] = card.split('_');
@@ -121,7 +129,7 @@ const PlayGame = () => {
                     setIsAnimating(false);
                     setSelectedCard(null);
 
-                    setMyCards(prevCards => prevCards.filter(c => c !== card));
+                    setMyCards(prevCards => prevCards.filter(c => c.card !== card));
                     setTableCards(prevTableCards => [...prevTableCards, { card, beaten_by_card: null }]);
 
                     console.log('Updated Table Cards:', [...tableCards, { card, beaten_by_card: null }]);
@@ -143,7 +151,7 @@ const PlayGame = () => {
                         )
                     );
 
-                    setMyCards(prevCards => prevCards.filter(c => c !== card));
+                    setMyCards(prevCards => prevCards.filter(c => c.card !== card));
 
                     console.log(`Card ${cardToBeat} beaten by ${card}`);
                     setAttackMode(true);
@@ -196,10 +204,25 @@ const PlayGame = () => {
                     <div className="wrapper-plays-header"></div>
                     <div className="wrapper-plays-game">
                         <div className="players-blocks">
-                            <div id="user-dumaet" style={{borderRadius:'50%'}}>
-                                <img src={GamePlay} alt="Gameplay Avatar" />
+                            <div id="user-dumaet" style={{borderRadius: '50%'}}>
+
+                                <CountdownCircleTimer
+                                    isPlaying
+                                    duration={30}
+                                    size={90}
+                                    colors={['#18ee7b', '#80776DFF',]}
+                                    colorsTime={[30, 0]}
+                                >
+                                    {({remainingTime}) =>
+                                        <img src={GamePlay} alt="Gameplay Avatar"/>
+
+                                    }
+
+                                </CountdownCircleTimer>
+
                                 <div className="second-player-hand">
-                                    {myCards.map((card, index) => {
+                                    {myCards.map((cardObj, index) => {
+                                        const { card, visible } = cardObj;
                                         return (
                                             <img
                                                 key={card}
@@ -208,7 +231,9 @@ const PlayGame = () => {
                                                 style={{
                                                     zIndex: index + 1,
                                                     width: 64,
-                                                    height: 90
+                                                    height: 90,
+                                                    opacity: visible ? 1 : 0,
+                                                    transition: 'opacity 0.3s ease',
                                                 }}
                                             />
                                         );
@@ -302,7 +327,8 @@ const PlayGame = () => {
                     </div>
 
                     <div className="hand" ref={handRef}>
-                        {myCards.map((card: string, index: number) => {
+                        {myCards.map((cardObj: { card: string, visible: boolean }, index: number) => {
+                            const { card, visible } = cardObj;
                             const rotation = (index - middle) * angle;
                             const position = (index - middle) * offset;
 
@@ -314,8 +340,9 @@ const PlayGame = () => {
                                     style={{
                                         left: `calc(50% + ${position}px)`,
                                         transform: `rotate(${rotation}deg)`,
-                                        transition: 'transform 0.2s ease',
+                                        transition: 'transform 0.2s ease, opacity 0.3s ease',
                                         zIndex: 10,
+                                        opacity: visible ? 1 : 0,
                                     }}
                                     onClick={() => handleCardClick(card)}
                                 />

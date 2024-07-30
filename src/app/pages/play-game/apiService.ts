@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'https://foolcard2.shop/v1';
 const HEADERS = {
-    Authorization: 'cd449c39700f42c038ce283683bc9b3a6557a644c86d175a',
+    Authorization: '8a32ef2bbe025a150047f8ff474b0d380c7f14ce2d7e03e4',
 };
 
 export const fetchGameData = async (gameId: number | string) => {
@@ -16,7 +16,6 @@ export const fetchGameData = async (gameId: number | string) => {
     }
 };
 
-// Получение списка игр
 export const fetchGameList = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/games`, {
@@ -28,7 +27,6 @@ export const fetchGameList = async () => {
     }
 };
 
-// Размещение карты на столе
 export const placeCardOnTable = async (gameId: number | string, card: string) => {
     try {
         await axios.post(
