@@ -1,9 +1,26 @@
-import RiveComponent from 'rive-react';
+import { useEffect } from 'react';
+import { useRive } from 'rive-react';
 import "./clubs-component.css"
 
-const ClubsRiveAnimation = () => {
+interface ClubsRiveAnimationProps {
+  active: boolean;
+}
+
+const ClubsRiveAnimation: React.FC<ClubsRiveAnimationProps> = ({ active }) => {
+  const { RiveComponent, rive } = useRive({
+    src: "/animations/clubs.riv",
+    autoplay: true,
+  });
+
+  useEffect(() => {
+    if (active) {
+      rive?.play('active');
+    } else {
+      rive?.reset()
+    }
+  }, [active, rive]);
   return (
-      <RiveComponent className='clubs-animation' src="/animations/clubs.riv" />
+      <RiveComponent className='clubs-animation' />
   );
 };
 

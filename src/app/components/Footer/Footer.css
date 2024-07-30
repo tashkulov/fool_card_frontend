@@ -10,7 +10,7 @@
     background-size: cover;
     bottom: 0;
     vertical-align: top;
-
+    position: fixed;
 }
 .main-page-navbar a {
     display: flex;

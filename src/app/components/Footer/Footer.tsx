@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 import { useTranslation } from "react-i18next";
@@ -8,40 +8,40 @@ import DiamondsRiveAnimation from '../rive-conponents/diamonds/diamonds-componen
 import SpadesRiveAnimation from '../rive-conponents/spades/spades-component';
 
 const Footer: React.FC = () => {
+    const [activeId, setActiveId] = useState<number | null>(null);
+
     const { t } = useTranslation()
+
+    const handleClick = (id: number | null) => {
+        setActiveId(id);
+    };
+
+    
 
     return (
         <footer className="main-page-navbar">
-            <div className="main-page-navbar-option menu">
+            <div className="main-page-navbar-option menu" onClick={() => handleClick(0)}>
                 <Link to="/" className="main-page-navbar-link">
-                    <ClubsRiveAnimation />
-                    <h1>
-                        {t("Меню")}
-                    </h1>
+                    <ClubsRiveAnimation active={activeId === 0} />
+                    <h1>{t("Меню")}</h1>
                 </Link>
             </div>
-            <div className="main-page-navbar-option quests">
+            <div className="main-page-navbar-option quests" onClick={() => handleClick(1)}>
                 <Link to="/quests" className="main-page-navbar-link">
-                    <HeartsRiveAnimation />
-                    <h1>
-                        {t("Квесты")}
-                    </h1>
+                    <HeartsRiveAnimation active={activeId === 1} />
+                    <h1>{t("Квесты")}</h1>
                 </Link>
             </div>
-            <div className="main-page-navbar-option open">
+            <div className="main-page-navbar-option open" onClick={() => handleClick(2)}>
                 <Link to="/open-games" className="main-page-navbar-link">
-                    <SpadesRiveAnimation />
-                    <h1>
-                        {t("Открытые")}
-                    </h1>
+                    <SpadesRiveAnimation active={activeId === 2} />
+                    <h1>{t("Открытые")}</h1>
                 </Link>
             </div>
-            <div className="main-page-navbar-option new-game">
+            <div className="main-page-navbar-option new-game" onClick={() => handleClick(3)}>
                 <Link to="/newGame" className="main-page-navbar-link">
-                    <DiamondsRiveAnimation />
-                    <h1>
-                        {t("Создать игру")}
-                    </h1>
+                    <DiamondsRiveAnimation active={activeId === 3} />
+                    <h1>{t("Создать игру")}</h1>
                 </Link>
             </div>
         </footer>
