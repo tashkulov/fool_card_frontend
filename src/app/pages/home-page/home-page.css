@@ -1,7 +1,10 @@
 .main-page-container {
+    padding-top: 126px;
+    padding-bottom: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     min-height: 100dvh;
 
     background-image: url("./images/main-page-bg.png");
@@ -9,12 +12,17 @@
     background-size: cover;
 }
 
+
+
+
 .main-page-header {
     background-image: url("./images/main-page-header-bg.png");
     background-repeat: no-repeat;
     background-size: cover;
     height: 126px;
     width: 100%;
+    position: fixed;
+    top: 0;
     
     display: flex;
     flex-direction: row;
@@ -141,14 +149,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 
     color: black;
-    margin-top: 10px;
+    
     z-index: 1;
     background-image: url('./images/main-page-menu-bg.png');
     width: 267px;
     height: 540px;
-    margin-bottom: 160px;
 }
 
 .main-page-menu-buttons {
