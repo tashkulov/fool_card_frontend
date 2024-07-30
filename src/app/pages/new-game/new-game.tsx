@@ -101,7 +101,6 @@ const CreateGameForm: React.FC = () => {
             "toss_mode": tossMode,
             "game_ending_type": gameEndingType
         };
-        
 
         try {
             const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
@@ -113,7 +112,7 @@ const CreateGameForm: React.FC = () => {
             const gameId = CreateGame.data.id;
             
 
-            const response = await axios.post('https://foolcard2.shop/v1/games', {"id": gameId}, {
+            const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
                 headers: {
                     'Authorization': localStorage.getItem('authorization')
                 }
