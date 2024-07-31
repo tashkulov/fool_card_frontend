@@ -14,7 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const PlayGame = () => {
-    const { gameId, who } = useParams<{ gameId: string, who: string }>();
+    const { gameId } = useParams<{ gameId: string }>();
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [loading, setLoading] = useState(true);
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
@@ -40,11 +40,11 @@ const PlayGame = () => {
         }
     }, [gameId]);
 
-    if (who === "guest") {
-
-    } else {
-
-    }
+    // if (who === "guest") {
+    //
+    // } else {
+    //
+    // }
 
     useEffect(() => {
         const loadGameData = async () => {
