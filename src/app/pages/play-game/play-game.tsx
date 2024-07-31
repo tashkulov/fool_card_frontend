@@ -16,7 +16,6 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 const PlayGame = () => {
     const [gameData, setGameData] = useState<GameData | null>(null);
-    const [betValue, setBetValue] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
@@ -179,7 +178,7 @@ const PlayGame = () => {
                             </Link>
                             <div className="play-header-coin">
                                 <img src={coins} alt="Coins" />
-                                <p>{betValue !== null ? `${betValue}` : 'N/A'}</p>
+                                {/*<p>{betValue !== null ? `${betValue}` : 'N/A'}</p>*/}
                             </div>
                         </div>
                         <div className="play-header-rejim block-obvodka">
@@ -205,7 +204,7 @@ const PlayGame = () => {
                                     colors={['#18ee7b', '#80776DFF']}
                                     colorsTime={[30, 0]}
                                 >
-                                    {({ remainingTime }) => <img src={GamePlay} alt="Gameplay Avatar" />}
+                                    {({}) => <img src={GamePlay} alt="Gameplay Avatar" />}
                                 </CountdownCircleTimer>
                                 <div className="second-player-hand">
                                     {myCards.map((card, index) => (
