@@ -7,20 +7,16 @@ import coins from "../img/coins.svg";
 import arrow from "../img/Arrow1.svg";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
-import { Link } from 'react-router-dom';
-import { fetchGameData, fetchGameList, placeCardOnTable, beatCard, endTurn } from './apiService'; // Импортируем функции API
-import { GameData, GameListItem } from './interface';
+import { Link, useParams } from 'react-router-dom';
+import { fetchGameData, placeCardOnTable, beatCard, endTurn } from './apiService';
+import { GameData } from './interface';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const PlayGame = () => {
-
-    // const { gameId } = useParams<{ gameId: string }>();
-
+    const { gameId } = useParams<{ gameId: string }>();
     const [gameData, setGameData] = useState<GameData | null>(null);
-    const [betValue, setBetValue] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const [isAnimating, setIsAnimating] = useState(false);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
@@ -28,55 +24,48 @@ const PlayGame = () => {
     const [myCards, setMyCards] = useState<string[]>([]);
     const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
     const [attackMode, setAttackMode] = useState<boolean>(true);
+    const [id, setId] = useState<number>(0);
+    const [error, setError] = useState<string | null>(null);
 
-    const gameId = 41;
-
-    const loadGameData = async () => {
-        try {
-            const data = await fetchGameData(gameId);
-            setGameData(data);
-            setMyCards(data.hand);
-
-            // Обновление tableCards, если данные получены из API
-            if (data.tableCards) {
-                setTableCards(data.tableCards);
-            }
-
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching game data:', error);
-            setError('Failed to load game data');
-            setLoading(false);
-        }
-    };
-
-    const loadGameList = async () => {
-        try {
-            const gameList = await fetchGameList();
-            const game = gameList.find((game: GameListItem) => game.id === gameId);
-            if (game) {
-                setBetValue(game.bet_value);
-            } else {
-                setError('Game not found');
-            }
-        } catch (error) {
-            console.error('Error fetching game list:', error);
-            setError('Failed to load game list');
-        }
-    };
+    const [errorUseParams, setErrorUseParams] = useState<boolean>(false);
 
     useEffect(() => {
-        const loadGameDataInterval = () => {
-            loadGameData();
+        if (Number(gameId)) {
+            if (gameId) {
+                const ID: number = +gameId
+                setId(Number(ID));
+            } else {
+                setErrorUseParams(true);
+            }
+        }
+    }, [gameId]);
+
+    useEffect(() => {
+        const loadGameData = async () => {
+            if (id) {
+                try {
+                    console.log(id)
+                    const data = await fetchGameData(id);
+                    setGameData(data);
+                    setMyCards(data.hand);
+                    if (data.tableCards) {
+                        setTableCards(data.tableCards);
+                    }
+                    setLoading(false);
+                } catch (error) {
+                    console.log('Error fetching game data:', error);
+                    setError('Failed to load game data');
+                    setLoading(false);
+                }
+            }
         };
 
         loadGameData();
-        loadGameList()
 
-        const intervalId = setInterval(loadGameDataInterval, 1000);
+        const intervalId = setInterval(loadGameData, 1000);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         if (selectedCard) {
@@ -102,7 +91,7 @@ const PlayGame = () => {
         }
 
         try {
-            await endTurn(gameId);
+            await endTurn(id);
             setTableCards([]);
         } catch (error) {
             console.error('Error ending turn:', error);
@@ -113,18 +102,15 @@ const PlayGame = () => {
     const handleCardClick = async (card: string) => {
         if (attackMode) {
             try {
-                await placeCardOnTable(gameId, card);
+                await placeCardOnTable(id, card);
 
                 setSelectedCard(card);
                 setIsAnimating(true);
                 setTimeout(() => {
                     setIsAnimating(false);
                     setSelectedCard(null);
-
                     setMyCards(prevCards => prevCards.filter(c => c !== card));
                     setTableCards(prevTableCards => [...prevTableCards, { card, beaten_by_card: null }]);
-
-                    console.log('Updated Table Cards:', [...tableCards, { card, beaten_by_card: null }]);
                     setAttackMode(false);
                 }, 500);
             } catch (error) {
@@ -135,7 +121,7 @@ const PlayGame = () => {
 
             if (cardToBeat) {
                 try {
-                    await beatCard(gameId, cardToBeat, card);
+                    await beatCard(id, cardToBeat, card);
 
                     setTableCards(prevTableCards =>
                         prevTableCards.map(t =>
@@ -144,8 +130,6 @@ const PlayGame = () => {
                     );
 
                     setMyCards(prevCards => prevCards.filter(c => c !== card));
-
-                    console.log(`Card ${cardToBeat} beaten by ${card}`);
                     setAttackMode(true);
                 } catch (error) {
                     console.error('Error beating card:', error);
@@ -154,31 +138,30 @@ const PlayGame = () => {
         }
     };
 
-    const hasUnbeatenCards = () => {
-        return tableCards.some(card => card.beaten_by_card === null);
-    };
+    const hasUnbeatenCards = () => tableCards.some(card => card.beaten_by_card === null);
 
     if (loading) return <div>Loading...</div>;
+    if (errorUseParams) return <div>Ошибка при получении адреса игры. Попробуйте перезайти в игру еще раз.</div>;
     if (error) return <div>{error}</div>;
 
     const angle = 20;
     const offset = 30;
     const middle = gameData ? Math.floor(gameData.hand.length / 2) : 0;
 
+
+
     return (
         <div className="wrapper">
             <div className="plays">
                 <section className="play-header">
                     <div className="play-header-wrapper">
-
                         <div className="play-header-block">
                             <Link to={'/'} className="play-header-back block-obvodka">
                                 <img src={arrow} alt="Back" />
                             </Link>
-
                             <div className="play-header-coin">
                                 <img src={coins} alt="Coins" />
-                                <p>{betValue !== null ? `${betValue}` : 'N/A'}</p>
+                                {/*<p>{betValue !== null ? `${betValue}` : 'N/A'}</p>*/}
                             </div>
                         </div>
                         <div className="play-header-rejim block-obvodka">
@@ -199,24 +182,20 @@ const PlayGame = () => {
                             <div id="user-dumaet" style={{borderRadius:'50%'}}>
                                 <img src={GamePlay} alt="Gameplay Avatar" />
                                 <div className="second-player-hand">
-                                    {myCards.map((card, index) => {
-                                        return (
-                                            <img
-                                                key={card}
-                                                src={back_card}
-                                                alt="back_card_second_player"
-                                                style={{
-                                                    zIndex: index + 1,
-                                                    width: 64,
-                                                    height: 90
-                                                }}
-                                            />
-                                        );
-                                    })}
+                                    {myCards.map((card, index) => (
+                                        <img
+                                            key={card}
+                                            src={back_card}
+                                            alt="back_card_second_player"
+                                            style={{
+                                                zIndex: index + 1,
+                                                width: 64,
+                                                height: 90
+                                            }}
+                                        />
+                                    ))}
                                 </div>
-
                             </div>
-
                             <div className="players-flex">
                                 <div className="player-block1 footer-ava-wp1">
                                     <img src={GamePlay} alt="Gameplay Avatar" />
@@ -227,7 +206,6 @@ const PlayGame = () => {
                             </div>
                         </div>
                     </div>
-
                     <div className="deck">
                         <div className="card-container">
                             {gameData && (
@@ -300,7 +278,6 @@ const PlayGame = () => {
                             </div>
                         ))}
                     </div>
-
                     <div className="hand" ref={handRef}>
                         {myCards.map((card: string, index: number) => {
                             const rotation = (index - middle) * angle;
@@ -322,10 +299,8 @@ const PlayGame = () => {
                             );
                         })}
                     </div>
-
                 </div>
             </div>
-
             <div className="play-footer">
                 <div className="play-footer-ava">
                     <div className="footer-ava-roga">
@@ -344,7 +319,6 @@ const PlayGame = () => {
                     </button>
                 </div>
             </div>
-
             <ToastContainer />
         </div>
     );
