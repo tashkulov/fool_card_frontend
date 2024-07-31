@@ -22,7 +22,7 @@ export type AppRouteProps = RouteProps &NonNullable<unknown>
 
 export const RoutePaths: Record<AppRoutes, string> = {
     [AppRoutes.HOMEPAGE]: "",
-    [AppRoutes.PLAYGAME]: "/inGame/:gameId",
+    [AppRoutes.PLAYGAME]: "/inGame/:gameId/:who",
     [AppRoutes.LEADERBOARD]: "/leaderBoard",
     [AppRoutes.OPENGAMES]: "/open-games",
     [AppRoutes.NEWGAME]: "/newGame",

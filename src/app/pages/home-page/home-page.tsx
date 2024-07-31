@@ -24,8 +24,8 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
     const refModalWindow = useRef(null)
     const { t } = useTranslation()
 
-    let hasRegistered = useRef(false);
-    let hasLoggedIn = useRef(false);
+    const hasRegistered = useRef(false);
+    const hasLoggedIn = useRef(false);
 
     useEffect(() => {
         const RegisterUser = async () => {
@@ -105,7 +105,6 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
 
     return (
-
         <div className="main-page-container">
             <div className="main-page-header">
                 <div className="main-page-header-content">
@@ -160,7 +159,6 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                 </div>
             </div>
             <img src={Hands} className='main-page-hands-cards'/>
-            
             <Modal mode={stateModeModalWindow} ref={refModalWindow}>
                 <Settings />
             </Modal>

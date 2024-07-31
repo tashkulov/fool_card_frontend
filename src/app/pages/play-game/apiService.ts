@@ -1,9 +1,18 @@
 import axios from 'axios';
+import {$api} from "../../../api.ts";
 
 const BASE_URL = 'https://foolcard2.shop/v1';
 const HEADERS = {
     Authorization: '05122f0a73086347b5381eb59127c37371c28143199faa0f',
 };
+
+export const joinInGame = async () => {
+    try {
+        // const response = await $api.get()
+    } catch (e) {
+        console.log("при попытке присоединиться к игре превзошла ошибка")
+    }
+}
 
 export const fetchGameData = async (gameId: number | string) => {
     try {

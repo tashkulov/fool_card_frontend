@@ -132,7 +132,6 @@ const CreateGameForm: React.FC = () => {
                 <HeaderMainSvgIcon />
             </div>
 
-
             <section className="kvesty-title new-games">
 
                 <form onSubmit={handleSubmit} className="form-new-game">
