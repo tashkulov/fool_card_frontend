@@ -8,7 +8,7 @@ interface ClubsRiveAnimationProps {
 
 const ClubsRiveAnimation: React.FC<ClubsRiveAnimationProps> = ({ active }) => {
   const { RiveComponent, rive } = useRive({
-    src: "/animations/clubs.riv",
+    src: "/animations/clubs_new.riv",
     autoplay: true,
   });
 

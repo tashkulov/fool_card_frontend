@@ -20,9 +20,9 @@ const Footer: React.FC = () => {
 
     return (
         <footer className="main-page-navbar">
-            <div className="main-page-navbar-option menu" onClick={() => handleClick(0)}>
+            <div className="main-page-navbar-option menu" onClick={() => handleClick(null)}>
                 <Link to="/" className="main-page-navbar-link">
-                    <ClubsRiveAnimation active={activeId === 0} />
+                    <ClubsRiveAnimation active={activeId === null} />
                     <h1>{t("Меню")}</h1>
                 </Link>
             </div>
