@@ -112,12 +112,12 @@ const CreateGameForm: React.FC = () => {
             const gameId = CreateGame.data.id;
             
 
-            const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
-                headers: {
-                    'Authorization': localStorage.getItem('authorization')
-                }
-            });
-            console.log(response.data)
+            // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
+            //     headers: {
+            //         'Authorization': localStorage.getItem('authorization')
+            //     }
+            // });
+            // console.log(response.data)
             navigate(`/inGame/${gameId}`);
         } catch (error) {
             console.error('Error creating game:', error, requestData);
