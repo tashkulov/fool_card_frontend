@@ -2,11 +2,12 @@ import axios from 'axios';
 
 const BASE_URL = 'https://foolcard2.shop/v1';
 const HEADERS = {
-    Authorization: 'cd449c39700f42c038ce283683bc9b3a6557a644c86d175a',
+    Authorization: '25737ceb37ea9640d09d94d4d85df8cd5b36755483ee36fa',
 };
 
 export const fetchGameData = async (gameId: number | string) => {
     try {
+        // console.log(`${BASE_URL}/games/${gameId}/get_current_table`)
         const response = await axios.get(`${BASE_URL}/games/${gameId}/get_current_table`, {
             headers: HEADERS,
         });

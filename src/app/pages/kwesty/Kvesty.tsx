@@ -15,12 +15,9 @@ const Kvesty = () => {
             <div className={cls.kvestyList}>
                 <OneKvest image={kvest1} headText="Выиграть 5000 монет" description="XP 30.5" buttonText='Начать'/>
                 <OneKvest image={kvest2} headText="Выиграть 2342 монет" description="XP 30.5" buttonText='Начать'/>
-                <OneKvest image={kvest3} headText="Выиграть 5000 монет" description="XP 30.5"
-                          buttonText='Получить'/>
-                <OneKvest image={kvest3} headText="Выиграть 4534 монет" description="XP 30.5"
-                          buttonText='Получить'/>
-                <OneKvest image={kvest3} headText="Выиграть 5000 монет" description="XP 30.5"
-                          buttonText='Получить'/>
+                <OneKvest image={kvest3} headText="Выиграть 5000 монет" description="XP 30.5" buttonText='Получить'/>
+                <OneKvest image={kvest3} headText="Выиграть 4534 монет" description="XP 30.5" buttonText='Получить'/>
+                <OneKvest image={kvest3} headText="Выиграть 5000 монет" description="XP 30.5" buttonText='Получить'/>
                 <OneKvest image={kvest3} headText="Выиграть 523 монет" description="XP 30.5" buttonText='Начать'/>
                 <OneKvest image={kvest3} headText="Выиграть 523 монет" description="XP 30.5" buttonText='Начать'/>
                 <OneKvest image={kvest3} headText="Выиграть 523 монет" description="XP 30.5" buttonText='Начать'/>
