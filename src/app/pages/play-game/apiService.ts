@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const BASE_URL = 'https://foolcard2.shop/v1';
 const HEADERS = {
-    Authorization: '25737ceb37ea9640d09d94d4d85df8cd5b36755483ee36fa',
-};
+    Authorization: localStorage.getItem('authorization')
+}
 
 export const fetchGameData = async (gameId: number | string) => {
     try {
