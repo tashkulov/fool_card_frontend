@@ -4,3 +4,12 @@
     margin-top: 17px;
     margin-left: 4px;
 }
+
+@media (max-height: 750px) {
+    .ruby-animation {
+        width: 40px;
+        height: 40px;
+        margin-top: 14px;
+        margin-left: 4px;
+    }
+}

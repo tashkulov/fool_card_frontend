@@ -13,9 +13,10 @@
     position: relative;
     border: 0.95px solid rgb(0, 0, 0);
     background: linear-gradient(0deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
-    z-index: 2;
+    z-index: 1000;
     flex-shrink: 0;
     padding: 10px;
+
 }
 
 .play-footer-wrap {
@@ -208,9 +209,6 @@
 }
 #user-dumaet {
 
-
-
-
     padding: 5px;
     display: inline-flex;
     align-items: center;
@@ -218,47 +216,15 @@
     border: 0.95px solid rgb(0, 0, 0);
     height: 80px;
     width: 80px;
+    z-index: 1;
     box-sizing: border-box;
 
 
 }
 
-#user-dumaet img {
-    max-width: 90%; /* Установите максимальную ширину картинки */
-    max-height: 90%; /* Установите максимальную высоту картинки */
-}
 
 
-/*/////////////////////////////////*/
 
-/* HTML: <div class="loader"></div> */
-.loader {
-    width: 50px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    border: 8px solid #514b82;
-    animation:
-            l20-1 0.8s infinite linear alternate,
-            l20-2 1.6s infinite linear;
-}
-@keyframes l20-1{
-    0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
-    12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
-    25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
-    50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
-    62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
-    75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
-    100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
-}
-@keyframes l20-2{
-    0%    {transform:scaleY(1)  rotate(0deg)}
-    49.99%{transform:scaleY(1)  rotate(135deg)}
-    50%   {transform:scaleY(-1) rotate(0deg)}
-    100%  {transform:scaleY(-1) rotate(-135deg)}
-}
-
-
-/*//////////////////////*/
 .wrapper-plays-game {
     background-color: #236245;
     height: calc(100vh - 60px); /* Высота на всю высоту окна просмотра за вычетом футера */
@@ -482,6 +448,7 @@
 }
 
 
+/* Стили для экранов до 768px */
 @media (max-width: 768px) {
     .play-footer-btn {
         font-size: 16px;
@@ -503,25 +470,29 @@
 
     .hand img,
     .second-player-hand img {
-        width: 12vw;
+        width: 12vw; /* Ширина для средних экранов */
         max-width: 60px;
     }
 
     .bita-card,
     .beaten-card {
-        width: 12vw;
+        width: 12vw; /* Ширина для средних экранов */
         max-width: 60px;
     }
-    .deck,.deck img{
-        width: 12vw;
+
+    .deck,
+    .deck img {
+        width: 12vw; /* Ширина для средних экранов */
         max-width: 60px;
     }
+
     .table-card {
-        width: 80vw;
-        height: 40vh;
+        width: 80vw; /* Ширина для средних экранов */
+        height: 40vh; /* Высота для средних экранов */
     }
 }
 
+/* Стили для экранов до 480px */
 @media (max-width: 480px) {
     .play-footer-btn {
         font-size: 14px;
@@ -543,23 +514,53 @@
 
     .hand img,
     .second-player-hand img {
-        width: 15vw;
+        width: 15vw; /* Ширина для маленьких экранов */
         max-width: 65px;
     }
 
-    .bita-card img,
+    .bita-card,
     .beaten-card {
-        width: 15vw;
-
+        width: 15vw; /* Ширина для маленьких экранов */
         max-width: 65px;
     }
-    .deck,.deck img{
-        width: 12vw;
+
+    .deck,
+    .deck img {
+        width: 12vw; /* Ширина для маленьких экранов */
         max-width: 60px;
     }
 
     .table-card {
-        width: 70vw;
-        height: 45vh;
+        width: 70vw; /* Ширина для маленьких экранов */
+        height: 45vh; /* Высота для маленьких экранов */
+    }
+}
+
+/* Стили для экранов до 375px */
+@media (max-width: 375px) {
+    .hand img {
+        width: 13vw; /* Ширина для очень маленьких экранов */
+        max-width: 50px;
+    }
+
+    .second-player-hand img {
+        width: 13vw; /* Ширина для очень маленьких экранов */
+        max-width: 40px;
+    }
+
+    .bita-card {
+        width: 15vw; /* Ширина для очень маленьких экранов */
+        max-width: 65px;
+    }
+
+    .deck,
+    .deck img {
+        width: 12vw; /* Ширина для очень маленьких экранов */
+        max-width: 60px;
+    }
+
+    .table-card {
+        width: 70vw; /* Ширина для очень маленьких экранов */
+        height: 45vh; /* Высота для очень маленьких экранов */
     }
 }

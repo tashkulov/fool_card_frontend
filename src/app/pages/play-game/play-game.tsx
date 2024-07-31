@@ -12,12 +12,9 @@ import { fetchGameData, fetchGameList, placeCardOnTable, beatCard, endTurn } fro
 import { GameData, GameListItem } from './interface';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {CountdownCircleTimer} from "react-countdown-circle-timer";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 const PlayGame = () => {
-
-    // const { gameId } = useParams<{ gameId: string }>();
-
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [betValue, setBetValue] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
@@ -30,7 +27,7 @@ const PlayGame = () => {
     const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
     const [attackMode, setAttackMode] = useState<boolean>(true);
 
-    const gameId = 47;
+    const gameId = 57;
 
     const loadGameData = async () => {
         try {
@@ -38,7 +35,6 @@ const PlayGame = () => {
             setGameData(data);
             setMyCards(data.hand);
 
-            // Обновление tableCards, если данные получены из API
             if (data.tableCards) {
                 setTableCards(data.tableCards);
             }
@@ -159,24 +155,28 @@ const PlayGame = () => {
         return tableCards.some(card => card.beaten_by_card === null);
     };
 
+    const getCardOffset = (numCards: number) => {
+        if (numCards >= 8) return 10;
+        if (numCards <= 3) return 50;
+        return 20;
+    };
+
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
     const angle = 20;
-    const offset = 30;
-    const middle = gameData ? Math.floor(gameData.hand.length / 2) : 0;
+    const offset = getCardOffset(myCards.length);
+    const middle = Math.floor(myCards.length / 2);
 
     return (
         <div className="wrapper">
             <div className="plays">
                 <section className="play-header">
                     <div className="play-header-wrapper">
-
                         <div className="play-header-block">
                             <Link to={'/'} className="play-header-back block-obvodka">
                                 <img src={arrow} alt="Back" />
                             </Link>
-
                             <div className="play-header-coin">
                                 <img src={coins} alt="Coins" />
                                 <p>{betValue !== null ? `${betValue}` : 'N/A'}</p>
@@ -197,56 +197,42 @@ const PlayGame = () => {
                     <div className="wrapper-plays-header"></div>
                     <div className="wrapper-plays-game">
                         <div className="players-blocks">
-                            <div id="user-dumaet" style={{borderRadius: '50%'}}>
-
+                            <div id="user-dumaet" style={{ borderRadius: '50%' }}>
                                 <CountdownCircleTimer
                                     isPlaying
                                     duration={30}
                                     size={90}
-                                    colors={['#18ee7b', '#80776DFF',]}
+                                    colors={['#18ee7b', '#80776DFF']}
                                     colorsTime={[30, 0]}
                                 >
-                                    {({remainingTime}) =>
-                                        <img src={GamePlay} alt="Gameplay Avatar"/>
-
-                                    }
-
+                                    {({ remainingTime }) => <img src={GamePlay} alt="Gameplay Avatar" />}
                                 </CountdownCircleTimer>
-
                                 <div className="second-player-hand">
-                                    {myCards.map((cardObj, index) => {
-                                        const {card, visible} = cardObj;
-                                        return (
-                                            <img
-                                                key={card}
-                                                src={back_card}
-                                                alt="back_card_second_player"
-                                                style={{
-                                                    zIndex: index + 1,
-                                                    width: 64,
-                                                    height: 90,
-                                                    opacity: visible ? 1 : 0,
-                                                    transition: 'opacity 0.3s ease',
-                                                }}
-                                            />
-                                        );
-                                    })}
+                                    {myCards.map((card, index) => (
+                                        <img
+                                            key={card}
+                                            src={back_card}
+                                            alt="back_card_second_player"
+                                            style={{
+                                                zIndex: index + 1,
+                                                width: 64,
+                                                height: 90,
+                                                transition: 'opacity 0.3s ease',
+                                            }}
+                                        />
+                                    ))}
                                 </div>
-
                             </div>
-
-
                             <div className="players-flex">
                                 <div className="player-block1 footer-ava-wp1">
-                                    <img src={GamePlay} alt="Gameplay Avatar"/>
+                                    <img src={GamePlay} alt="Gameplay Avatar" />
                                 </div>
                                 <div className="player-block1 footer-ava-wp1">
-                                    <img src={GamePlay} alt="Gameplay Avatar"/>
+                                    <img src={GamePlay} alt="Gameplay Avatar" />
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div className="deck">
                         <div className="card-container">
                             {gameData && (
@@ -319,7 +305,6 @@ const PlayGame = () => {
                             </div>
                         ))}
                     </div>
-
                     <div className="hand" ref={handRef}>
                         {myCards.map((card: string, index: number) => {
                             const rotation = (index - middle) * angle;
@@ -341,10 +326,8 @@ const PlayGame = () => {
                             );
                         })}
                     </div>
-
                 </div>
             </div>
-
             <div className="play-footer">
                 <div className="play-footer-ava">
                     <div className="footer-ava-roga">
@@ -359,11 +342,10 @@ const PlayGame = () => {
                         onClick={endTurnHandler}
                         disabled={hasUnbeatenCards()}
                     >
-                        Бито
+                        Бита
                     </button>
                 </div>
             </div>
-
             <ToastContainer />
         </div>
     );

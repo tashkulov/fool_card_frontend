@@ -13,7 +13,6 @@ const App: React.FC = () => {
 
         <div className={cls.main}>
             <AppRouter />
-
         </div>
 
     );

@@ -7,7 +7,7 @@ export const $api = axios.create({
 
     
     headers: {
-        Authorization: "8a32ef2bbe025a150047f8ff474b0d380c7f14ce2d7e03e4"
+        Authorization: "05122f0a73086347b5381eb59127c37371c28143199faa0f"
     }
 });
 

@@ -4,13 +4,13 @@
     justify-content: space-around;
     align-items: center;
     width: 100vw;
-    height: 12vh;
+    height: 100px;
     background-image: url("../../pages/home-page/images/main-page-navbar-bg.png") ;
     background-repeat: no-repeat;
     background-size: cover;
     bottom: 0;
     vertical-align: top;
-
+    position: fixed;
 }
 .main-page-navbar a {
     display: flex;
