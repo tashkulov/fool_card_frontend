@@ -7,6 +7,7 @@ const HEADERS = {
 
 export const fetchGameData = async (gameId: number | string) => {
     try {
+        // console.log(`${BASE_URL}/games/${gameId}/get_current_table`)
         const response = await axios.get(`${BASE_URL}/games/${gameId}/get_current_table`, {
             headers: HEADERS,
         });
