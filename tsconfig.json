@@ -1,5 +1,3 @@
-
-
 {
   "compilerOptions": {
     "composite": true,
@@ -27,6 +25,7 @@
   },
   "include": [
     "./src/**/*",
-    "./src/telegram-web-app.d.ts"
+    "./src/telegram-web-app.d.ts",
+    "./src/app/hooks/useAppReduxToolkitTools/redux.ts"
   ]
 }

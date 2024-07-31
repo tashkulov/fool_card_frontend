@@ -34,14 +34,13 @@ const OpenGames: React.FC = () => {
             <div className={cls.main}>
                 {games ? (
                     games.sort((a, b) => b.id - a.id).map((game) => (
-                        <Link to={`/inGame/${game.id}`}>
+                        <Link to={`/inGame/${game.id}`} key={game.id}>
                         <OpenGame
                             key={game.id}
                             experience={game.bet_value}
                             username={`Username ${game.id}`}
                             maxMembers={4}
                             currentMembers={3}
-
                         />
                         </Link>
                     ))
