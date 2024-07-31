@@ -14,7 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const PlayGame = () => {
-    const { gameId } = useParams<{ gameId: string }>();
+    const { gameId, who } = useParams<{ gameId: string, who: string }>();
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [loading, setLoading] = useState(true);
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
@@ -39,6 +39,12 @@ const PlayGame = () => {
             }
         }
     }, [gameId]);
+
+    if (who === "guest") {
+
+    } else {
+
+    }
 
     useEffect(() => {
         const loadGameData = async () => {
@@ -147,8 +153,6 @@ const PlayGame = () => {
     const angle = 20;
     const offset = 30;
     const middle = gameData ? Math.floor(gameData.hand.length / 2) : 0;
-
-
 
     return (
         <div className="wrapper">
