@@ -9,12 +9,12 @@ import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 import { Link, useParams } from 'react-router-dom';
 import {fetchGameData, placeCardOnTable, beatCard, endTurn, fetchGameList} from './apiService';
-import { GameData } from './interface';
+import {GameData, GameListItem} from './interface';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const PlayGame = () => {
-    const { gameId } = useParams<{ gameId: string }>();
+    const { gameId } = useParams<{ gameId: string  }>();
     const [betValue, setBetValue] = useState<number | null>(null);
 
     const [gameData, setGameData] = useState<GameData | null>(null);
@@ -50,7 +50,7 @@ const PlayGame = () => {
     const loadGameList = async () => {
         try {
             const gameList = await fetchGameList();
-            const game = gameList.find((game: GameListItem) => game.id === gameId);
+            const game = gameList.find((game: GameListItem) => game.id === id);
             if (game) {
                 setBetValue(game.bet_value);
             } else {
