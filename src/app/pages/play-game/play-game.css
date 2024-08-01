@@ -162,7 +162,7 @@
 .plays {
     position: relative;
     z-index: 2;
-    flex: 1;
+    /*flex: 1;*/
     display: flex;
     flex-direction: column;
 }
@@ -317,6 +317,30 @@
     max-width: 64px; /* Ограничение максимальной ширины */
     height: auto; /* Поддержка соотношения сторон */
 }
+.waiting-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.ready-button {
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.ready-button:hover {
+    background-color: #45a049;
+}
+
 
 .back_card1 {
     position: absolute;

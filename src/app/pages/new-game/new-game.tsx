@@ -105,20 +105,20 @@ const CreateGameForm: React.FC = () => {
         try {
             const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
                 headers: {
-                    'Authorization': localStorage.getItem('authorization')
+                    Authorization: 'd2ab280a297f92a9c5806cee2f4a1a71ee928274e0bbad5c'
                 }
             });
             console.log('Game created successfully:', CreateGame.data);
             const gameId = CreateGame.data.id;
-            
+            const createdById = CreateGame.data.created_by;
 
-            const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
-                headers: {
-                    'Authorization': localStorage.getItem('authorization')
-                }
-            });
-            console.log(response.data)
-            navigate(`/inGame/${gameId}`);
+            // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
+            //     headers: {
+            //         'Authorization': localStorage.getItem('authorization')
+            //     }
+            // });
+            // console.log(response.data)
+            navigate(`/inGame/${gameId}/${createdById}`);
         } catch (error) {
             console.error('Error creating game:', error, requestData);
         }
@@ -131,7 +131,6 @@ const CreateGameForm: React.FC = () => {
                 <HeaderRiveAnimation />
                 <HeaderMainSvgIcon />
             </div>
-
 
             <section className="kvesty-title new-games">
 
