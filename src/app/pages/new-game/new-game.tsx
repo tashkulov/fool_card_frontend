@@ -105,7 +105,7 @@ const CreateGameForm: React.FC = () => {
         try {
             const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
                 headers: {
-                    'Authorization': localStorage.getItem('authorization')
+                    Authorization: '05122f0a73086347b5381eb59127c37371c28143199faa0f'
                 }
             });
             console.log('Game created successfully:', CreateGame.data);

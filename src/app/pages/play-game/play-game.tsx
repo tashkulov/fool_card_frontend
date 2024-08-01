@@ -12,10 +12,11 @@ import {fetchGameData, placeCardOnTable, beatCard, endTurn, fetchGameList} from 
 import {GameData, GameListItem} from './interface';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {CountdownCircleTimer} from "react-countdown-circle-timer";
 
 const PlayGame = () => {
     const { gameId } = useParams<{ gameId: string  }>();
-    const [betValue, setBetValue] = useState<number | null>(null);
+    // const [betValue, setBetValue] = useState<number | null>(null);
 
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [loading, setLoading] = useState(true);
@@ -47,26 +48,25 @@ const PlayGame = () => {
     // } else {
     //
     // }
-    const loadGameList = async () => {
-        try {
-            const gameList = await fetchGameList();
-            const game = gameList.find((game: GameListItem) => game.id === id);
-            if (game) {
-                setBetValue(game.bet_value);
-            } else {
-                setError('Game not found');
-            }
-        } catch (error) {
-            console.error('Error fetching game list:', error);
-            setError('Failed to load game list');
-        }
-    };
+    // const loadGameList = async () => {
+    //     try {
+    //         const gameList = await fetchGameList();
+    //         const game = gameList.find((game: GameListItem) => game.id === id);
+    //         if (game) {
+    //             setBetValue(game.bet_value);
+    //         } else {
+    //             setError('Game not found');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching game list:', error);
+    //         setError('Failed to load game list');
+    //     }
+    // };
 
     useEffect(() => {
         const loadGameData = async () => {
             if (id) {
                 try {
-                    console.log(id)
                     const data = await fetchGameData(id);
                     setGameData(data);
                     setMyCards(data.hand);
@@ -83,7 +83,7 @@ const PlayGame = () => {
         };
 
         loadGameData();
-        loadGameList()
+        // loadGameList()
 
 
         const intervalId = setInterval(loadGameData, 1000);
@@ -183,7 +183,7 @@ const PlayGame = () => {
                             </Link>
                             <div className="play-header-coin">
                                 <img src={coins} alt="Coins" />
-                                <p>{betValue !== null ? `${betValue}` : 'N/A'}</p>
+                                {/*<p>{betValue !== null ? `${betValue}` : 'N/A'}</p>*/}
                             </div>
                         </div>
                         <div className="play-header-rejim block-obvodka">
@@ -201,8 +201,16 @@ const PlayGame = () => {
                     <div className="wrapper-plays-header"></div>
                     <div className="wrapper-plays-game">
                         <div className="players-blocks">
-                            <div id="user-dumaet" style={{borderRadius:'50%'}}>
-                                <img src={GamePlay} alt="Gameplay Avatar" />
+                            <div id="user-dumaet" style={{borderRadius: '50%'}}>
+                                <CountdownCircleTimer
+                                    isPlaying
+                                    duration={30}
+                                    size={90}
+                                    colors={['#18ee7b', '#80776DFF']}
+                                    colorsTime={[30, 0]}
+                                >
+                                    {({remainingTime}) => <img src={GamePlay} alt="Gameplay Avatar"/>}
+                                </CountdownCircleTimer>
                                 <div className="second-player-hand">
                                     {myCards.map((card, index) => (
                                         <img
@@ -212,7 +220,8 @@ const PlayGame = () => {
                                             style={{
                                                 zIndex: index + 1,
                                                 width: 64,
-                                                height: 90
+                                                height: 90,
+                                                transition: 'opacity 0.3s ease',
                                             }}
                                         />
                                     ))}
@@ -220,10 +229,10 @@ const PlayGame = () => {
                             </div>
                             <div className="players-flex">
                                 <div className="player-block1 footer-ava-wp1">
-                                    <img src={GamePlay} alt="Gameplay Avatar" />
+                                    <img src={GamePlay} alt="Gameplay Avatar"/>
                                 </div>
                                 <div className="player-block1 footer-ava-wp1">
-                                    <img src={GamePlay} alt="Gameplay Avatar" />
+                                    <img src={GamePlay} alt="Gameplay Avatar"/>
                                 </div>
                             </div>
                         </div>
