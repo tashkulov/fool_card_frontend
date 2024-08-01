@@ -209,7 +209,7 @@ const PlayGame = () => {
                                     colors={['#18ee7b', '#80776DFF']}
                                     colorsTime={[30, 0]}
                                 >
-                                    {({remainingTime}) => <img src={GamePlay} alt="Gameplay Avatar"/>}
+                                    {({}) => <img src={GamePlay} alt="Gameplay Avatar"/>}
                                 </CountdownCircleTimer>
                                 <div className="second-player-hand">
                                     {myCards.map((card, index) => (
