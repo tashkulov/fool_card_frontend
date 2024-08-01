@@ -10,7 +10,7 @@ import arrow from "../img/Arrow1.svg";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 import { Link, useParams } from 'react-router-dom';
-import { fetchGameData, placeCardOnTable, beatCard, endTurn } from './apiService';
+import {fetchGameData, placeCardOnTable, beatCard, endTurn, markPlayerReady} from './apiService';
 import { GameData } from './interface';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -145,9 +145,14 @@ const PlayGame = () => {
 
     const hasUnbeatenCards = () => tableCards.some(card => card.beaten_by_card === null);
 
-    const handleReadyClick = () => {
-        // Set waiting state to false when ready is clicked
-        setWaiting(false);
+    const handleReadyClick = async () => {
+        try {
+            await markPlayerReady(id);
+            setWaiting(false);
+        } catch (error) {
+            console.error('Error marking player as ready:', error);
+            setError('Failed to mark player as ready');
+        }
     };
 
     if (loading) return <div>Loading...</div>;
@@ -184,7 +189,7 @@ const PlayGame = () => {
             </div>
             <div className="main play-wrapper-game play-krug">
                 {waiting ? (
-                    <WaitingForPlayers onReady={handleReadyClick} />
+                    <WaitingForPlayers onReadyClick={handleReadyClick} />
                 ) : (
                     <div className="main-wrapper-plays">
                         <div className="wrapper-plays-header"></div>

@@ -73,3 +73,15 @@ export const endTurn = async (gameId: number | string) => {
         throw new Error('Error ending turn');
     }
 };
+
+export const markPlayerReady = async (gameId: number | string) => {
+    try {
+        await axios.post(
+            `${BASE_URL}/games/${gameId}/ready`,
+            {},
+            { headers: HEADERS }
+        );
+    } catch (error) {
+        throw new Error('Error marking player as ready');
+    }
+};
