@@ -6,7 +6,7 @@ import { Modal } from "../../components/Modal";
 import Settings from "../Settings/ui/Settings";
 import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick";
 import { useTranslation } from "react-i18next";
-import MyRiveAnimation from "../../components/rive-conponents/ruby/ruby-component"
+import MyRiveAnimation from "../../components/rive-conponents/header-animations/ruby/ruby-component"
 import axios from 'axios';
 import Hands from "./images/main-page-hand-bg.svg"
 
