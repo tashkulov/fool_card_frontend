@@ -8,13 +8,15 @@ import arrow from "../img/Arrow1.svg";
 import { useEffect, useState, useRef } from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 import { Link, useParams } from 'react-router-dom';
-import { fetchGameData, placeCardOnTable, beatCard, endTurn } from './apiService';
+import {fetchGameData, placeCardOnTable, beatCard, endTurn, fetchGameList} from './apiService';
 import { GameData } from './interface';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const PlayGame = () => {
     const { gameId } = useParams<{ gameId: string }>();
+    const [betValue, setBetValue] = useState<number | null>(null);
+
     const [gameData, setGameData] = useState<GameData | null>(null);
     const [loading, setLoading] = useState(true);
     const [selectedCard, setSelectedCard] = useState<string | null>(null);
@@ -45,6 +47,20 @@ const PlayGame = () => {
     // } else {
     //
     // }
+    const loadGameList = async () => {
+        try {
+            const gameList = await fetchGameList();
+            const game = gameList.find((game: GameListItem) => game.id === gameId);
+            if (game) {
+                setBetValue(game.bet_value);
+            } else {
+                setError('Game not found');
+            }
+        } catch (error) {
+            console.error('Error fetching game list:', error);
+            setError('Failed to load game list');
+        }
+    };
 
     useEffect(() => {
         const loadGameData = async () => {
@@ -67,6 +83,8 @@ const PlayGame = () => {
         };
 
         loadGameData();
+        loadGameList()
+
 
         const intervalId = setInterval(loadGameData, 1000);
 
@@ -165,7 +183,7 @@ const PlayGame = () => {
                             </Link>
                             <div className="play-header-coin">
                                 <img src={coins} alt="Coins" />
-                                {/*<p>{betValue !== null ? `${betValue}` : 'N/A'}</p>*/}
+                                <p>{betValue !== null ? `${betValue}` : 'N/A'}</p>
                             </div>
                         </div>
                         <div className="play-header-rejim block-obvodka">

@@ -5,6 +5,7 @@ const HEADERS = {
     Authorization: localStorage.getItem('authorization')
 };
 
+
 export const joinInGame = async () => {
     try {
         // const response = await $api.get()
