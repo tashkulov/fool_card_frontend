@@ -110,7 +110,7 @@ const CreateGameForm: React.FC = () => {
             });
             console.log('Game created successfully:', CreateGame.data);
             const gameId = CreateGame.data.id;
-            
+            const createdById = CreateGame.data.created_by;
 
             // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
             //     headers: {
@@ -118,7 +118,7 @@ const CreateGameForm: React.FC = () => {
             //     }
             // });
             // console.log(response.data)
-            navigate(`/inGame/${gameId}`);
+            navigate(`/inGame/${gameId}/${createdById}`);
         } catch (error) {
             console.error('Error creating game:', error, requestData);
         }
