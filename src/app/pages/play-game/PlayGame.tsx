@@ -9,7 +9,7 @@ import arrow from "../img/Arrow1.svg";
 import {useEffect, useState, useRef} from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 import {Link, useParams} from 'react-router-dom';
-import {fetchGameData, placeCardOnTable, beatCard, endTurn} from './apiService';
+import {fetchGameData, placeCardOnTable, beatCard, endTurn, markPlayerReady} from './apiService';
 import {GameData} from './interface';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -94,9 +94,7 @@ const PlayGame = () => {
         const intervalId = setInterval(loadGameData, 1000);
 
         return () => clearInterval(intervalId);
-    }, [id]);
-
-    useEffect(() => {
+    }, [id]);    useEffect(() => {
         if (selectedCard) {
             setIsAnimating(true);
             const timer = setTimeout(() => {
@@ -168,10 +166,17 @@ const PlayGame = () => {
 
     const hasUnbeatenCards = () => tableCards.some(card => card.beaten_by_card === null);
 
-    const handleReadyClick = () => {
-        setWaiting(false);
+    const handleReadyClick = async () => {
+        try {
+            const result = await markPlayerReady(id);
+            if (result) {
+                setWaiting(false);
+            }
+        } catch (error) {
+            console.error('Ошибка при отметке игрока как готового:', error);
+            setError('Не удалось отметить игрока как готового');
+        }
     };
-
     if (loading) return <div>Loading...</div>;
     if (errorUseParams) return <div>Ошибка при получении адреса игры. Попробуйте перезайти в игру еще раз.</div>;
     if (error) return <div>{error}</div>;
@@ -179,7 +184,6 @@ const PlayGame = () => {
     const angle = 20;
     const offset = 30;
     const middle = gameData ? Math.floor(gameData.hand.length / 2) : 0;
-
     return (
         <div className="wrapper">
             <div className="plays">
@@ -324,7 +328,6 @@ const PlayGame = () => {
                             {myCards.map((card: string, index: number) => {
                                 const rotation = (index - middle) * angle;
                                 const position = (index - middle) * offset;
-
                                 return (
                                     <img
                                         key={card}

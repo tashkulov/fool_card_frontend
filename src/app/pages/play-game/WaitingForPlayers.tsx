@@ -1,14 +1,12 @@
 // src/components/WaitingForPlayers.js
 import './style.css';
 
-const WaitingForPlayers = ({ onReadyClick}) => {
 
+const WaitingForPlayers = ({ onReadyClick }: { onReadyClick: () => void }) => {
     return (
         <div className="waiting-screen">
-            <h2>Ожидание других игроков...</h2>
-            <button className="play-footer-btn ready-button" onClick={onReadyClick}>
-                Готов
-            </button>
+            <p>Ожидание других игроков...</p>
+            <button className="play-footer-btn ready-button" onClick={onReadyClick}>готов</button>
         </div>
     );
 };
