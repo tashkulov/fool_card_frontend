@@ -3,7 +3,18 @@ body {
     color: #fff;
 }
 
+.error-string {
+    position: fixed;
+    z-index: 1200;
+    text-align: center;
+    color: red;
+    font-size: 30px;
+    font-weight: 900;
+    bottom: 50%;
+    
 
+    width: 100%;
+}
 
 .wrapper {
 

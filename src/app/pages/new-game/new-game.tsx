@@ -28,6 +28,7 @@ const CreateGameForm: React.FC = () => {
     const [tossMode, setTossMode] = useState<string>('');
     const [gameEndingType, setGameEndingType] = useState<string>('');
     const [active, setActive] = useState<string>('');
+    const [errorString, setErrorString] = useState<string>('');
 
     // Handle the bet amount change
     const handleBetChange = (increment: boolean, valueChange: number) => {
@@ -38,7 +39,7 @@ const CreateGameForm: React.FC = () => {
     const handleGameModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSelectedGameMode(value === 'Подкидной' ? 'throwing' : value === 'Переводной' ? 'shifting' : value);
-        
+
     };
 
     // Handle the player count change
@@ -108,22 +109,29 @@ const CreateGameForm: React.FC = () => {
         };
 
         try {
-            const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
-                headers: {
-                    'Authorization': localStorage.getItem('authorization')
-                }
-            });
-            console.log('Game created successfully:', CreateGame.data);
-            const gameId = CreateGame.data.id;
-            const createdById = CreateGame.data.created_by;
+            if (betAmount >= 100) {
+                setErrorString('')
+                const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
+                    headers: {
+                        'Authorization': localStorage.getItem('authorization')
+                    }
+                });
+                console.log('Game created successfully:', CreateGame.data);
+                const gameId = CreateGame.data.id;
+                const createdById = CreateGame.data.created_by;
 
-            // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
-            //     headers: {
-            //         'Authorization': localStorage.getItem('authorization')
-            //     }
-            // });
-            // console.log(response.data)
-            navigate(`/inGame/${gameId}/${createdById}`);
+                // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
+                //     headers: {
+                //         'Authorization': localStorage.getItem('authorization')
+                //     }
+                // });
+                // console.log(response.data)
+                navigate(`/inGame/${gameId}/${createdById}`);
+            } else {
+                setErrorString('bet amount is les then 100')
+            }
+
+
         } catch (error) {
             console.error('Error creating game:', error, requestData);
         }
@@ -133,6 +141,7 @@ const CreateGameForm: React.FC = () => {
 
     return (
         <div className="main main-wrapp">
+            <p className='error-string'>{ errorString }</p>
             <div className='header'>
                 <HeaderRiveAnimation />
                 <HeaderMainSvgIcon />
