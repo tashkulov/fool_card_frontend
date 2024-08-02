@@ -3,7 +3,18 @@ body {
     color: #fff;
 }
 
+.error-string {
+    position: fixed;
+    z-index: 1200;
+    text-align: center;
+    color: red;
+    font-size: 30px;
+    font-weight: 900;
+    bottom: 50%;
+    
 
+    width: 100%;
+}
 
 .wrapper {
 
@@ -647,9 +658,11 @@ section {
 .rejim-igry-blocks-flex {
     height: 150px;
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 31.5% 31.5% 31.5%;
     gap: 10px;
 }
+
+
 
 .rejim-igry {
     margin-bottom: 10px;
@@ -682,7 +695,12 @@ section {
     gap: 10px;
 }
 
+
+
 .rejim-igry-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: 67px;
     position: relative;
     border-radius: 8px;
@@ -690,6 +708,14 @@ section {
     background-size: cover;
     background-position: center;
 }
+label {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 
 .rejim-check {
     display: none;
@@ -700,12 +726,27 @@ section {
 }
 
 .icon-rejim {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    text-align: center;
+.icon-rejim-2 {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .rej-text {
-    margin-top: 5px;
+    position: absolute;
+    bottom: 0;
+
+    
     font-weight: 400;
     font-size: 12px;
     line-height: 150%;
@@ -829,6 +870,8 @@ section {
 
 .checkboxer {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
     gap: 8px;
 }

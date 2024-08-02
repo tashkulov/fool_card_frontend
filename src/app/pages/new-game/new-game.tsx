@@ -9,8 +9,9 @@ import Check from "../../../assets/img/check_.svg"
 import Footer from '../../components/Footer/Footer';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from 'react-router-dom';
-import HeaderRiveAnimation from '../../components/rive-conponents/ruby-header/ruby-component';
+import HeaderRiveAnimation from '../../components/rive-conponents/header-animations/ruby-header/ruby-component';
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
+import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-animations/mode-anim';
 
 
 // Define the types for the props and states
@@ -26,6 +27,8 @@ const CreateGameForm: React.FC = () => {
     const [isPrivate, setIsPrivate] = useState<boolean>(false);
     const [tossMode, setTossMode] = useState<string>('');
     const [gameEndingType, setGameEndingType] = useState<string>('');
+    const [active, setActive] = useState<string>('');
+    const [errorString, setErrorString] = useState<string>('');
 
     // Handle the bet amount change
     const handleBetChange = (increment: boolean, valueChange: number) => {
@@ -36,6 +39,7 @@ const CreateGameForm: React.FC = () => {
     const handleGameModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSelectedGameMode(value === 'Подкидной' ? 'throwing' : value === 'Переводной' ? 'shifting' : value);
+
     };
 
     // Handle the player count change
@@ -51,12 +55,14 @@ const CreateGameForm: React.FC = () => {
     const handleTossModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setTossMode(value === 'Соседи' ? 'neighbors' : value === 'Все' ? 'all' : value);
+        setActive(value === 'Соседи' ? 'neighbors' : 'all')
     };
 
     // Handle the game ending type change
     const handleGameEndingTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setGameEndingType(value === 'Классика' ? 'classic' : value === 'Ничья' ? 'draw' : value);
+        setActive(value === 'Классика' ? 'classic' : 'draw');
     };
 
     // Initialize Rive animations
@@ -103,30 +109,38 @@ const CreateGameForm: React.FC = () => {
         };
 
         try {
-            const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
-                headers: {
-                    Authorization: '01952c352d690981307e5ef18a4aa703eaf3761a5ded39d4'
-                }
-            });
-            console.log('Game created successfully:', CreateGame.data);
-            const gameId = CreateGame.data.id;
-            const createdById = CreateGame.data.created_by;
 
-            // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
-            //     headers: {
-            //         'Authorization': localStorage.getItem('authorization')
-            //     }
-            // });
-            // console.log(response.data)
-            navigate(`/inGame/${gameId}/creator`);
+            if (betAmount >= 100) {
+                setErrorString('')
+                const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
+                    headers: {
+                        'Authorization': localStorage.getItem('authorization')
+                    }
+                });
+                console.log('Game created successfully:', CreateGame.data);
+                const gameId = CreateGame.data.id;
+                const createdById = CreateGame.data.created_by;
+
+                // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
+                //     headers: {
+                //         'Authorization': localStorage.getItem('authorization')
+                //     }
+                // });
+                // console.log(response.data)
+                navigate(`/inGame/${gameId}/${createdById}`);
+            } else {
+                setErrorString('bet amount is les then 100')
+            }
         } catch (error) {
             console.error('Error creating game:', error, requestData);
         }
 
     };
 
+
     return (
         <div className="main main-wrapp">
+            <p className='error-string'>{ errorString }</p>
             <div className='header'>
                 <HeaderRiveAnimation />
                 <HeaderMainSvgIcon />
@@ -181,19 +195,19 @@ const CreateGameForm: React.FC = () => {
                                             <label className="checkbox-container">
                                                 <input
                                                     type="radio"
-                                                    className={`rejim-check ${selectedGameMode === mode ? 'gameModeSelected' : ''}`}
+                                                    className={`rejim-check ${selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'shifting') ? 'gameModeSelected' : ''}`}
                                                     value={mode}
                                                     name="rejim-1"
                                                     checked={selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'shifting')}
-                                                    onChange={handleGameModeChange} />
+                                                    onChange={handleGameModeChange}
+                                                />
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />
                                                 </div>
                                                 <div className="icon-rejim">
-                                                    <canvas id={mode.toLowerCase()}></canvas>
+                                                    <ModeRiveAnimation active={active === (mode === 'Соседи' ? 'neighbors' : 'all')} path={mode === 'Подкидной' ? 'casual' : 'shift'} />
                                                     <div className="rej-text">{mode}</div>
                                                 </div>
-                                                <div className="checkmark"></div>
                                             </label>
                                         </div>
                                     </div>
@@ -207,24 +221,25 @@ const CreateGameForm: React.FC = () => {
                                             <label className="checkbox-container">
                                                 <input
                                                     type="radio"
-                                                    className={`rejim-check ${tossMode === mode ? 'gameModeSelected' : ''}`}
+                                                    className={`rejim-check ${tossMode === (mode === 'Соседи' ? 'neighbors' : 'all') ? 'gameModeSelected' : ''}`}
                                                     value={mode}
                                                     name="rejim-2"
                                                     checked={tossMode === (mode === 'Соседи' ? 'neighbors' : 'all')}
-                                                    onChange={handleTossModeChange} />
+                                                    onChange={handleTossModeChange}
+                                                />
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />
                                                 </div>
                                                 <div className="icon-rejim">
-                                                    <canvas id={mode.toLowerCase()}></canvas>
+                                                    <ModeRiveAnimation active={active === (mode === 'Соседи' ? 'neighbors' : 'all')} path={mode === 'Соседи' ? 'neighbors' : 'all'} />
                                                     <div className="rej-text">{mode}</div>
                                                 </div>
-                                                <div className="checkmark"></div>
                                             </label>
                                         </div>
                                     </div>
                                 ))}
                             </div>
+
                             <div className='game-mode-selector-container'>
                                 {['Классика', 'Ничья'].map((mode) => (
                                     <div className="rejim-igry-blocks" key={mode}>
@@ -232,19 +247,20 @@ const CreateGameForm: React.FC = () => {
                                             <label className="checkbox-container">
                                                 <input
                                                     type="radio"
-                                                    className={`rejim-check ${gameEndingType === mode ? 'gameModeSelected' : ''}`}
+                                                    className={`rejim-check ${gameEndingType === (mode === 'Классика' ? 'classic' : 'draw') ? 'gameModeSelected' : ''}`}
                                                     value={mode}
                                                     name="rejim-3"
                                                     checked={gameEndingType === (mode === 'Классика' ? 'classic' : 'draw')}
-                                                    onChange={handleGameEndingTypeChange} />
+                                                    onChange={handleGameEndingTypeChange}
+                                                />
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />
                                                 </div>
                                                 <div className="icon-rejim">
-                                                    <canvas id={mode.toLowerCase()}></canvas>
+                                                    {/* <ModeRiveAnimation active={active} path={mode === 'Классика' ? 'classic' : 'draw'} /> */}
+                                                    <ModeRiveAnimation active={active === (mode === 'Классика' ? 'classic' : 'draw')} path={mode === 'Классика' ? 'classic' : 'draw'} />
                                                     <div className="rej-text">{mode}</div>
                                                 </div>
-                                                <div className="checkmark"></div>
                                             </label>
                                         </div>
                                     </div>
@@ -273,7 +289,7 @@ const CreateGameForm: React.FC = () => {
                                         <div className="image-radio" id="images">
                                             <img src={Check} alt="" />
                                         </div>
-                                        <div className="icon-rejim">
+                                        <div className="icon-rejim-2">
                                             <div className="kolvo-text">{count}</div>
                                         </div>
                                     </label>
