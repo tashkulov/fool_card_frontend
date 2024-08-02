@@ -8,16 +8,19 @@ interface ModeRiveAnimationProps {
     active: boolean;
 }
 
-const ModeRiveAnimation: React.FC<ModeRiveAnimationProps> = ({path}, {active}) => {
+const ModeRiveAnimation: React.FC<ModeRiveAnimationProps> = ({ path, active }) => {
     const { RiveComponent, rive } = useRive({
         src: `/animations/${path}.riv`,
         autoplay: true,
     });
 
+
     useEffect(() => {
         if (active) {
             rive?.play('active');
-        } 
+        } else {
+            rive?.reset();
+        }
     }, [rive, active]);
 
     return (

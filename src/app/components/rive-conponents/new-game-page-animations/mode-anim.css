@@ -1,4 +1,7 @@
 .mode-animation {
+    z-index: 5;
+    /* position: fixed; */
+    left: 0;
     margin-top: 7px;
     width: 36px;
     height: 36px;

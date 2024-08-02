@@ -27,6 +27,7 @@ const CreateGameForm: React.FC = () => {
     const [isPrivate, setIsPrivate] = useState<boolean>(false);
     const [tossMode, setTossMode] = useState<string>('');
     const [gameEndingType, setGameEndingType] = useState<string>('');
+    const [active, setActive] = useState<string>('');
 
     // Handle the bet amount change
     const handleBetChange = (increment: boolean, valueChange: number) => {
@@ -53,14 +54,14 @@ const CreateGameForm: React.FC = () => {
     const handleTossModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setTossMode(value === 'Соседи' ? 'neighbors' : value === 'Все' ? 'all' : value);
-        
+        setActive(value === 'Соседи' ? 'neighbors' : 'all')
     };
 
     // Handle the game ending type change
     const handleGameEndingTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setGameEndingType(value === 'Классика' ? 'classic' : value === 'Ничья' ? 'draw' : value);
-        
+        setActive(value === 'Классика' ? 'classic' : 'draw');
     };
 
     // Initialize Rive animations
@@ -129,11 +130,6 @@ const CreateGameForm: React.FC = () => {
 
     };
 
-    const [active, setActive] = useState(false);
-
-    const handleClick = () => {
-        setActive(!active);
-    };
 
     return (
         <div className="main main-wrapp">
@@ -186,21 +182,22 @@ const CreateGameForm: React.FC = () => {
                         <div className="rejim-igry-blocks-flex">
                             <div className='game-mode-selector-container'>
                                 {['Подкидной', 'Переводной'].map((mode) => (
-                                    <div className="rejim-igry-blocks" key={mode} onClick={handleClick}>
+                                    <div className="rejim-igry-blocks" key={mode}>
                                         <div className="rejim-igry-block block-obvodka">
                                             <label className="checkbox-container">
                                                 <input
                                                     type="radio"
-                                                    className={`rejim-check ${selectedGameMode === mode ? 'gameModeSelected' : ''}`}
+                                                    className={`rejim-check ${selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'shifting') ? 'gameModeSelected' : ''}`}
                                                     value={mode}
                                                     name="rejim-1"
                                                     checked={selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'shifting')}
-                                                    onChange={handleGameModeChange} />
+                                                    onChange={handleGameModeChange}
+                                                />
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />
                                                 </div>
                                                 <div className="icon-rejim">
-                                                    <ModeRiveAnimation active={active} path={mode === 'Подкидной' ? 'casuals' : 'shift'} />
+                                                    <ModeRiveAnimation active={active === (mode === 'Соседи' ? 'neighbors' : 'all')} path={mode === 'Подкидной' ? 'casual' : 'shift'} />
                                                     <div className="rej-text">{mode}</div>
                                                 </div>
                                             </label>
@@ -216,16 +213,17 @@ const CreateGameForm: React.FC = () => {
                                             <label className="checkbox-container">
                                                 <input
                                                     type="radio"
-                                                    className={`rejim-check ${tossMode === mode ? 'gameModeSelected' : ''}`}
+                                                    className={`rejim-check ${tossMode === (mode === 'Соседи' ? 'neighbors' : 'all') ? 'gameModeSelected' : ''}`}
                                                     value={mode}
                                                     name="rejim-2"
                                                     checked={tossMode === (mode === 'Соседи' ? 'neighbors' : 'all')}
-                                                    onChange={handleTossModeChange} />
+                                                    onChange={handleTossModeChange}
+                                                />
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />
                                                 </div>
                                                 <div className="icon-rejim">
-                                                    <ModeRiveAnimation active={active} path={mode === 'Соседи' ? 'neighbors' : 'all'} />
+                                                    <ModeRiveAnimation active={active === (mode === 'Соседи' ? 'neighbors' : 'all')} path={mode === 'Соседи' ? 'neighbors' : 'all'} />
                                                     <div className="rej-text">{mode}</div>
                                                 </div>
                                             </label>
@@ -233,6 +231,7 @@ const CreateGameForm: React.FC = () => {
                                     </div>
                                 ))}
                             </div>
+
                             <div className='game-mode-selector-container'>
                                 {['Классика', 'Ничья'].map((mode) => (
                                     <div className="rejim-igry-blocks" key={mode}>
@@ -240,19 +239,18 @@ const CreateGameForm: React.FC = () => {
                                             <label className="checkbox-container">
                                                 <input
                                                     type="radio"
-                                                    className={`rejim-check ${gameEndingType === mode ? 'gameModeSelected' : ''}`}
+                                                    className={`rejim-check ${gameEndingType === (mode === 'Классика' ? 'classic' : 'draw') ? 'gameModeSelected' : ''}`}
                                                     value={mode}
                                                     name="rejim-3"
                                                     checked={gameEndingType === (mode === 'Классика' ? 'classic' : 'draw')}
                                                     onChange={handleGameEndingTypeChange}
-                                                
                                                 />
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />
                                                 </div>
-                                                
                                                 <div className="icon-rejim">
-                                                    <ModeRiveAnimation active={active} path={mode === 'Классика' ? 'classic' : 'draw'} />
+                                                    {/* <ModeRiveAnimation active={active} path={mode === 'Классика' ? 'classic' : 'draw'} /> */}
+                                                    <ModeRiveAnimation active={active === (mode === 'Классика' ? 'classic' : 'draw')} path={mode === 'Классика' ? 'classic' : 'draw'} />
                                                     <div className="rej-text">{mode}</div>
                                                 </div>
                                             </label>
