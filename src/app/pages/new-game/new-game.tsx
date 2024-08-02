@@ -109,6 +109,7 @@ const CreateGameForm: React.FC = () => {
         };
 
         try {
+
             if (betAmount >= 100) {
                 setErrorString('')
                 const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
@@ -130,8 +131,6 @@ const CreateGameForm: React.FC = () => {
             } else {
                 setErrorString('bet amount is les then 100')
             }
-
-
         } catch (error) {
             console.error('Error creating game:', error, requestData);
         }

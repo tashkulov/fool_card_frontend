@@ -1,6 +1,6 @@
 import {RouteProps} from "react-router-dom"
 import HomePage from "../../pages/home-page/home-page";
-import PlayGame from "../../pages/play-game/play-game";
+import PlayGame from "../../pages/play-game/PlayGame.tsx";
 import Kvesty from "../../pages/kwesty/Kvesty";
 import {LeaderBoard} from "../../pages/LeaderBoard";
 import NewGame from "../../pages/new-game/new-game";
