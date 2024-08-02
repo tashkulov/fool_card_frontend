@@ -2,6 +2,7 @@
 import './style.css';
 
 const WaitingForPlayers = ({ onReadyClick}) => {
+
     return (
         <div className="waiting-screen">
             <h2>Ожидание других игроков...</h2>

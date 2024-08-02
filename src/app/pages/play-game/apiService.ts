@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'https://foolcard2.shop/v1';
 const HEADERS = {
-    Authorization: 'd2ab280a297f92a9c5806cee2f4a1a71ee928274e0bbad5c'
+    Authorization: '01952c352d690981307e5ef18a4aa703eaf3761a5ded39d4'
 };
 
 
