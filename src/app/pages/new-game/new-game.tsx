@@ -109,28 +109,33 @@ const CreateGameForm: React.FC = () => {
         };
 
         try {
-
-            if (betAmount >= 100) {
+            if (selectedPlayerCount != '' && selectedGameMode != '' && tossMode != '' && gameEndingType != '') {
                 setErrorString('')
-                const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
-                    headers: {
-                        'Authorization': localStorage.getItem('authorization')
-                    }
-                });
-                console.log('Game created successfully:', CreateGame.data);
-                const gameId = CreateGame.data.id;
-                const createdById = CreateGame.data.created_by;
+                if (betAmount >= 100) {
+                    setErrorString('')
+                    const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
+                        headers: {
+                            'Authorization': localStorage.getItem('authorization')
+                        }
+                    });
+                    console.log('Game created successfully:', CreateGame.data);
+                    const gameId = CreateGame.data.id;
+                    const createdById = CreateGame.data.created_by;
 
-                // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
-                //     headers: {
-                //         'Authorization': localStorage.getItem('authorization')
-                //     }
-                // });
-                // console.log(response.data)
-                navigate(`/inGame/${gameId}/${createdById}`);
+                    // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
+                    //     headers: {
+                    //         'Authorization': localStorage.getItem('authorization')
+                    //     }
+                    // });
+                    // console.log(response.data)
+                    navigate(`/inGame/${gameId}/${createdById}`);
+                } else {
+                    setErrorString('bet amount is les then 100!')
+                }
             } else {
-                setErrorString('bet amount is les then 100')
+                setErrorString('fill all the needed inputs!')
             }
+
         } catch (error) {
             console.error('Error creating game:', error, requestData);
         }
@@ -140,7 +145,7 @@ const CreateGameForm: React.FC = () => {
 
     return (
         <div className="main main-wrapp">
-            <p className='error-string'>{ errorString }</p>
+            <p className='error-string'>{errorString}</p>
             <div className='header'>
                 <HeaderRiveAnimation />
                 <HeaderMainSvgIcon />
