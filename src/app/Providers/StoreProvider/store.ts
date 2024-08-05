@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {statePlayGameSliceReducer} from "../../pages/play-game/statePlayGame";
-import {statePlayPvPGameSliceReducer} from "../../pages/play-game/playGameSlice.ts";
+import {statePlayGameSlice} from "../../pages/play-game/playGameSlice.ts";
 
 const rootReducer = combineReducers({
     playGame: statePlayGameSliceReducer,
-    playGamePvP: statePlayPvPGameSliceReducer,
+    playGamePvP: statePlayGameSlice,
 
 });
 

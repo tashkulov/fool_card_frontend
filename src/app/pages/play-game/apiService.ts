@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const BASE_URL = 'https://foolcard2.shop/v1';
 const HEADERS = {
     'Content-Type': 'application/json',
-    Authorization: '4fb2b710934814b6cd51160f7b1d84dac602d07d8b07909f',
+    Authorization: 'dbafcfc84bfb6664a46cf72e8285bb5b19ac621e0555ae72',
 };
 
 export const api = createApi({
@@ -66,11 +66,4 @@ export const {
     useMarkPlayerReadyMutation,
 } = api;
 
-export const {
-    endpoints: {
-        placeCardOnTable,
-        beatCard,
-        endTurn,
-        markPlayerReady
-    }
-} = api;
+
