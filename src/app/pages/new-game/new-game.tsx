@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from 'react-router-dom';
 import HeaderRiveAnimation from '../../components/rive-conponents/header-animations/ruby-header/ruby-component';
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
+import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-animations/mode-anim';
 
 const CreateGameForm: React.FC = () => {
 
@@ -24,9 +25,8 @@ const CreateGameForm: React.FC = () => {
     const [gameEndingType, setGameEndingType] = useState<string>('');
     const [active, setActive] = useState<string>('');
     const [errorString, setErrorString] = useState<string>('');
-    const [requiredFieldUncheked, setRequiredFieldUncheked] = useState<boolean>(true);
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-    
+
 
     // Handle the bet amount change
     const handleBetChange = (increment: boolean, valueChange: number) => {
@@ -37,8 +37,6 @@ const CreateGameForm: React.FC = () => {
     const handleGameModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSelectedGameMode(value === 'Подкидной' ? 'throwing' : value === 'Переводной' ? 'shifting' : value);
-
-        setRequiredFieldUncheked(false);
         setActive(value === 'Подкидной' ? 'casuals' : 'shift');
 
     };
@@ -58,7 +56,6 @@ const CreateGameForm: React.FC = () => {
         setTossMode(value === 'Соседи' ? 'neighbors' : value === 'Все' ? 'all' : value);
 
         setActive(value === 'Соседи' ? 'neighbors' : 'all')
-        setRequiredFieldUncheked(false);
 
     };
 
@@ -68,8 +65,6 @@ const CreateGameForm: React.FC = () => {
         setGameEndingType(value === 'Классика' ? 'classic' : value === 'Ничья' ? 'draw' : value);
 
         setActive(value === 'Классика' ? 'classic' : 'draw');
-        setRequiredFieldUncheked(false);
-
     };
 
     // Initialize Rive animations
@@ -109,25 +104,34 @@ const CreateGameForm: React.FC = () => {
             "game_ending_type": gameEndingType
         };
 
-
-
         try {
-            const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
-                headers: {
-                    Authorization: '01952c352d690981307e5ef18a4aa703eaf3761a5ded39d4'
-                }
-            });
-            console.log('Game created successfully:', CreateGame.data);
-            const gameId = CreateGame.data.id;
-            const createdById = CreateGame.data.created_by;
+            if (selectedPlayerCount != '' && selectedGameMode != '' && tossMode != '' && gameEndingType != '') {
+                setErrorString('')
+                if (betAmount >= 100) {
+                    setErrorString('')
+                    const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
+                        headers: {
+                            'Authorization': localStorage.getItem('authorization')
+                        }
+                    });
+                    console.log('Game created successfully:', CreateGame.data);
+                    const gameId = CreateGame.data.id;
+                    const createdById = CreateGame.data.created_by;
 
-            // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
-            //     headers: {
-            //         'Authorization': localStorage.getItem('authorization')
-            //     }
-            // });
-            // console.log(response.data)
-            navigate(`/inGame/${gameId}/creator`);
+                    // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
+                    //     headers: {
+                    //         'Authorization': localStorage.getItem('authorization')
+                    //     }
+                    // });
+                    // console.log(response.data)
+                    navigate(`/inGame/${gameId}/${createdById}`);
+                } else {
+                    setErrorString('bet amount is les then 100!')
+                }
+            } else {
+                setErrorString('fill all the needed inputs!')
+            }
+
         } catch (error) {
             console.error('Error creating game:', error, requestData);
         }
@@ -136,6 +140,7 @@ const CreateGameForm: React.FC = () => {
 
     return (
         <div className="main main-wrapp">
+            <p className='error-string'>{errorString}</p>
             <div className='header'>
                 <HeaderRiveAnimation />
                 <HeaderMainSvgIcon />
@@ -198,10 +203,10 @@ const CreateGameForm: React.FC = () => {
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />
                                                 </div>
-                                                <div className="icon-rejim">
-                                                    <canvas id={mode.toLowerCase()}></canvas>
-                                                    <div className="rej-text">{mode}</div>
-                                                </div>
+
+                                                <ModeRiveAnimation active={active === (mode === 'Подкидной' ? 'throwing' : 'shifting')} path={mode === 'Подкидной' ? 'casual' : 'shift'} />
+                                                <div className="rej-text">{mode}</div>
+
                                                 <div className="checkmark"></div>
                                             </label>
                                         </div>
@@ -224,10 +229,8 @@ const CreateGameForm: React.FC = () => {
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />
                                                 </div>
-                                                <div className="icon-rejim">
-                                                    <canvas id={mode.toLowerCase()}></canvas>
-                                                    <div className="rej-text">{mode}</div>
-                                                </div>
+                                                <ModeRiveAnimation active={active === (mode === 'Соседи' ? 'neighbors' : 'all')} path={mode === 'Соседи' ? 'neighbors' : 'all'} />
+                                                <div className="rej-text">{mode}</div>
                                                 <div className="checkmark"></div>
                                             </label>
                                         </div>
@@ -249,10 +252,8 @@ const CreateGameForm: React.FC = () => {
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />
                                                 </div>
-                                                <div className="icon-rejim">
-                                                    <canvas id={mode.toLowerCase()}></canvas>
-                                                    <div className="rej-text">{mode}</div>
-                                                </div>
+                                                <ModeRiveAnimation active={active === (mode === 'Классика' ? 'classic' : 'draw')} path={mode === 'Классика' ? 'classic' : 'draw'} />
+                                                <div className="rej-text">{mode}</div>
                                                 <div className="checkmark"></div>
                                             </label>
                                         </div>
