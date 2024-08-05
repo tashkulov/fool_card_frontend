@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {$api} from "../../../../../api.ts";
 import {CurrentTableResponse} from "../types/CurrentTableData.ts";
 
-// Тип данных, возвращаемых API
 export const getCurrentTableThunk = createAsyncThunk<
     CurrentTableResponse,
     number,
