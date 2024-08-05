@@ -12,10 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import HeaderRiveAnimation from '../../components/rive-conponents/header-animations/ruby-header/ruby-component';
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 
-
-// Define the types for the props and states
-type RiveAnimation = { play: () => void };
-
 const CreateGameForm: React.FC = () => {
 
     const navigate = useNavigate();
@@ -26,6 +22,11 @@ const CreateGameForm: React.FC = () => {
     const [isPrivate, setIsPrivate] = useState<boolean>(false);
     const [tossMode, setTossMode] = useState<string>('');
     const [gameEndingType, setGameEndingType] = useState<string>('');
+    const [active, setActive] = useState<string>('');
+    const [errorString, setErrorString] = useState<string>('');
+    const [requiredFieldUncheked, setRequiredFieldUncheked] = useState<boolean>(true);
+    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+    
 
     // Handle the bet amount change
     const handleBetChange = (increment: boolean, valueChange: number) => {
@@ -36,6 +37,10 @@ const CreateGameForm: React.FC = () => {
     const handleGameModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSelectedGameMode(value === 'Подкидной' ? 'throwing' : value === 'Переводной' ? 'shifting' : value);
+
+        setRequiredFieldUncheked(false);
+        setActive(value === 'Подкидной' ? 'casuals' : 'shift');
+
     };
 
     // Handle the player count change
@@ -51,18 +56,24 @@ const CreateGameForm: React.FC = () => {
     const handleTossModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setTossMode(value === 'Соседи' ? 'neighbors' : value === 'Все' ? 'all' : value);
+
+        setActive(value === 'Соседи' ? 'neighbors' : 'all')
+        setRequiredFieldUncheked(false);
+
     };
 
     // Handle the game ending type change
     const handleGameEndingTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setGameEndingType(value === 'Классика' ? 'classic' : value === 'Ничья' ? 'draw' : value);
+
+        setActive(value === 'Классика' ? 'classic' : 'draw');
+        setRequiredFieldUncheked(false);
+
     };
 
     // Initialize Rive animations
     useEffect(() => {
-        const riveAnimations: { [key: string]: RiveAnimation } = {};
-
         document.querySelectorAll('.rejim-check').forEach((radio) => {
             radio.addEventListener('change', () => {
                 document.querySelectorAll(`input[name="${(radio as HTMLInputElement).name}"]`).forEach((groupRadio) => {
@@ -72,11 +83,6 @@ const CreateGameForm: React.FC = () => {
                 if ((radio as HTMLInputElement).checked) {
                     const activeBlock = (radio as HTMLInputElement).closest('.rejim-igry-block');
                     activeBlock?.classList.add('active-rejim');
-
-                    const activeCanvas = activeBlock?.querySelector('canvas') as HTMLCanvasElement;
-                    if (activeCanvas && riveAnimations[activeCanvas.id]) {
-                        riveAnimations[activeCanvas.id].play();
-                    }
                 }
             });
         });
@@ -89,6 +95,7 @@ const CreateGameForm: React.FC = () => {
     }, []);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        setIsSubmitted(true);
         event.preventDefault();
 
         const requestData = {
@@ -101,6 +108,8 @@ const CreateGameForm: React.FC = () => {
             "toss_mode": tossMode,
             "game_ending_type": gameEndingType
         };
+
+
 
         try {
             const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
@@ -176,7 +185,7 @@ const CreateGameForm: React.FC = () => {
                         <div className="rejim-igry-blocks-flex">
                             <div className='game-mode-selector-container'>
                                 {['Подкидной', 'Переводной'].map((mode) => (
-                                    <div className="rejim-igry-blocks" key={mode}>
+                                    <div className={`rejim-igry-blocks ${isSubmitted ? (!selectedGameMode ? 'un-cheked' : '') : (!selectedGameMode ? 'required-field' : '')}`} key={mode}>
                                         <div className="rejim-igry-block block-obvodka">
                                             <label className="checkbox-container">
                                                 <input
@@ -202,7 +211,7 @@ const CreateGameForm: React.FC = () => {
 
                             <div className='game-mode-selector-container'>
                                 {['Соседи', 'Все'].map((mode) => (
-                                    <div className="rejim-igry-blocks" key={mode}>
+                                    <div className={`rejim-igry-blocks ${isSubmitted ? (!tossMode ? 'un-cheked' : '') : (!tossMode ? 'required-field' : '')}`} key={mode}>
                                         <div className="rejim-igry-block block-obvodka">
                                             <label className="checkbox-container">
                                                 <input
@@ -227,7 +236,7 @@ const CreateGameForm: React.FC = () => {
                             </div>
                             <div className='game-mode-selector-container'>
                                 {['Классика', 'Ничья'].map((mode) => (
-                                    <div className="rejim-igry-blocks" key={mode}>
+                                    <div className={`rejim-igry-blocks ${isSubmitted ? (!gameEndingType ? 'un-cheked' : '') : (!gameEndingType ? 'required-field' : '')}`} key={mode}>
                                         <div className="rejim-igry-block block-obvodka">
                                             <label className="checkbox-container">
                                                 <input
@@ -259,7 +268,7 @@ const CreateGameForm: React.FC = () => {
                         <div className="col-igrok-blocks">
                             {[2, 3, 4].map((count) => (
                                 <div
-                                    className={`col-igrok-block btn-krug block-obvodka ${selectedPlayerCount === count.toString() ? 'selected' : ''}`}
+                                    className={`col-igrok-block btn-krug block-obvodka ${selectedPlayerCount === count.toString() ? 'selected' : ''} ${isSubmitted ? (!selectedPlayerCount ? 'un-cheked' : '') : (!selectedPlayerCount ? 'required-field' : '')}`}
                                     key={count}
                                 >
                                     <label className="checkbox-container">
