@@ -44,7 +44,6 @@ const initialState: InitialStatePlayPvPGame = {
     waiting: true,
 };
 
-// Create async thunks for the API calls
 export const placeCardOnTableThunk = createAsyncThunk(
     'statePlayPvPGame/placeCardOnTable',
     async ({ gameId, card }: { gameId: number; card: string }) => {
