@@ -1,8 +1,10 @@
 import { AxiosInstance } from "axios";
 import {InitialStatePlayGame, statePlayGameSliceReducerName} from '../../pages/play-game/statePlayGame';
+import {InitialStatePlayPvPGame, statePlayGamePvPSliceReducerName} from "../../pages/play-game/playGameSlice.ts";
 
 export interface StateSchema {
-    [statePlayGameSliceReducerName]: InitialStatePlayGame
+    [statePlayGameSliceReducerName]: InitialStatePlayGame,
+    [statePlayGamePvPSliceReducerName]:InitialStatePlayPvPGame
 }
 
 export interface ThunkExtraArg {
