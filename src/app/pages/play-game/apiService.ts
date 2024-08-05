@@ -1,87 +1,76 @@
-import axios from 'axios';
+// apiService.ts
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const BASE_URL = 'https://foolcard2.shop/v1';
 const HEADERS = {
-    Authorization: '01952c352d690981307e5ef18a4aa703eaf3761a5ded39d4'
+    'Content-Type': 'application/json',
+    Authorization: '4fb2b710934814b6cd51160f7b1d84dac602d07d8b07909f',
 };
 
+export const api = createApi({
+    reducerPath: 'api',
+    baseQuery: fetchBaseQuery({
+        baseUrl: BASE_URL,
+        prepareHeaders: (headers) => {
+            headers.set('Content-Type', HEADERS['Content-Type']);
+            headers.set('Authorization', HEADERS['Authorization']);
+            return headers;
+        },
+    }),
+    endpoints: (builder) => ({
+        joinInGame: builder.query({
+            query: () => '/join',
+        }),
+        fetchGameData: builder.query({
+            query: (gameId) => `/games/${gameId}/get_current_table`,
+        }),
+        fetchGameList: builder.query({
+            query: () => '/games',
+        }),
+        placeCardOnTable: builder.mutation({
+            query: ({ gameId, card }) => ({
+                url: `/games/${gameId}/place_card_on_table`,
+                method: 'POST',
+                params: { card },
+            }),
+        }),
+        beatCard: builder.mutation({
+            query: ({ gameId, cardToBeat, cardToBeatBy }) => ({
+                url: `/games/${gameId}/beat_card`,
+                method: 'POST',
+                params: { card_to_beat: cardToBeat, card_to_beat_by: cardToBeatBy },
+            }),
+        }),
+        endTurn: builder.mutation({
+            query: (gameId) => ({
+                url: `/games/${gameId}/end_turn`,
+                method: 'POST',
+            }),
+        }),
+        markPlayerReady: builder.mutation({
+            query: (gameId) => ({
+                url: `/games/${gameId}/ready`,
+                method: 'POST',
+            }),
+        }),
+    }),
+});
 
-export const joinInGame = async () => {
-    try {
-        // const response = await $api.get()
-    } catch (e) {
-        console.log("при попытке присоединиться к игре превзошла ошибка")
-    }
-}
+export const {
+    useJoinInGameQuery,
+    useFetchGameDataQuery,
+    useFetchGameListQuery,
+    usePlaceCardOnTableMutation,
+    useBeatCardMutation,
+    useEndTurnMutation,
+    useMarkPlayerReadyMutation,
+} = api;
 
-export const fetchGameData = async (gameId: number | string) => {
-    try {
-        const response = await axios.get(`${BASE_URL}/games/${gameId}/get_current_table`, {
-            headers: HEADERS,
-        });
-        return response.data;
-    } catch (error) {
-        throw new Error('Failed to load game data');
+export const {
+    endpoints: {
+        placeCardOnTable,
+        beatCard,
+        endTurn,
+        markPlayerReady
     }
-};
-
-export const fetchGameList = async () => {
-    try {
-        const response = await axios.get(`${BASE_URL}/games`, {
-            headers: HEADERS,
-        });
-        return response.data;
-    } catch (error) {
-        throw new Error('Failed to load game list');
-    }
-};
-
-export const placeCardOnTable = async (gameId: number | string, card: string) => {
-    try {
-        await axios.post(
-            `${BASE_URL}/games/${gameId}/place_card_on_table?card=${card}`,
-            {},
-            { headers: HEADERS }
-        );
-    } catch (error) {
-        throw new Error('Error placing card on table');
-    }
-};
-
-// Побитие карты
-export const beatCard = async (gameId: number | string, cardToBeat: string, cardToBeatBy: string) => {
-    try {
-        await axios.post(
-            `${BASE_URL}/games/${gameId}/beat_card?card_to_beat=${cardToBeat}&card_to_beat_by=${cardToBeatBy}`,
-            {},
-            { headers: HEADERS }
-        );
-    } catch (error) {
-        throw new Error('Error beating card');
-    }
-};
-
-// Окончание хода
-export const endTurn = async (gameId: number | string) => {
-    try {
-        await axios.post(
-            `${BASE_URL}/games/${gameId}/end_turn`,
-            {},
-            { headers: HEADERS }
-        );
-    } catch (error) {
-        throw new Error('Error ending turn');
-    }
-};
-
-export const markPlayerReady = async (gameId: number | string) => {
-    try {
-        await axios.post(
-            `${BASE_URL}/games/${gameId}/ready`,
-            {},
-            { headers: HEADERS }
-        );
-    } catch (error) {
-        throw new Error('Error marking player as ready');
-    }
-};
+} = api;

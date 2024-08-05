@@ -1,6 +1,9 @@
 export interface GameData {
-    trump_card: string;
     hand: string[];
+    tableCards: { card: string, beaten_by_card: string | null }[];
+    trump_card: string;
+    currentPlayer: 'creator' | 'guest';
+    action: 'attack' | 'defend';
 }
 
 export interface GameListItem {
