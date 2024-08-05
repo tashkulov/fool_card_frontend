@@ -6,9 +6,10 @@ import { Modal } from "../../components/Modal";
 import Settings from "../Settings/ui/Settings";
 import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick";
 import { useTranslation } from "react-i18next";
-import MyRiveAnimation from "../../components/rive-conponents/ruby/ruby-component"
+import MyRiveAnimation from "../../components/rive-conponents/header-animations/ruby/ruby-component"
 import axios from 'axios';
 import Hands from "./images/main-page-hand-bg.svg"
+import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-animations/mode-anim';
 
 interface User {
     photo_url: string;
@@ -26,6 +27,12 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
     const hasRegistered = useRef(false);
     const hasLoggedIn = useRef(false);
+    let [active, setActive] = useState(false);
+
+    const click = () => {
+        setActive(true);
+    }
+
 
     useEffect(() => {
         const RegisterUser = async () => {
@@ -135,6 +142,10 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                     </div>
                 </div>
             </div>
+            <div onClick={click}>
+                <ModeRiveAnimation active={active} path='all' />
+            </div>
+            
             <div className="main-page-menu">
                 <MyRiveAnimation />
                 <div className="main-page-menu-buttons">

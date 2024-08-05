@@ -5,186 +5,101 @@ import card3 from '../img/card3.svg';
 import GamePlay from "../img/Gameplay_Avatar.svg";
 import coins from "../img/coins.svg";
 import arrow from "../img/Arrow1.svg";
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
-import {Link, useParams} from 'react-router-dom';
-import {fetchGameData, placeCardOnTable, beatCard, endTurn, markPlayerReady} from './apiService';
-import {GameData} from './interface';
-import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {CountdownCircleTimer} from "react-countdown-circle-timer";
-import WaitingForPlayers from "./WaitingRoom/WaitingForPlayers";
-import {useAppDispatch, useAppSelector} from "../../hooks/useAppReduxToolkitTools/redux.ts";
-import {RootState} from "../../Providers/StoreProvider/store.ts";
+import { Link, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppReduxToolkitTools/redux.ts";
+import { RootState } from "../../Providers/StoreProvider/store.ts";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import WaitingForPlayers from "./WaitingRoom/WaitingForPlayers.tsx";
+import {toast} from "react-toastify";
 import {joinInGameService} from "./statePlayGame/service/joinInGameService.ts";
 import {getPlayers} from "./statePlayGame/service/getPlayers.ts";
+import {getCurrentTableThunk} from "./statePlayGame/service/getCurrentTableThunk.ts";
+import {placeCardOnTableThunk} from "./statePlayGame/service/placeCardOnTableThunk.ts";
+// import {beatCardThunk} from "./statePlayGame/service/beatCardThunk.ts";
+import {endTurnThunk} from "./statePlayGame/service/endTurnThunk.ts";
+import {statePlayGameSliceAction, } from "./statePlayGame";
 
 const PlayGame = () => {
-    const dispatch = useAppDispatch()
-    const statePlayGame = useAppSelector((state: RootState) => state.playGame)
-    const {gameId, who} = useParams<{ gameId: string, who: string }>();
-    // const [betValue, setBetValue] = useState<number | null>(null);
+    const dispatch = useAppDispatch();
+    const { gameId, who } = useParams<{ gameId: string, who: string }>();
+    const [, setSelectedCard] = useState<string | null>(null);
+    const [isAnimating, ] = useState(false);
 
-    const [gameData, setGameData] = useState<GameData | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [selectedCard, setSelectedCard] = useState<string | null>(null);
-    const [isAnimating, setIsAnimating] = useState(false);
+    const { isLoading, tableCards, myCards, attackMode, waiting,currentTable  } = useAppSelector((state: RootState) => state.playGame);
     const cardAnimationContainerRef = useRef<HTMLDivElement | null>(null);
     const handRef = useRef<HTMLDivElement | null>(null);
-    const [myCards, setMyCards] = useState<string[]>([]);
-    const [tableCards, setTableCards] = useState<{ card: string, beaten_by_card: string | null }[]>([]);
-    const [attackMode, setAttackMode] = useState<boolean>(true);
-    const [id, setId] = useState<number>(0);
-    const [error, setError] = useState<string | null>(null);
-    const [waiting, setWaiting] = useState<boolean>(true); // New waiting state
-    const [errorUseParams, setErrorUseParams] = useState<boolean>(false);
 
     useEffect(() => {
-        if (Number(gameId)) {
-            if (gameId) {
-                const ID: number = +gameId
-                setId(Number(ID));
-            } else {
-                setErrorUseParams(true);
+        if (gameId) {
+            dispatch(getCurrentTableThunk(Number(gameId)));
+
+            if (who === "guest" || who === "creator") {
+                dispatch(joinInGameService(Number(gameId)));
+                dispatch(getPlayers(Number(gameId)));
             }
         }
-    }, [gameId]);
+    }, [dispatch, gameId, who]);
 
     useEffect(() => {
-        if (id != 0) {
-            if (who === "guest") {
-                console.log("guest")
-                dispatch(joinInGameService(id))
-                dispatch(getPlayers(id))
-            } else if (who === "creator") {
-                console.log("creator")
+        if (!waiting) {
+            const intervalId = setInterval(() => {
+                dispatch(getCurrentTableThunk(Number(gameId)));
+            }, 1000);
+            return () => clearInterval(intervalId);
+        }
+    }, [waiting, dispatch, gameId]);
+
+    const handleCardClick = async (card: string,) => {
+        if (attackMode) {
+            try {
+                await dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
+                setSelectedCard(card);
+            } catch (error) {
+                console.error('Error placing card on table:', error);
             }
+        } else {
+            console.log('hello')
         }
-    }, [who, dispatch, id]);
-
-    useEffect(() => {
-        if (statePlayGame.players.length == statePlayGame.data.participants_number) {
-            console.log("количество игроков соответствует количеству игроков для начала игры")
-
+        //     const cardToBeat = tableCards.find(t => t.beaten_by_card === null)?.card;
+        //     if (cardToBeat) {
+        //         try {
+        //             await dispatch(beatCardThunk({ gameId: Number(gameId), cardToBeat, cardToBeatBy }));
+        //         } catch (error) {
+        //             console.error('Error beating card:', error);
+        //         }
+        //     }
+        // }
+    };
+    const getCardImagePath = (card: string | undefined| null ) => {
+        if (card){
+            const [suit] = card.split('_');
+            const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
+            return path;
+        }else{
+            console.log('иди в пизду ')
         }
-    }, []);
 
-    useEffect(() => {
-        const loadGameData = async () => {
-            if (id) {
-                try {
-                    const data = await fetchGameData(id);
-                    setGameData(data);
-                    setMyCards(data.hand);
-                    if (data.tableCards) {
-                        setTableCards(data.tableCards);
-                    }
-                    setLoading(false);
-                } catch (error) {
-                    console.log('Error fetching game data:', error);
-                    setError('Failed to load game data');
-                    setLoading(false);
-                }
-            }
-        };
-
-        loadGameData();
-
-        const intervalId = setInterval(loadGameData, 1000);
-
-        return () => clearInterval(intervalId);
-    }, [id]);
-
-    useEffect(() => {
-        if (selectedCard) {
-            setIsAnimating(true);
-            const timer = setTimeout(() => {
-                setIsAnimating(false);
-                setSelectedCard(null);
-            }, 500);
-            return () => clearTimeout(timer);
-        }
-    }, [selectedCard]);
-
-    const getCardImagePath = (card: string) => {
-        const [suit] = card.split('_');
-        const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
-        return path;
     };
 
     const endTurnHandler = async () => {
-        if (hasUnbeatenCards()) {
+        if (tableCards.some(card => card.beaten_by_card === null)) {
             toast.error('Необходимо побить все карты на столе, прежде чем завершить ход.');
             return;
         }
 
         try {
-            await endTurn(id);
-            setTableCards([]);
+            await dispatch(endTurnThunk(Number(gameId)));
         } catch (error) {
             console.error('Error ending turn:', error);
-            setError('Failed to end turn');
         }
     };
 
-    const handleCardClick = async (card: string) => {
-        if (attackMode) {
-            try {
-                await placeCardOnTable(id, card);
-                setSelectedCard(card);
-                setIsAnimating(true);
-                setTimeout(() => {
-                    setIsAnimating(false);
-                    setSelectedCard(null);
-                    setMyCards(prevCards => prevCards.filter(c => c !== card));
-                    setTableCards(prevTableCards => [...prevTableCards, {card, beaten_by_card: null}]);
-                    setAttackMode(false);
-                }, 500);
-            } catch (error) {
-                console.error('Error placing card on table:', error);
-            }
-        } else {
-            const cardToBeat = tableCards.find(t => t.beaten_by_card === null)?.card;
-
-            if (cardToBeat) {
-                try {
-                    await beatCard(id, cardToBeat, card);
-
-                    setTableCards(prevTableCards =>
-                        prevTableCards.map(t =>
-                            t.card === cardToBeat ? {...t, beaten_by_card: card} : t
-                        )
-                    );
-
-                    setMyCards(prevCards => prevCards.filter(c => c !== card));
-                    setAttackMode(true);
-                } catch (error) {
-                    console.error('Error beating card:', error);
-                }
-            }
-        }
-    };
-
-    const hasUnbeatenCards = () => tableCards.some(card => card.beaten_by_card === null);
-
-    const handleReadyClick = async () => {
-        try {
-            const result = await markPlayerReady(id);
-            if (result) {
-                setWaiting(false);
-            }
-        } catch (error) {
-            console.error('Ошибка при отметке игрока как готового:', error);
-            setError('Не удалось отметить игрока как готового');
-        }
-    };
-    if (loading) return <div>Loading...</div>;
-    if (errorUseParams) return <div>Ошибка при получении адреса игры. Попробуйте перезайти в игру еще раз.</div>;
-    if (error) return <div>{error}</div>;
-
+    const trump_card=currentTable?.trump_card;
     const angle = 20;
     const offset = 30;
-    const middle = gameData ? Math.floor(gameData.hand.length / 2) : 0;
+    const middle = myCards.length ? Math.floor(myCards.length / 2) : 0;
 
     return (
         <div className="wrapper">
@@ -197,7 +112,6 @@ const PlayGame = () => {
                             </Link>
                             <div className="play-header-coin">
                                 <img src={coins} alt="Coins"/>
-                                {/*<p>{betValue !== null ? ${betValue} : 'N/A'}</p>*/}
                             </div>
                         </div>
                         <div className="play-header-rejim block-obvodka">
@@ -212,60 +126,55 @@ const PlayGame = () => {
             </div>
             <div className="main play-wrapper-game play-krug">
                 {waiting ? (
-                    <WaitingForPlayers onReadyClick={handleReadyClick}/>
+                    <WaitingForPlayers onReadyClick={() => dispatch(statePlayGameSliceAction.setWaiting(false))}/>
                 ) : (
                     <div className="main-wrapper-plays">
-                        <div className="wrapper-plays-header"></div>
-                        <div className="wrapper-plays-game">
-                            <div className="players-blocks">
-                                <div id="user-dumaet" style={{borderRadius: '50%'}}>
-                                    <CountdownCircleTimer
-                                        isPlaying
-                                        duration={30}
-                                        size={90}
-                                        colors={['#18ee7b', '#80776DFF']}
-                                        colorsTime={[30, 0]}
-                                    >
-                                        {({}) => <img src={GamePlay} alt="Gameplay Avatar"/>}
-                                    </CountdownCircleTimer>
-                                    <div className="second-player-hand">
-                                        {myCards.map((card, index) => (
-                                            <img
-                                                key={card}
-                                                src={back_card}
-                                                alt="back_card_second_player"
-                                                style={{
-                                                    zIndex: index + 1,
-                                                    width: 64,
-                                                    height: 90,
-                                                    transition: 'opacity 0.3s ease',
-                                                }}
-                                            />
-                                        ))}
-                                    </div>
+                        <div className="players-blocks">
+                            <div id="user-dumaet" style={{borderRadius: '50%'}}>
+                                <CountdownCircleTimer
+                                    isPlaying
+                                    duration={30}
+                                    size={90}
+                                    colors={['#18ee7b', '#80776DFF']}
+                                    colorsTime={[30, 0]}
+                                >
+                                    {({}) => <img src={GamePlay} alt="Gameplay Avatar"/>}
+                                </CountdownCircleTimer>
+                                <div className="second-player-hand">
+                                    {myCards.map((card, index) => (
+                                        <img
+                                            key={card}
+                                            src={back_card}
+                                            alt="back_card_second_player"
+                                            style={{
+                                                zIndex: index + 1,
+                                                width: 64,
+                                                height: 90,
+                                                transition: 'opacity 0.3s ease',
+                                            }}
+                                        />
+                                    ))}
                                 </div>
-                                <div className="players-flex">
-                                    <div className="player-block1 footer-ava-wp1">
-                                        <img src={GamePlay} alt="Gameplay Avatar"/>
-                                    </div>
-                                    <div className="player-block1 footer-ava-wp1">
-                                        <img src={GamePlay} alt="Gameplay Avatar"/>
-                                    </div>
+                            </div>
+                            <div className="players-flex">
+                                <div className="player-block1 footer-ava-wp1">
+                                    <img src={GamePlay} alt="Gameplay Avatar"/>
+                                </div>
+                                <div className="player-block1 footer-ava-wp1">
+                                    <img src={GamePlay} alt="Gameplay Avatar"/>
                                 </div>
                             </div>
                         </div>
                         <div className="deck">
                             <div className="card-container">
-                                {gameData && (
-                                    <img
-                                        key={'trump_card'}
-                                        src={getCardImagePath(gameData.trump_card)}
-                                        alt={"card"}
-                                        width={64}
-                                        height={90}
-                                        className="trump-card"
-                                    />
-                                )}
+                                {/*<img*/}
+                                {/*    key={'trump_card'}*/}
+                                {/*    src={getCardImagePath(trump_card)}*/}
+                                {/*    alt={"card"}*/}
+                                {/*    width={64}*/}
+                                {/*    height={90}*/}
+                                {/*    className="trump-card"*/}
+                                {/*/>*/}
                                 <img
                                     key={'back_card_in_deck'}
                                     src={back_card}
@@ -308,13 +217,9 @@ const PlayGame = () => {
                             {tableCards.map(({ card, beaten_by_card }, index) => (
                                 <div key={index} className="table-card-item">
                                     <img
-                                        src={getCardImagePath(selectedCard)}
-                                        alt={selectedCard}
+                                        src={getCardImagePath(card)}
+                                        alt={card}
                                         className={`bita-card ${isAnimating ? 'animate' : ''}`}
-                                        onAnimationEnd={() => {
-                                            setIsAnimating(false);
-                                            setSelectedCard(null);
-                                        }}
                                     />
                                     {beaten_by_card && (
                                         <img
@@ -327,7 +232,7 @@ const PlayGame = () => {
                             ))}
                         </div>
                         <div className="hand" ref={handRef}>
-                            {myCards.map((card: string, index: number) => {
+                            {currentTable.hand.map((card: string, index: number) => {
                                 const rotation = (index - middle) * angle;
                                 const position = (index - middle) * offset;
 
@@ -342,33 +247,20 @@ const PlayGame = () => {
                                             transition: 'transform 0.2s ease',
                                             zIndex: 10,
                                         }}
-                                        onClick={() => handleCardClick(card)}
+                                        onClick={() => handleCardClick(card,)}
                                     />
                                 );
                             })}
                         </div>
+                        <button
+                            className="btn-end-turn"
+                            onClick={endTurnHandler}
+                        >
+                            Завершить ход
+                        </button>
                     </div>
                 )}
             </div>
-            <div className="play-footer">
-                <div className="play-footer-ava">
-                    <div className="footer-ava-roga">
-                        <div className="footer-ava-wp1">
-                            <img src={GamePlay} alt="Gameplay Avatar" />
-                        </div>
-                    </div>
-                </div>
-                <div className="play-footer-wrap">
-                    <button
-                        className="play-footer-btn"
-                        onClick={endTurnHandler}
-                        disabled={hasUnbeatenCards() || waiting} // Disable if waiting
-                    >
-                        Бито
-                    </button>
-                </div>
-            </div>
-            <ToastContainer />
         </div>
     );
 };

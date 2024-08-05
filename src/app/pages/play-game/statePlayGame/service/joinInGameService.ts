@@ -5,9 +5,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const joinInGameService = createAsyncThunk<IJoinInGame, number, { rejectValue: string }>(
     "joinInGameService",
     async (id, thunkAPI) => {
-        console.log(id, "запрос на join")
         try {
             const response = await $api.post<IJoinInGame>(`/v1/games/${id}/join`);
+            console.log(response)
             return thunkAPI.fulfillWithValue(response.data);
         } catch (e) {
             console.log(e);

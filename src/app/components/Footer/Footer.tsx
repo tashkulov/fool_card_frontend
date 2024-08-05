@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 import { useTranslation } from "react-i18next";
-import HeartsRiveAnimation from '../rive-conponents/hearts/hearts-component';
-import ClubsRiveAnimation from '../rive-conponents/clubs/clubs-component';
-import DiamondsRiveAnimation from '../rive-conponents/diamonds/diamonds-component';
-import SpadesRiveAnimation from '../rive-conponents/spades/spades-component';
+import HeartsRiveAnimation from '../rive-conponents/footer-animations/hearts/hearts-component';
+import ClubsRiveAnimation from '../rive-conponents/footer-animations/clubs/clubs-component';
+import DiamondsRiveAnimation from '../rive-conponents/footer-animations/diamonds/diamonds-component';
+import SpadesRiveAnimation from '../rive-conponents/footer-animations/spades/spades-component';
 
 const Footer: React.FC = () => {
     const [activeId, setActiveId] = useState<number | null>(null);

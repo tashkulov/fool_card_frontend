@@ -9,7 +9,7 @@ import Check from "../../../assets/img/check_.svg"
 import Footer from '../../components/Footer/Footer';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from 'react-router-dom';
-import HeaderRiveAnimation from '../../components/rive-conponents/ruby-header/ruby-component';
+import HeaderRiveAnimation from '../../components/rive-conponents/header-animations/ruby-header/ruby-component';
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 
 
@@ -105,12 +105,12 @@ const CreateGameForm: React.FC = () => {
         try {
             const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
                 headers: {
-                    Authorization: 'dbafcfc84bfb6664a46cf72e8285bb5b19ac621e0555ae72'
+                    Authorization: '01952c352d690981307e5ef18a4aa703eaf3761a5ded39d4'
                 }
             });
             console.log('Game created successfully:', CreateGame.data);
             const gameId = CreateGame.data.id;
-            // const createdById = CreateGame.data.created_by;
+            const createdById = CreateGame.data.created_by;
 
             // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
             //     headers: {

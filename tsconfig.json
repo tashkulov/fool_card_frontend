@@ -24,7 +24,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "./src/**/*",
+    "src/**/*",
     "./src/telegram-web-app.d.ts",
     "./src/app/hooks/useAppReduxToolkitTools/redux.ts"
   ]
