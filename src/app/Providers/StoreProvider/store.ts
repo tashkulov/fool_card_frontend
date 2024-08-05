@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {statePlayGameSliceReducer} from "../../pages/play-game/statePlayGame";
-import {statePlayGameSlice} from "../../pages/play-game/playGameSlice.ts";
+import {statePlayGameSlice} from "../../pages/play-game/statePlayGame/slice/statePlayGameSlice";
 
 const rootReducer = combineReducers({
     playGame: statePlayGameSliceReducer,

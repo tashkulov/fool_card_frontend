@@ -15,7 +15,7 @@ import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 const CreateGameForm: React.FC = () => {
 
     const navigate = useNavigate();
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     const [betAmount, setBetAmount] = useState<number>(1200);
     const [selectedGameMode, setSelectedGameMode] = useState<string>('');
     const [selectedPlayerCount, setSelectedPlayerCount] = useState<string>('');
