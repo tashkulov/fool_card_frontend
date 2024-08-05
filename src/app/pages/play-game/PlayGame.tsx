@@ -1,4 +1,3 @@
-// src/components/PlayGame.js
 import './play-game.css';
 import card1 from "../img/card1.svg";
 import card2 from '../img/card2.svg';
@@ -9,12 +8,11 @@ import arrow from "../img/Arrow1.svg";
 import {useEffect, useState, useRef} from "react";
 import back_card from '../../../assets/cards/back/back_3.svg';
 import {Link, useParams} from 'react-router-dom';
-import {fetchGameData, placeCardOnTable, beatCard, endTurn, markPlayerReady} from './apiService';
 import {GameData} from './interface';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {CountdownCircleTimer} from "react-countdown-circle-timer";
-import WaitingForPlayers from "./WaitingForPlayers";
+import WaitingForPlayers from "./WaitingRoom/WaitingForPlayers.tsx";
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppReduxToolkitTools/redux.ts";
 import {RootState} from "../../Providers/StoreProvider/store.ts";
 import {joinInGameService} from "./statePlayGame/service/joinInGameService.ts";
@@ -59,6 +57,7 @@ const PlayGame = () => {
                 dispatch(getPlayers(id))
             } else if (who === "creator") {
                 console.log("creator")
+                dispatch(getPlayers(id))
             }
         }
     }, [who, dispatch, id]);
@@ -66,7 +65,6 @@ const PlayGame = () => {
     useEffect(() => {
         if (statePlayGame.players.length == statePlayGame.data.participants_number) {
             console.log("количество игроков соответствует количеству игроков для начала игры")
-
         }
     }, []);
 
@@ -94,7 +92,9 @@ const PlayGame = () => {
         const intervalId = setInterval(loadGameData, 1000);
 
         return () => clearInterval(intervalId);
-    }, [id]);    useEffect(() => {
+    }, [id]);
+
+    useEffect(() => {
         if (selectedCard) {
             setIsAnimating(true);
             const timer = setTimeout(() => {
@@ -166,17 +166,10 @@ const PlayGame = () => {
 
     const hasUnbeatenCards = () => tableCards.some(card => card.beaten_by_card === null);
 
-    const handleReadyClick = async () => {
-        try {
-            const result = await markPlayerReady(id);
-            if (result) {
-                setWaiting(false);
-            }
-        } catch (error) {
-            console.error('Ошибка при отметке игрока как готового:', error);
-            setError('Не удалось отметить игрока как готового');
-        }
+    const handleReadyClick = () => {
+        setWaiting(false);
     };
+
     if (loading) return <div>Loading...</div>;
     if (errorUseParams) return <div>Ошибка при получении адреса игры. Попробуйте перезайти в игру еще раз.</div>;
     if (error) return <div>{error}</div>;
@@ -184,6 +177,7 @@ const PlayGame = () => {
     const angle = 20;
     const offset = 30;
     const middle = gameData ? Math.floor(gameData.hand.length / 2) : 0;
+
     return (
         <div className="wrapper">
             <div className="plays">
@@ -328,6 +322,7 @@ const PlayGame = () => {
                             {myCards.map((card: string, index: number) => {
                                 const rotation = (index - middle) * angle;
                                 const position = (index - middle) * offset;
+
                                 return (
                                     <img
                                         key={card}
