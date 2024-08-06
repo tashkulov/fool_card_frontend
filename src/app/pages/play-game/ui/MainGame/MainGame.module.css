@@ -1,0 +1,20 @@
+.main {
+  width: 100%;
+  height: calc(100vh - 50px - 86px);
+  background: rgb(26, 69, 54);
+  position: relative;
+}
+.main .wrapperImg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -20%);
+}
+.main .wrapperTextGetReady {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*# sourceMappingURL=MainGame.module.css.map */

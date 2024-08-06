@@ -1,0 +1,27 @@
+.main {
+  width: 100%;
+  height: 86px;
+  position: relative;
+  border: 0.95px solid rgb(0, 0, 0);
+  background: linear-gradient(0deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
+  z-index: 1000;
+  flex-shrink: 0;
+  padding: 10px;
+}
+.main .wrapperButton .button {
+  background: linear-gradient(rgb(114, 31, 31), rgb(56, 12, 12));
+  color: white;
+  padding: 10px 30px;
+  border-radius: 8px;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+.main .wrapperButton .button:active {
+  background: linear-gradient(rgb(83, 19, 19), rgb(33, 5, 5));
+}
+.main .wrapperButton .none {
+  display: none;
+}
+
+/*# sourceMappingURL=FooterPlayGame.module.css.map */

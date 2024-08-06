@@ -3,12 +3,14 @@ import { IJoinInGame } from "../types/joinInGame";
 import { IPlayer } from "../types/players";
 import { joinInGameService } from "../service/joinInGameService";
 import { getPlayers } from "../service/getPlayers";
-import {placeCardOnTableThunk} from "../service/placeCardOnTableThunk"
+import { placeCardOnTableThunk } from "../service/placeCardOnTableThunk"
 import { beatCardThunk } from "../service/beatCardThunk.ts"
 import { endTurnThunk } from "../service/endTurnThunk.ts"
 import { markPlayerReadyThunk } from "../service/markPlayerReadyThunk.ts"
-import {getCurrentTableThunk} from "../service/getCurrentTableThunk.ts";
-import {CurrentTableResponse} from "../types/CurrentTableData.ts";
+import { getCurrentTableThunk } from "../service/getCurrentTableThunk.ts";
+import { CurrentTableResponse } from "../types/CurrentTableData.ts";
+import {getGames} from "../service/getGames.ts";
+import {IGame} from "../types/game.ts";
 
 
 interface ErrorPayload {
@@ -21,6 +23,9 @@ export interface InitialStatePlayGame {
     errors: string[];
     players: IPlayer[];
     data: IJoinInGame;
+    stage: boolean;
+    games: IGame[];
+    participants_number: number;
     currentPlayer: string | null;
     tableCards: { card: string, beaten_by_card: string | null }[];
     myCards: string[];
@@ -33,6 +38,9 @@ const initialState: InitialStatePlayGame = {
     isLoading: false,
     errors: [],
     players: [],
+    games: [],
+    participants_number: 0,
+    stage: false,
     data: {
         bet_value: 0,
         card_amount: 0,
@@ -195,6 +203,22 @@ export const statePlayGameSlice = createSlice({
                     : 'Unknown error';
                 state.errors = [...state.errors, errorMessage];
             });
+        builder
+            .addCase(getGames.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getGames.fulfilled, (state, action: PayloadAction<{games: IGame[], id: number}>) => {
+                state.isLoading = false
+                state.games = action.payload.games
+                state.participants_number = Number(action.payload.games.find(game => game.id === action.payload.id)?.participants_number)
+            })
+            .addCase(getGames.rejected, (state, action) => {
+                state.isLoading = false
+                const errorMessage = action.payload && typeof action.payload === 'object'
+                    ? (action.payload as ErrorPayload).message || 'Unknown error'
+                    : 'Unknown error';
+                state.errors = [...state.errors, errorMessage];
+            })
     },
 });
 
