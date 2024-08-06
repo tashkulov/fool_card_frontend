@@ -690,6 +690,7 @@ section {
     height: 67px;
     width: 100%;
     display: flex;
+    border-radius: 10px;
     flex-direction: column;
     gap: 10px;
 }
@@ -730,6 +731,7 @@ label {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .icon-rejim-2 {
@@ -854,7 +856,13 @@ label {
 
 
 
+.required-field {
+    box-shadow: 0.5px 0.5px 7px #fff, -0.5px -0.5px 7px #fff;
+}
 
+.un-cheked {
+    box-shadow: 0.5px 0.5px 7px #8f5252, -0.5px -0.5px 7px #8f5252;
+}
 
 /* create-game */
 .create-game {
@@ -863,7 +871,7 @@ label {
 
 .create-checkbox {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
@@ -872,6 +880,7 @@ label {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    width: 60%;
     gap: 8px;
 }
 
