@@ -49,21 +49,6 @@ const PlayGame = () => {
         }
     },[]);
 
-    // const getCardImagePath = (card: string | undefined| null ) => {
-    //     if (card){
-    //         const [suit] = card.split('_');
-    //         const path = new URL(`../../../assets/cards/${suit}/${card}.svg`, import.meta.url).href;
-    //         return path;
-    //     }else{
-    //         console.log('иди в пизду ')
-    //     }
-    //
-    // };
-    //
-    // const trump_card=currentTable?.trump_card;
-    // const angle = 20;
-    // const offset = 30;
-    // const middle = myCards.length ? Math.floor(myCards.length / 2) : 0;
 
     if (gameId && who) {
         return (
