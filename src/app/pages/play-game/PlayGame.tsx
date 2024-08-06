@@ -1,4 +1,4 @@
-import './play-game.css';
+import './PlayGames.css';
 import card1 from "../img/card1.svg";
 import card2 from '../img/card2.svg';
 import card3 from '../img/card3.svg';
