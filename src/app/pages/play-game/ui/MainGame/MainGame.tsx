@@ -9,7 +9,6 @@ import back_card from '../../../../../assets/cards/back/back_2.svg';
 import { calculateCardStyles, calculateCardStylesForOpponent } from "./components/calculateCardStyles/calculateCardStyles.ts";
 import { placeCardOnTableThunk } from "../../statePlayGame/service/placeCardOnTableThunk.ts";
 import { beatCardThunk } from "../../statePlayGame/service/beatCardThunk.ts";
-import {endTurnThunk} from "../../statePlayGame/service/endTurnThunk.ts"; // Импортируем beatCardThunk
 
 type TMainGameProps = {
     gameId: string;
@@ -40,11 +39,10 @@ const MainGame = (props: TMainGameProps) => {
         }
     }, [movingCard]);
 
-    const table = data.currentTable?.table;
+    const table = data.currentTable?.table ?? [];
     const playerHand = data.currentTable?.hand ?? [];
-// @ts-ignore
-    const idPlayers = Object.keys(data.currentTable?.participants)
-    const opponentCardsAmount = data.currentTable?.participants[idPlayers[0]]?.cards_amount ?? 0;
+    const idPlayers = Object.keys(data.currentTable?.participants ?? {});
+    const opponentCardsAmount = idPlayers.length > 0 ? data.currentTable?.participants[idPlayers[0]]?.cards_amount ?? 0 : 0;
     const opponentCards = new Array(opponentCardsAmount).fill('back_card');
 
     const handleBeatCard = (cardToBeatBy: string) => {
@@ -63,7 +61,6 @@ const MainGame = (props: TMainGameProps) => {
             dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
         }
     };
-
 
     return (
         <div className={cls.main}>
@@ -106,7 +103,7 @@ const MainGame = (props: TMainGameProps) => {
                 <img src={back_card} alt="deck_card" />
             </div>
             <div className={cls.tableCard}>
-                {table?.map((cardObj, index: number) => (
+                {table.map((cardObj, index: number) => (
                     <div key={index}>
                         <img
                             src={getCardImagePath(cardObj.card)}

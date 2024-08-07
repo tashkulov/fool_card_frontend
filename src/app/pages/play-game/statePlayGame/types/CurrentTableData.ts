@@ -1,9 +1,12 @@
 interface Participant {
     cards_amount: number;
 }
-
+export interface TableCard {
+    card: string;
+    beaten_by_card: string | null;
+}
 export interface CurrentTableResponse {
-    table: string[];
+    table: TableCard[];
     free_cards_amount: number;
     beaten_cards: string[];
     trump: string;
