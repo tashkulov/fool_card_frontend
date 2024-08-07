@@ -25,7 +25,6 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
                 markPlayerReadyThunk(Number(gameId));
                 const res = data.players.find(player => player.is_ready === false)
                 if (res === undefined) {
-                    console.log("1234567890")
                     dispatch(statePlayGameSliceAction.setStageTrue())
                     clearInterval(intervalId)
                 }
@@ -33,6 +32,10 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
 
         }
     }, [data.stage]);
+
+    const onClickButton = () => {
+
+    }
 
     return (
         <div className={cls.main}>

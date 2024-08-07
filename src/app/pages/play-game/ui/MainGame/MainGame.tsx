@@ -8,6 +8,7 @@ import { getCardImagePath } from "./components/getCardImagePath/getCardImagePath
 import back_card from '../../../../../assets/cards/back/back_2.svg';
 import { calculateCardStyles, calculateCardStylesForOpponent } from "./components/calculateCardStyles/calculateCardStyles.ts";
 import { placeCardOnTableThunk } from "../../statePlayGame/service/placeCardOnTableThunk.ts";
+import { beatCardThunk } from "../../statePlayGame/service/beatCardThunk.ts"; // Импортируем beatCardThunk
 
 type TMainGameProps = {
     gameId: string;
@@ -24,10 +25,7 @@ const MainGame = (props: TMainGameProps) => {
             dispatch(getCurrentTableThunk(Number(gameId)));
         };
 
-        // Fetch data initially
         fetchTableData();
-
-        // Set up polling
         const interval = setInterval(fetchTableData, 5000);
 
         return () => clearInterval(interval);
@@ -35,33 +33,58 @@ const MainGame = (props: TMainGameProps) => {
 
     useEffect(() => {
         if (movingCard) {
-            // Анимация карты
             setTimeout(() => {
                 setMovingCard(null);
-            }, 500); // Длительность анимации
+            }, 500);
         }
     }, [movingCard]);
 
     const table = data.currentTable?.table;
     const playerHand = data.currentTable?.hand ?? [];
-    const opponentCardsAmount = data.currentTable?.participants['235']?.cards_amount ?? 0;
+    // @ts-ignore
+    const idPlayers = Object.keys(data.currentTable?.participants)
+    const opponentCardsAmount = data.currentTable?.participants[idPlayers[0]]?.cards_amount ?? 0;
     const opponentCards = new Array(opponentCardsAmount).fill('back_card');
 
-    const handleCardClick = (card: string) => {
-        setMovingCard(card); // Запуск анимации
-        dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
+    const handleBeatCard = (cardToBeatBy: string) => {
+        const lastCard = table[table.length - 1];
+        if (lastCard && !lastCard.beaten_by_card) {
+            dispatch(beatCardThunk({ gameId: Number(gameId), cardToBeat: lastCard.card, cardToBeatBy }));
+        }
     };
+
+    const handleCardClick = (card: string) => {
+        const lastCard = table[table.length - 1];
+        if (lastCard && !lastCard.beaten_by_card) {
+            handleBeatCard(card);
+        } else {
+            setMovingCard(card);
+            dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
+        }
+    };
+
+    const getTextReady = () => {
+        if (data.stage === false) {
+            return (
+                <div className={cls.wrapperTextGetReady}>Нажми Готов</div>
+            )
+        } else if (data.stage === null || typeof data.stage === "string") {
+            return (
+                <div className={cls.wrapperTextGetReady}>Отлично скоро игра начнётся</div>
+            )
+        } else {
+            return null
+        }
+    }
 
     return (
         <div className={cls.main}>
             <div className={cls.wrapperImg}>
-                <img src={ava} alt="avatars players" />
-                <div className={cls.wrapperTextGetReady}>
-                    Нажми Готов
-                </div>
+                <img src={ava} alt="avatars players"/>
+                {getTextReady()}
             </div>
             <div className={cls.opponentHand}>
-                {opponentCards.map((_, index: number) => (
+            {opponentCards.map((_, index: number) => (
                     <img
                         key={index}
                         src={back_card}
@@ -69,6 +92,32 @@ const MainGame = (props: TMainGameProps) => {
                         className={cls.card}
                         style={calculateCardStylesForOpponent(index, opponentCards.length)}
                     />
+                ))}
+            </div>
+            <div className={cls.MywrapperImg}>
+                <img src={ava} alt="avatars players"/>
+                <div className={cls.wrapperTextGetReady}>
+                </div>
+            </div>
+            <div className={cls.deck}>
+                <img src={getCardImagePath(data.currentTable?.trump_card)} alt="trump_card" className={cls.trump}/>
+                <img src={back_card} alt="deck_card"/>
+            </div>
+            <div className={cls.tableCard}>
+                {table?.map((cardObj, index: number) => (
+                    <div key={index}>
+                        <img
+                            src={getCardImagePath(cardObj.card)}
+                            alt={cardObj.card}
+                        />
+                        {cardObj.beaten_by_card ? (
+                            <img
+                                src={getCardImagePath(cardObj.beaten_by_card)}
+                                alt={cardObj.beaten_by_card}
+                                className={cls.beatenCard}
+                            />
+                        ) : null}
+                    </div>
                 ))}
             </div>
             <div className={cls.hand}>
@@ -80,24 +129,6 @@ const MainGame = (props: TMainGameProps) => {
                         className={`${cls.card} ${movingCard === card ? cls.cardMoving : ''}`}
                         style={calculateCardStyles(index, playerHand.length)}
                         onClick={() => handleCardClick(card)}
-                    />
-                ))}
-            </div>
-            <div className={cls.MywrapperImg}>
-                <img src={ava} alt="avatars players" />
-                <div className={cls.wrapperTextGetReady}>
-                </div>
-            </div>
-            <div className={cls.deck}>
-                <img src={getCardImagePath(data.currentTable?.trump_card)} alt="trump_card" className={cls.trump} />
-                <img src={back_card} alt="deck_card" />
-            </div>
-            <div className={cls.tableCard}>
-                {table?.map((card: string, index: number) => (
-                    <img
-                        key={index}
-                        src={getCardImagePath(card.card)}
-                        alt={card}
                     />
                 ))}
             </div>

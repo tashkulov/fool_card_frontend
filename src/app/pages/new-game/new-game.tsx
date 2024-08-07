@@ -110,7 +110,7 @@ const CreateGameForm: React.FC = () => {
                     setErrorString('')
                     const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
                         headers: {
-                            Authorization: '6cc521bac480f3ad0ba0fa9a5f29dff1eae810a5b3a12bb3'
+                            Authorization: '2b40590d9788c9737b94207f340715cb0b11d09ac4643bf8'
                         }
                     });
                     console.log('Game created successfully:', CreateGame.data);
@@ -123,7 +123,7 @@ const CreateGameForm: React.FC = () => {
                     //     }
                     // });
                     // console.log(response.data)
-                    navigate(`/inGame/${gameId}/${createdById}`);
+                    navigate(`/inGame/${gameId}/creator`);
                 } else {
                     setErrorString('bet amount is les then 100!')
                 }
