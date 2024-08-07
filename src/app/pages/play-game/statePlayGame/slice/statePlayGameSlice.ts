@@ -11,6 +11,7 @@ import { getCurrentTableThunk } from "../service/getCurrentTableThunk.ts";
 import { CurrentTableResponse } from "../types/CurrentTableData.ts";
 import {getGames} from "../service/getGames.ts";
 import {IGame} from "../types/game.ts";
+import {MarkPlayerReadyResponse} from "../types/MarkPlayerReadyResponse.ts";
 
 
 interface ErrorPayload {
@@ -30,7 +31,7 @@ export interface InitialStatePlayGame {
     tableCards: { card: string, beaten_by_card: string | null }[];
     myCards: string[];
     attackMode: boolean;
-    waiting: boolean;
+    waiting: boolean | null;
     currentTable: CurrentTableResponse | null;
 }
 
@@ -81,7 +82,12 @@ export const statePlayGameSlice = createSlice({
         setWaiting: (state, action: PayloadAction<boolean>) => {
             state.waiting = action.payload;
         },
-
+        setStageTrue: (state) => {
+            state.stage = true
+        },
+        setReset: (state) => {
+            Object.assign(state, initialState);
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -91,7 +97,6 @@ export const statePlayGameSlice = createSlice({
             .addCase(joinInGameService.fulfilled, (state, action: PayloadAction<IJoinInGame>) => {
                 state.isLoading = false;
                 state.data = action.payload;
-                state.waiting = true;
             })
             .addCase(joinInGameService.rejected, (state, action) => {
                 state.isLoading = false;
@@ -192,9 +197,9 @@ export const statePlayGameSlice = createSlice({
             .addCase(markPlayerReadyThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(markPlayerReadyThunk.fulfilled, (state) => {
+            .addCase(markPlayerReadyThunk.fulfilled, (state, action: PayloadAction<MarkPlayerReadyResponse | null>) => {
                 state.isLoading = false;
-                state.waiting = false;
+                state.waiting = typeof action.payload === "string" ? action.payload : null;
             })
             .addCase(markPlayerReadyThunk.rejected, (state, action) => {
                 state.isLoading = false;

@@ -8,6 +8,8 @@ import { getCardImagePath } from "./components/getCardImagePath/getCardImagePath
 import back_card from '../../../../../assets/cards/back/back_2.svg';
 import { calculateCardStyles, calculateCardStylesForOpponent } from "./components/calculateCardStyles/calculateCardStyles.ts";
 import { placeCardOnTableThunk } from "../../statePlayGame/service/placeCardOnTableThunk.ts";
+import { beatCardThunk } from "../../statePlayGame/service/beatCardThunk.ts";
+import {endTurnThunk} from "../../statePlayGame/service/endTurnThunk.ts"; // Импортируем beatCardThunk
 
 type TMainGameProps = {
     gameId: string;
@@ -24,10 +26,7 @@ const MainGame = (props: TMainGameProps) => {
             dispatch(getCurrentTableThunk(Number(gameId)));
         };
 
-        // Fetch data initially
         fetchTableData();
-
-        // Set up polling
         const interval = setInterval(fetchTableData, 5000);
 
         return () => clearInterval(interval);
@@ -35,22 +34,36 @@ const MainGame = (props: TMainGameProps) => {
 
     useEffect(() => {
         if (movingCard) {
-            // Анимация карты
             setTimeout(() => {
                 setMovingCard(null);
-            }, 500); // Длительность анимации
+            }, 500);
         }
     }, [movingCard]);
 
     const table = data.currentTable?.table;
     const playerHand = data.currentTable?.hand ?? [];
-    const opponentCardsAmount = data.currentTable?.participants['236']?.cards_amount ?? 0;
+// @ts-ignore
+    const idPlayers = Object.keys(data.currentTable?.participants)
+    const opponentCardsAmount = data.currentTable?.participants[idPlayers[0]]?.cards_amount ?? 0;
     const opponentCards = new Array(opponentCardsAmount).fill('back_card');
 
-    const handleCardClick = (card: string) => {
-        setMovingCard(card); // Запуск анимации
-        dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
+    const handleBeatCard = (cardToBeatBy: string) => {
+        const lastCard = table[table.length - 1];
+        if (lastCard && !lastCard.beaten_by_card) {
+            dispatch(beatCardThunk({ gameId: Number(gameId), cardToBeat: lastCard.card, cardToBeatBy }));
+        }
     };
+
+    const handleCardClick = (card: string) => {
+        const lastCard = table[table.length - 1];
+        if (lastCard && !lastCard.beaten_by_card) {
+            handleBeatCard(card);
+        } else {
+            setMovingCard(card);
+            dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
+        }
+    };
+
 
     return (
         <div className={cls.main}>
@@ -93,12 +106,20 @@ const MainGame = (props: TMainGameProps) => {
                 <img src={back_card} alt="deck_card" />
             </div>
             <div className={cls.tableCard}>
-                {table?.map((card: string, index: number) => (
-                    <img
-                        key={index}
-                        src={getCardImagePath(card.card)}
-                        alt={card}
-                    />
+                {table?.map((cardObj, index: number) => (
+                    <div key={index}>
+                        <img
+                            src={getCardImagePath(cardObj.card)}
+                            alt={cardObj.card}
+                        />
+                        {cardObj.beaten_by_card ? (
+                            <img
+                                src={getCardImagePath(cardObj.beaten_by_card)}
+                                alt={cardObj.beaten_by_card}
+                                className={cls.beatenCard}
+                            />
+                        ) : null}
+                    </div>
                 ))}
             </div>
         </div>

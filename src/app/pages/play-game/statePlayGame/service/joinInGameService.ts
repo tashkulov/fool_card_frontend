@@ -7,7 +7,7 @@ export const joinInGameService = createAsyncThunk<IJoinInGame, number, { rejectV
     async (id, thunkAPI) => {
         try {
             const response = await $api.post<IJoinInGame>(`/v1/games/${id}/join`);
-            console.log(response)
+            console.log("вы успешно присоединились к игре",response)
             return thunkAPI.fulfillWithValue(response.data);
         } catch (e) {
             console.log(e);

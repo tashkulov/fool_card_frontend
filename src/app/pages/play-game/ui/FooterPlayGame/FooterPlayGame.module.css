@@ -4,7 +4,7 @@
   position: relative;
   border: 0.95px solid rgb(0, 0, 0);
   background: linear-gradient(0deg, rgb(128, 119, 109) -17.66%, rgb(145, 135, 137) 2.79%, rgb(187, 176, 174) 33.465%, rgb(215, 204, 200) 60.422%, rgb(226, 215, 210) 75.295%);
-  z-index: 1000;
+  z-index: 2;
   flex-shrink: 0;
   padding: 10px;
 }

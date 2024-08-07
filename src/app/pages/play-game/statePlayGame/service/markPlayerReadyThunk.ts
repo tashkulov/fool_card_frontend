@@ -5,7 +5,7 @@ import {MarkPlayerReadyResponse} from "../types/MarkPlayerReadyResponse.ts";
 
 
 export const markPlayerReadyThunk = createAsyncThunk<
-    MarkPlayerReadyResponse,
+    MarkPlayerReadyResponse | null,
     number,
     { rejectValue: string }
 >(
@@ -14,6 +14,7 @@ export const markPlayerReadyThunk = createAsyncThunk<
         try {
             const url = `https://foolcard2.shop/v1/games/${gameId}/ready`;
             const response = await $api.post<MarkPlayerReadyResponse>(url);
+            console.log("markPlayerReadyThunk",response.data)
             return thunkAPI.fulfillWithValue(response.data);
         } catch (e) {
             console.log(e);
