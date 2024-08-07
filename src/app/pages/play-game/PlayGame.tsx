@@ -11,6 +11,7 @@ import cls from "./PlayGame.module.scss"
 import HeaderPlayGame from "./ui/HeaderPlayGame/HeaderPlayGame.tsx";
 import FooterPlayGame from "./ui/FooterPlayGame/FooterPlayGame.tsx";
 import MainGame from "./ui/MainGame/MainGame.tsx";
+import {statePlayGameSliceAction} from "./statePlayGame";
 
 const PlayGame = () => {
     const dispatch = useAppDispatch();
@@ -48,6 +49,14 @@ const PlayGame = () => {
             }
         }
     },[]);
+
+    useEffect(() => {
+
+        return () => {
+
+            dispatch(statePlayGameSliceAction.setReset())
+        }
+    }, [])
 
 
     if (gameId && who) {

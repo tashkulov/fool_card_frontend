@@ -6,7 +6,6 @@ import NewBet from '../../../assets/img/new-stavka.svg';
 import Minus from '../../../assets/img/minus.svg';
 import Plus from '../../../assets/img/pluss.svg';
 import Check from "../../../assets/img/check_.svg"
-import Footer from '../../components/Footer/Footer';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from 'react-router-dom';
 import HeaderRiveAnimation from '../../components/rive-conponents/header-animations/ruby-header/ruby-component';
@@ -310,10 +309,7 @@ const CreateGameForm: React.FC = () => {
                         </div>
                     </div>
                 </form>
-
             </section>
-
-            <Footer></Footer>
         </div>
     );
 };

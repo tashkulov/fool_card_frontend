@@ -44,7 +44,7 @@ const MainGame = (props: TMainGameProps) => {
 
     const table = data.currentTable?.table;
     const playerHand = data.currentTable?.hand ?? [];
-    const opponentCardsAmount = data.currentTable?.participants['224']?.cards_amount ?? 0;
+    const opponentCardsAmount = data.currentTable?.participants['235']?.cards_amount ?? 0;
     const opponentCards = new Array(opponentCardsAmount).fill('back_card');
 
     const handleCardClick = (card: string) => {
