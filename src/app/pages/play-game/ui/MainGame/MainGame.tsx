@@ -2,14 +2,19 @@ import cls from "./MainGame.module.scss";
 import ava from "../../images/Сircle Right.svg";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useAppReduxToolkitTools/redux.ts";
 import { RootState } from "../../../../Providers/StoreProvider/store.ts";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getCurrentTableThunk } from "../../statePlayGame/service/getCurrentTableThunk.ts";
 import { getCardImagePath } from "./components/getCardImagePath/getCardImagePath.ts";
 import back_card from '../../../../../assets/cards/back/back_2.svg';
-import { calculateCardStyles, calculateCardStylesForOpponent } from "./components/calculateCardStyles/calculateCardStyles.ts";
+import {
+    calculateCardStyles, getRotateStyle, getTranslateXStyle
+} from "./components/calculateCardStyles/calculateCardStyles.ts";
 import { placeCardOnTableThunk } from "../../statePlayGame/service/placeCardOnTableThunk.ts";
 import { beatCardThunk } from "../../statePlayGame/service/beatCardThunk.ts";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import Card from "./components/card/Card.tsx";
+import {getPlayers} from "../../statePlayGame/service/getPlayers.ts";
+
 type TMainGameProps = {
     gameId: string;
 };
@@ -26,6 +31,8 @@ const MainGame = (props: TMainGameProps) => {
     const [offsets, setOffsets] = useState<Record<string, { x: number; y: number }>>({});
     const [isDragging, setIsDragging] = useState(false);
     const [draggingCardScale, setDraggingCardScale] = useState<Record<string, { scale: number }>>({});
+    const [activeOpponentCardIndex, setActiveOpponentCardIndex] = useState<number>(-1);
+    const [activeCardIndex, setActiveCardIndex] = useState<number>(-1);
 
     const getRandomValue = () => {
         return Math.floor(Math.random() * (20 - 10 + 1)) + 10;
@@ -116,6 +123,8 @@ const MainGame = (props: TMainGameProps) => {
 
     };
 
+
+
     useEffect(() => {
         const fetchTableData = () => {
             dispatch(getCurrentTableThunk(Number(gameId)));
@@ -134,6 +143,7 @@ const MainGame = (props: TMainGameProps) => {
             }, 500);
         }
     }, [movingCard]);
+
 
     const table = data.currentTable?.table ?? [];
     const playerHand = data.currentTable?.hand ?? [];
@@ -165,6 +175,7 @@ const MainGame = (props: TMainGameProps) => {
         }
     };
 
+
     const onComplete = () => {
         if (currentTurn === 'creator') {
             setCurrentTurn('guest');
@@ -173,7 +184,40 @@ const MainGame = (props: TMainGameProps) => {
         }
         setKey(prevKey => prevKey + 1);
     };
+    useEffect(() => {
+        if (playerHand.length > 0) {
+            const interval = setInterval(() => {
+                setActiveCardIndex((prevIndex) => {
+                    if (prevIndex < playerHand.length - 1) {
+                        return prevIndex + 1;
+                    } else {
+                        clearInterval(interval);
+                        return prevIndex;
+                    }
+                });
+            }, 500);
 
+            return () => clearInterval(interval);
+        }
+    }, [playerHand.length]);
+
+
+    useEffect(() => {
+        if (opponentCards.length > 0) {
+            const interval = setInterval(() => {
+                setActiveOpponentCardIndex((prevIndex) => {
+                    if (prevIndex < opponentCards.length - 1) {
+                        return prevIndex + 1;
+                    } else {
+                        clearInterval(interval);
+                        return prevIndex;
+                    }
+                });
+            }, 500);
+
+            return () => clearInterval(interval);
+        }
+    }, [opponentCards.length]);
     return (
         <div className={cls.main}
              onMouseMove={handleMouseMove}
@@ -201,19 +245,23 @@ const MainGame = (props: TMainGameProps) => {
             </div>
             <div className={cls.opponentHand}>
                 {opponentCards.map((_, index: number) => (
-                    <img
-                        key={index}
-                        src={back_card}
-                        alt="back_card"
-                        className={cls.card}
-                        style={calculateCardStylesForOpponent(index, opponentCards.length)}
-                    />
+                    index <= activeOpponentCardIndex && (
+                        <Card
+                            key={index}
+                            src={back_card}
+                            alt="back_card"
+                            Rotate={getRotateStyle(index, opponentCards.length)}
+                            Transform={getTranslateXStyle(index, opponentCards.length)}
+                        />
+                    )
+
                 ))}
             </div>
             <div className={cls.hand}>
                 {playerHand.map((card: string, index: number) => (
+                    index<=activeCardIndex && (
                     <div
-                        key={card}
+                        key={card} // Убедитесь, что у вас уникальные ключи
                         onMouseDown={(event) => handleMouseDown(card, event)}
                         onTouchStart={(event) => handleTouchStart(card, event)}
                         style={{
@@ -234,7 +282,7 @@ const MainGame = (props: TMainGameProps) => {
                         onClick={() => currentTurn === 'creator' && handleCardClick(card)}
 
                     />
-                ))}
+                )))}
             </div>
             <div className={cls.MywrapperImg}>
                 <CountdownCircleTimer

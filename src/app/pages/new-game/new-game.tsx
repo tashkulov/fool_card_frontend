@@ -112,7 +112,7 @@ const CreateGameForm: React.FC = () => {
                         headers: {
                             // Authorization: localStorage.getItem('authorization')
 
-                            Authorization: '0b8546a656fea16572ad1a13710f728feab9b144d33aa3a6'
+                            Authorization: 'c5263294bf4dc8654f5b0e8a1030c13e67842e993b7b7a7f'
                         }
                     });
                     console.log('Game created successfully:', CreateGame.data);
