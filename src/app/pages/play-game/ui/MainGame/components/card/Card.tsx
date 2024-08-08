@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components";
 interface ICardProps extends React.ImgHTMLAttributes<HTMLImageElement> {
     Rotate: number;
     Transform: number;
-    Top: number;
+    Top?: number;
 }
 const cardMovement = (Rotate: number, Transform: number) => keyframes`
     0% {
