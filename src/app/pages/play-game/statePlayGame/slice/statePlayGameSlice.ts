@@ -20,6 +20,7 @@ interface ErrorPayload {
 
 
 export interface InitialStatePlayGame {
+    isAnimating: boolean,
     isLoading: boolean;
     errors: string[];
     players: IPlayer[];
@@ -36,6 +37,7 @@ export interface InitialStatePlayGame {
 }
 
 const initialState: InitialStatePlayGame = {
+    isAnimating: false,
     isLoading: false,
     errors: [],
     players: [],
@@ -67,6 +69,12 @@ export const statePlayGameSlice = createSlice({
     name: "statePlayGame",
     initialState,
     reducers: {
+        startAnimation(state) {
+            state.isAnimating = true;
+        },
+        stopAnimation(state) {
+            state.isAnimating = false;
+        },
         setCurrentPlayer: (state, action: PayloadAction<string>) => {
             state.currentPlayer = action.payload;
         },
@@ -226,6 +234,8 @@ export const statePlayGameSlice = createSlice({
             })
     },
 });
+
+export const { startAnimation, stopAnimation } = statePlayGameSlice.actions;
 
 export const {
     name: statePlayGameSliceReducerName,
