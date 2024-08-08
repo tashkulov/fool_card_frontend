@@ -13,7 +13,6 @@ import { placeCardOnTableThunk } from "../../statePlayGame/service/placeCardOnTa
 import { beatCardThunk } from "../../statePlayGame/service/beatCardThunk.ts";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import Card from "./components/card/Card.tsx";
-import {getPlayers} from "../../statePlayGame/service/getPlayers.ts";
 
 type TMainGameProps = {
     gameId: string;
