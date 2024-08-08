@@ -4,7 +4,7 @@ import { markPlayerReadyThunk } from "../../statePlayGame/service/markPlayerRead
 import { RootState } from "../../../../Providers/StoreProvider/store.ts";
 import { useEffect } from "react";
 import { statePlayGameSliceAction } from "../../statePlayGame";
-import {endTurnThunk} from "../../statePlayGame/service/endTurnThunk.ts";
+import { startAnimation } from "../../statePlayGame/slice/statePlayGameSlice.ts";
 
 type TFooterPlayGameProps = {
     stateButtonReadiness: boolean;
@@ -15,13 +15,13 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
     const { stateButtonReadiness, gameId } = props;
     const dispatch = useAppDispatch();
     const data = useAppSelector((state: RootState) => state.playGame);
-
     const getReady = () => {
         dispatch(markPlayerReadyThunk(Number(gameId)));
     };
-    const handleEndTurn =()=>{
-        dispatch(endTurnThunk(Number(gameId)))
-    }
+
+    const handleEndTurn = () => {
+        dispatch(startAnimation()); // Запуск анимации
+    };
 
     useEffect(() => {
         if (!data.stage) {
@@ -42,17 +42,15 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
         <div className={cls.main}>
             <div className={cls.wrapperButton}>
                 <button
-                    onClick={data.waiting === false ? getReady : handleEndTurn } // Здесь должна быть функция для бития карты
+                    onClick={data.waiting === false ? getReady : handleEndTurn }
                     type="button"
-
                     className={stateButtonReadiness ? cls.button : cls.none}
                 >
                     {data.waiting === false
                         ? "Готов"
                         : data.waiting === null || typeof data.waiting === "string"
                             ? "Бито"
-                            : "" // Пока что ничего не придумал
-                    }
+                            : ""}
                 </button>
             </div>
         </div>

@@ -12,7 +12,12 @@ import {
 import { placeCardOnTableThunk } from "../../statePlayGame/service/placeCardOnTableThunk.ts";
 import { beatCardThunk } from "../../statePlayGame/service/beatCardThunk.ts";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+
+import { endTurnThunk } from "../../statePlayGame/service/endTurnThunk.ts";
+import { stopAnimation } from "../../statePlayGame/slice/statePlayGameSlice.ts"; // Импортируем action
+
 import Card from "./components/card/Card.tsx";
+
 
 type TMainGameProps = {
     gameId: string;
@@ -30,16 +35,42 @@ const MainGame = (props: TMainGameProps) => {
     const [offsets, setOffsets] = useState<Record<string, { x: number; y: number }>>({});
     const [isDragging, setIsDragging] = useState(false);
     const [draggingCardScale, setDraggingCardScale] = useState<Record<string, { scale: number }>>({});
+
+    const [rotationAngle, setRotationAngle] = useState<Record<string, { angle: number }>>({});
+
+
+    const isAnimating = useAppSelector((state: RootState) => state.playGame.isAnimating);
+
+
+    useEffect(() => {
+        if (isAnimating) {
+            const moveToRightAnimation = async () => {
+                // Запуск анимации
+                await new Promise(resolve => setTimeout(resolve, 500)); // Ждем 500ms для завершения анимации
+                dispatch(stopAnimation()); // Останавливаем анимацию
+                dispatch(endTurnThunk(Number(props.gameId))); // Завершаем ход
+            };
+            moveToRightAnimation();
+        }
+    }, [isAnimating, dispatch, props.gameId]);
+
     const [activeOpponentCardIndex, setActiveOpponentCardIndex] = useState<number>(-1);
     const [activeCardIndex, setActiveCardIndex] = useState<number>(-1);
 
+
     const getRandomValue = () => {
-        return Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+        return Math.floor(Math.random() * (20 - 40 + 1)) + 10;
     };
 
     const handleMouseDown = (id: string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (currentTurn !== 'creator') return; // Не разрешаем перетаскивание, если это не ваш ход
-
+        setRotationAngle((prevAngle) => ({
+            ...prevAngle,
+            [id]: {
+                angle: 0
+            }
+        }));
+        console.log(rotationAngle)
         setActiveCardId(id);
         setIsDragging(true);
         setOffsets((prevOffsets) => ({
@@ -74,12 +105,28 @@ const MainGame = (props: TMainGameProps) => {
         setIsDragging(false);
         setActiveCardId(null);
         handleCardClick(activeCardId)
+
+        if (activeCardId != null) {
+            setRotationAngle(() => ({
+                
+                [activeCardId]: {
+                    angle: getRandomValue()
+                }
+            }));
+        }
     };
 
     const handleTouchStart = (id: string, event: React.TouchEvent<HTMLDivElement>) => {
         if (currentTurn !== 'creator') return; // Не разрешаем перетаскивание, если это не ваш ход
 
         const touch = event.touches[0];
+
+        setRotationAngle((prevAngle) => ({
+            ...prevAngle,
+            [id]: {
+                angle: 0
+            }
+        }));
         setActiveCardId(id);
         setIsDragging(true);
         setOffsets((prevOffsets) => ({
@@ -101,6 +148,7 @@ const MainGame = (props: TMainGameProps) => {
 
     };
 
+
     const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
         if (isDragging && activeCardId) {
             const touch = event.touches[0];
@@ -120,6 +168,16 @@ const MainGame = (props: TMainGameProps) => {
         handleCardClick(activeCardId)
         setActiveCardId(null);
 
+        if (activeCardId != null) {
+            setRotationAngle(() => ({
+                
+                [activeCardId]: {
+                    angle: getRandomValue()
+                }
+            }));
+        }
+
+
     };
 
 
@@ -130,7 +188,7 @@ const MainGame = (props: TMainGameProps) => {
         };
 
         fetchTableData();
-        const interval = setInterval(fetchTableData, 5000);
+        const interval = setInterval(fetchTableData, 500);
 
         return () => clearInterval(interval);
     }, [dispatch, gameId]);
@@ -170,6 +228,7 @@ const MainGame = (props: TMainGameProps) => {
                 dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
                 setCurrentTurn('guest');
                 setKey(prevKey => prevKey + 1);
+
             }
         }
     };
@@ -214,29 +273,31 @@ const MainGame = (props: TMainGameProps) => {
                 });
             }, 500);
 
+
             return () => clearInterval(interval);
         }
     }, [opponentCards.length]);
+
     return (
         <div className={cls.main}
-             onMouseMove={handleMouseMove}
-             onMouseUp={handleMouseUp}
-             onMouseLeave={handleMouseUp}
-             onTouchMove={handleTouchMove}
-             onTouchEnd={handleTouchEnd}
-             onTouchCancel={handleTouchEnd}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchEnd}
         >
             <div className={cls.wrapperImg}>
                 <CountdownCircleTimer
                     key={key}
                     isPlaying={currentTurn === 'guest'}
-                    duration={30}
+                    duration={10}
                     size={96}
                     colors={['#18ee7b', '#80776DFF']}
                     colorsTime={[30, 0]}
                     onComplete={onComplete}
                 >
-                    {() => <img src={ava} className={cls.opponentAva} alt="avatars players"/>}
+                    {() => <img src={ava} className={cls.opponentAva} alt="avatars players" />}
                 </CountdownCircleTimer>
                 <div className={cls.wrapperTextGetReady}>
                     Нажми Готов
@@ -278,7 +339,7 @@ const MainGame = (props: TMainGameProps) => {
                             scale: `${draggingCardScale[card]?.scale}`,
                             cursor: 'grab',
                         }}
-                        onClick={() => currentTurn === 'creator' && handleCardClick(card)}
+                    // onClick={() => currentTurn === 'creator' && handleCardClick(card)}
 
                     />
                 )))}
@@ -287,17 +348,18 @@ const MainGame = (props: TMainGameProps) => {
                 <CountdownCircleTimer
                     key={key} // Использование ключа для обновления таймера
                     isPlaying={currentTurn === 'creator'}
-                    duration={30}
+                    duration={10}
                     size={96}
                     colors={['#18ee7b', '#80776DFF']}
                     colorsTime={[30, 0]}
                     onComplete={onComplete}
                 >
-                    {() => <img src={ava} alt="avatars players"/>}
+                    {() => <img src={ava} alt="avatars players" />}
                 </CountdownCircleTimer>
                 <div className={cls.wrapperTextGetReady}>
                 </div>
             </div>
+
 
             <div className={cls.bita}>
                 <div className={cls.cardContainer}>
@@ -329,8 +391,8 @@ const MainGame = (props: TMainGameProps) => {
             </div>
 
             <div className={cls.deck}>
-                <img src={getCardImagePath(data.currentTable?.trump_card)} alt="trump_card" className={cls.trump}/>
-                <img src={back_card} alt="deck_card"/>
+                <img src={getCardImagePath(data.currentTable?.trump_card)} alt="trump_card" className={cls.trump} />
+                <img src={back_card} alt="deck_card" />
             </div>
             <div className={cls.tableCard}>
                 {table.map((cardObj, index: number) => (
@@ -344,6 +406,10 @@ const MainGame = (props: TMainGameProps) => {
                         <img
                             src={getCardImagePath(cardObj.card)}
                             alt={cardObj.card}
+                            style={{
+                                transition: `transform 0.3s ease`,
+                                transform: `${isAnimating ? 'translateX(600px)' : ''} `
+                            }}
                         />
                         {cardObj.beaten_by_card ? (
                             <img
@@ -353,7 +419,8 @@ const MainGame = (props: TMainGameProps) => {
                                 style={{
                                     marginTop: '20px',
 
-                                    transform: `rotate(${getRandomValue()}deg)`
+                                    transition: `transform 0.3s ease`,
+                                    transform: `rotate(10deg) ${isAnimating ? 'translateX(600px)' : ''} `,
 
                                 }}
                             />
