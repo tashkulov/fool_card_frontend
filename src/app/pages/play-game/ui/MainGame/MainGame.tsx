@@ -9,7 +9,6 @@ import back_card from '../../../../../assets/cards/back/back_2.svg';
 import { calculateCardStyles, calculateCardStylesForOpponent } from "./components/calculateCardStyles/calculateCardStyles.ts";
 import { placeCardOnTableThunk } from "../../statePlayGame/service/placeCardOnTableThunk.ts";
 import { beatCardThunk } from "../../statePlayGame/service/beatCardThunk.ts";
-import img from '../../../../../assets/cards/cl/cl_11.svg'
 
 type TMainGameProps = {
     gameId: string;
@@ -117,7 +116,7 @@ const MainGame = (props: TMainGameProps) => {
         };
 
         fetchTableData();
-        const interval = setInterval(fetchTableData, 5000);
+        const interval = setInterval(fetchTableData, 200);
 
         return () => clearInterval(interval);
     }, [dispatch, gameId]);
