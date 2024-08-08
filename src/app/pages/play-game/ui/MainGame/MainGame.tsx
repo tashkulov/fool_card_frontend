@@ -10,7 +10,6 @@ import { calculateCardStyles, calculateCardStylesForOpponent } from "./component
 import { placeCardOnTableThunk } from "../../statePlayGame/service/placeCardOnTableThunk.ts";
 import { beatCardThunk } from "../../statePlayGame/service/beatCardThunk.ts";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-
 type TMainGameProps = {
     gameId: string;
 };
@@ -214,7 +213,7 @@ const MainGame = (props: TMainGameProps) => {
             <div className={cls.hand}>
                 {playerHand.map((card: string, index: number) => (
                     <div
-                        key={card} // Убедитесь, что у вас уникальные ключи
+                        key={card}
                         onMouseDown={(event) => handleMouseDown(card, event)}
                         onTouchStart={(event) => handleTouchStart(card, event)}
                         style={{
