@@ -215,8 +215,8 @@ const MainGame = (props: TMainGameProps) => {
                 {playerHand.map((card: string, index: number) => (
                     <div
                         key={card} // Убедитесь, что у вас уникальные ключи
-                        onMouseDown={(event) => handleMouseDown(card, event)}
-                        onTouchStart={(event) => handleTouchStart(card, event)}
+                        onMouseDown={(event) => currentTurn === 'creator' && handleMouseDown(card, event)}
+                        onTouchStart={(event) => currentTurn === 'creator' && handleTouchStart(card, event)}
                         style={{
                             ...calculateCardStyles(index, playerHand.length),
 
@@ -232,7 +232,7 @@ const MainGame = (props: TMainGameProps) => {
                             scale: `${draggingCardScale[card]?.scale}`,
                             cursor: 'grab',
                         }}
-                        onClick={() => currentTurn === 'creator' && handleCardClick(card)}
+                        
 
                     />
                 ))}
