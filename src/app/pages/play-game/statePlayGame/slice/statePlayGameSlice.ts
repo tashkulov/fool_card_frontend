@@ -105,7 +105,6 @@ export const statePlayGameSlice = createSlice({
                     : 'Unknown error';
                 state.errors = [...state.errors, errorMessage];
             });
-
         builder
             .addCase(getPlayers.pending, (state) => {
                 state.isLoading = true;
@@ -176,7 +175,6 @@ export const statePlayGameSlice = createSlice({
                     : 'Unknown error';
                 state.errors = [...state.errors, errorMessage];
             });
-
         builder
             .addCase(endTurnThunk.pending, (state) => {
                 state.isLoading = true;
@@ -232,4 +230,3 @@ export const {
     reducer: statePlayGameSliceReducer,
     actions: statePlayGameSliceAction,
 } = statePlayGameSlice;
-

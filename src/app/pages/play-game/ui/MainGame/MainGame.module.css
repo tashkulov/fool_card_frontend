@@ -1,10 +1,15 @@
 @charset "UTF-8";
+body {
+  overflow: hidden !important;
+}
+
 .main {
   width: 100%;
   height: calc(100vh - 136px);
   background: rgb(26, 69, 54);
   position: relative;
   /* MainGame.module.scss */
+  overflow: hidden;
 }
 .main .wrapperImg {
   position: absolute;
@@ -37,18 +42,22 @@
   padding: 20px;
   z-index: 1;
   width: 100%;
-  perspective: 1000px;
 }
-.main .hand img {
+
+.bebebe {
+  background-image: url('../../../../../assets/cards/cl/cl_11.svg');
+}
+
+/* .main .hand div {
   position: absolute;
-  bottom: -5px;
   transform-origin: bottom center;
   transition: transform 0.3s ease, left 0.3s ease;
-  width: 75px;
+  width: 224.73px;
+  height: 316.92px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-}
+} */
 .main .hand img:hover {
   transform: scale(1.1);
 }

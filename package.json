@@ -32,7 +32,8 @@
     "rive-canvas": "^0.7.6",
     "rive-js": "^0.7.33",
     "rive-react": "^4.13.4",
-    "sass": "^1.77.8"
+    "sass": "^1.77.8",
+    "styled-components": "^6.1.12"
   },
   "devDependencies": {
     "@types/node": "^20.14.11",

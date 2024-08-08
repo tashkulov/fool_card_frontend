@@ -4,6 +4,7 @@ import { markPlayerReadyThunk } from "../../statePlayGame/service/markPlayerRead
 import { RootState } from "../../../../Providers/StoreProvider/store.ts";
 import { useEffect } from "react";
 import { statePlayGameSliceAction } from "../../statePlayGame";
+import {endTurnThunk} from "../../statePlayGame/service/endTurnThunk.ts";
 
 type TFooterPlayGameProps = {
     stateButtonReadiness: boolean;
@@ -18,6 +19,9 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
     const getReady = () => {
         dispatch(markPlayerReadyThunk(Number(gameId)));
     };
+    const handleEndTurn =()=>{
+        dispatch(endTurnThunk(Number(gameId)))
+    }
 
     useEffect(() => {
         if (!data.stage) {
@@ -41,14 +45,15 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
         <div className={cls.main}>
             <div className={cls.wrapperButton}>
                 <button
-                    onClick={data.waiting === false ? getReady : undefined} // Здесь должна быть функция для бития карты
+                    onClick={data.waiting === false ? getReady : handleEndTurn } // Здесь должна быть функция для бития карты
                     type="button"
+
                     className={stateButtonReadiness ? cls.button : cls.none}
                 >
                     {data.waiting === false
-                        ? "готов"
+                        ? "Готов"
                         : data.waiting === null || typeof data.waiting === "string"
-                            ? "бит"
+                            ? "Бито"
                             : "" // Пока что ничего не придумал
                     }
                 </button>

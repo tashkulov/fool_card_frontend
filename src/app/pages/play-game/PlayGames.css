@@ -182,8 +182,6 @@
     overflow: hidden;
 }
 
-.wrapper-plays-game {}
-
 .play-wrapper-game::before {
     content: '';
     position: absolute;
