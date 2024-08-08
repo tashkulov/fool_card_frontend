@@ -9,6 +9,7 @@ import back_card from '../../../../../assets/cards/back/back_2.svg';
 import { calculateCardStyles, calculateCardStylesForOpponent } from "./components/calculateCardStyles/calculateCardStyles.ts";
 import { placeCardOnTableThunk } from "../../statePlayGame/service/placeCardOnTableThunk.ts";
 import { beatCardThunk } from "../../statePlayGame/service/beatCardThunk.ts";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 type TMainGameProps = {
     gameId: string;
@@ -19,6 +20,8 @@ const MainGame = (props: TMainGameProps) => {
     const { gameId } = props;
     const data = useAppSelector((state: RootState) => state.playGame);
     const [movingCard, setMovingCard] = useState<string | null>(null);
+    const [currentTurn, setCurrentTurn] = useState<string>('creator');
+    const [key, setKey] = useState<number>(0);
 
     useEffect(() => {
         const fetchTableData = () => {
@@ -49,6 +52,8 @@ const MainGame = (props: TMainGameProps) => {
         const lastCard = table[table.length - 1];
         if (lastCard && !lastCard.beaten_by_card) {
             dispatch(beatCardThunk({ gameId: Number(gameId), cardToBeat: lastCard.card, cardToBeatBy }));
+            setCurrentTurn('guest');
+            setKey(prevKey => prevKey + 1);
         }
     };
 
@@ -59,13 +64,34 @@ const MainGame = (props: TMainGameProps) => {
         } else {
             setMovingCard(card);
             dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
+            setCurrentTurn('guest');
+            setKey(prevKey => prevKey + 1);
         }
+    };
+
+    const onComplete = () => {
+        if (currentTurn === 'creator') {
+            setCurrentTurn('guest');
+        } else {
+            setCurrentTurn('creator');
+        }
+        setKey(prevKey => prevKey + 1);
     };
 
     return (
         <div className={cls.main}>
             <div className={cls.wrapperImg}>
-                <img src={ava} alt="avatars players" />
+                <CountdownCircleTimer
+                    key={key} // Использование ключа для обновления таймера
+                    isPlaying={currentTurn === 'guest'}
+                    duration={30}
+                    size={96}
+                    colors={['#18ee7b', '#80776DFF']}
+                    colorsTime={[30, 0]}
+                    onComplete={onComplete}
+                >
+                    {() => <img src={ava} className={cls.opponentAva} alt="avatars players" />}
+                </CountdownCircleTimer>
                 <div className={cls.wrapperTextGetReady}>
                     Нажми Готов
                 </div>
@@ -89,13 +115,50 @@ const MainGame = (props: TMainGameProps) => {
                         alt={card}
                         className={`${cls.card} ${movingCard === card ? cls.cardMoving : ''}`}
                         style={calculateCardStyles(index, playerHand.length)}
-                        onClick={() => handleCardClick(card)}
+                        onClick={() => currentTurn === 'creator' && handleCardClick(card)}
                     />
                 ))}
             </div>
             <div className={cls.MywrapperImg}>
-                <img src={ava} alt="avatars players" />
-                <div className={cls.wrapperTextGetReady}>
+                <CountdownCircleTimer
+                    key={key} // Использование ключа для обновления таймера
+                    isPlaying={currentTurn === 'creator'}
+                    duration={30}
+                    size={96}
+                    colors={['#18ee7b', '#80776DFF']}
+                    colorsTime={[30, 0]}
+                    onComplete={onComplete}
+                >
+                    {() => <img src={ava} alt="avatars players" />}
+                </CountdownCircleTimer>
+                <div className={cls.wrapperTextGetReady}></div>
+            </div>
+            <div className={cls.bita}>
+                <div className={cls.cardContainer}>
+                    <img
+                        key={'bita1'}
+                        src={back_card}
+                        alt={"back_card"}
+                        width={64}
+                        height={90}
+                        className={cls.back_card1}
+                    />
+                    <img
+                        key={'bita2'}
+                        src={back_card}
+                        alt={"back_card"}
+                        width={64}
+                        height={90}
+                        className={cls.back_card2}
+                    />
+                    <img
+                        key={'bita3'}
+                        src={back_card}
+                        alt={"back_card"}
+                        width={64}
+                        height={90}
+                        className={cls.back_card3}
+                    />
                 </div>
             </div>
             <div className={cls.deck}>

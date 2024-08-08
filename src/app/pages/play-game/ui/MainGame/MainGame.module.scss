@@ -7,6 +7,7 @@
   .wrapperImg {
     position: absolute;
     top: 0;
+    z-index: 3;
     left: 50%;
     transform: translate(-50%, -20%);
   }
@@ -67,13 +68,16 @@
     width: 100%;
     perspective: 1000px;
   }
-
+  .opponentAva{
+    z-index: 15;
+  }
   .opponentHand img {
     position: absolute;
     bottom: -5px;
     transform-origin: bottom center;
     transition: transform 0.3s ease, left 0.3s ease;
     width: 75px;
+    z-index: 1;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     cursor: pointer;
@@ -150,6 +154,42 @@
     width: 75px;
     height: auto;
   }
+  .cardContainer img{
+    width: 75px;
+    right: -30px;
+    height: auto;
+  }
+  .back_card2 {
+    position: absolute;
+    top: 250px;
+    transform: rotate(-200deg);
+    right: -10px;
+    z-index: 1;
+    width: 10vw; /* Сделано относительным */
+    max-width: 64px; /* Ограничение максимальной ширины */
+    height: auto; /* Поддержка соотношения сторон */
+  }
 
+  .back_card1 {
+    position: absolute;
+    top: 300px;
+    transform: rotate(-200deg);
+    right: -10px;
+    z-index: 2;
+    width: 10vw; /* Сделано относительным */
+    max-width: 64px; /* Ограничение максимальной ширины */
+    height: auto; /* Поддержка соотношения сторон */
+  }
+
+  .back_card3 {
+    position: absolute;
+    top: 330px;
+    transform: rotate(190deg);
+    right: -10px;
+    z-index: 4;
+    width: 10vw;
+    max-width: 64px;
+    height: auto;
+  }
 
 }
