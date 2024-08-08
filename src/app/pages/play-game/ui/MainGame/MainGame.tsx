@@ -17,7 +17,7 @@ import { endTurnThunk } from "../../statePlayGame/service/endTurnThunk.ts";
 import { stopAnimation } from "../../statePlayGame/slice/statePlayGameSlice.ts"; // Импортируем action
 
 import Card from "./components/card/Card.tsx";
-import {getPlayers} from "../../statePlayGame/service/getPlayers.ts";
+// import {getPlayers} from "../../statePlayGame/service/getPlayers.ts";
 
 
 type TMainGameProps = {
