@@ -26,6 +26,10 @@ const MainGame = (props: TMainGameProps) => {
     const [isDragging, setIsDragging] = useState(false);
     const [draggingCardScale, setDraggingCardScale] = useState<Record<string, { scale: number }>>({});
 
+    const getRandomValue = () => {
+        return Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+    };
+
     const handleMouseDown = (id: string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setActiveCardId(id);
         setIsDragging(true);
@@ -143,7 +147,7 @@ const MainGame = (props: TMainGameProps) => {
             dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
         }
 
-        
+
     };
 
     return (
@@ -242,7 +246,10 @@ const MainGame = (props: TMainGameProps) => {
                                 alt={cardObj.beaten_by_card}
                                 className={cls.beatenByCard}
                                 style={{
-                                    marginTop: '20px'
+                                    marginTop: '20px',
+
+                                    transform: `rotate(${getRandomValue()}deg)`
+                                    
                                 }}
                             />
                         ) : null}
