@@ -33,6 +33,8 @@ const MainGame = (props: TMainGameProps) => {
     };
 
     const handleMouseDown = (id: string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (currentTurn !== 'creator') return; // Не разрешаем перетаскивание, если это не ваш ход
+
         setActiveCardId(id);
         setIsDragging(true);
         setOffsets((prevOffsets) => ({
@@ -48,7 +50,7 @@ const MainGame = (props: TMainGameProps) => {
             [id]: {
                 scale: 1.4
             }
-        }))
+        }));
     };
 
     const handleMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -70,6 +72,8 @@ const MainGame = (props: TMainGameProps) => {
     };
 
     const handleTouchStart = (id: string, event: React.TouchEvent<HTMLDivElement>) => {
+        if (currentTurn !== 'creator') return; // Не разрешаем перетаскивание, если это не ваш ход
+
         const touch = event.touches[0];
         setActiveCardId(id);
         setIsDragging(true);
@@ -150,15 +154,18 @@ const MainGame = (props: TMainGameProps) => {
         if (card === null) {
             return;
         }
-        if (lastCard && !lastCard.beaten_by_card) {
-            handleBeatCard(card);
-        } else {
-            setMovingCard(card);
-            dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
-            setCurrentTurn('guest');
-            setKey(prevKey => prevKey + 1);
+        if (currentTurn === 'creator') {
+            if (lastCard && !lastCard.beaten_by_card) {
+                handleBeatCard(card);
+            } else {
+                setMovingCard(card);
+                dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
+                setCurrentTurn('guest');
+                setKey(prevKey => prevKey + 1);
+            }
         }
     };
+
     const onComplete = () => {
         if (currentTurn === 'creator') {
             setCurrentTurn('guest');
