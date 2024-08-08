@@ -28,24 +28,24 @@
 
   .hand {
     position: absolute;
-    bottom: 10px;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
+
     display: flex;
     justify-content: center;
-    align-items: flex-end;
     height: 150px;
     padding: 20px;
     z-index: 1;
-    width: 100%;
+    width: 13%;
     perspective: 1000px;
   }
 
-  .hand img {
+  .hand div {
     position: absolute;
-    bottom: -5px;
+    bottom: 0;
     transform-origin: bottom center;
-    transition: transform 0.3s ease, left 0.3s ease;
+    transition: transform 0.3s ease;
     width: 75px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -109,19 +109,6 @@
     height: auto; /* Поддержка соотношения сторон */
 
   }
-  /* MainGame.module.scss */
-  .cardMoving {
-    animation: moveToTable 0.5s forwards;
-  }
-
-  @keyframes moveToTable {
-    from {
-      transform: scale(1) translateX(0) translateY(0);
-    }
-    to {
-      transform: scale(0.5) translateX(200px) translateY(200px); // Параметры для анимации перемещения
-    }
-  }
 
   .tableCard {
     position: absolute;
@@ -129,7 +116,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
-    height: 300px;
+    height: 240px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -137,22 +124,12 @@
     gap: 10px;
     z-index: 10;
   }
-  .cardMoving {
-    animation: moveToTable 0.5s forwards;
-  }
-
-  @keyframes moveToTable {
-    from {
-      transform: scale(1) translateX(0) translateY(0);
-    }
-    to {
-      transform: scale(0.5) translateX(calc(50vw - 150px)) translateY(calc(50vh - 150px)); // Параметры для анимации перемещения
-    }
-  }
 
   .tableCard img {
     width: 75px;
+    scale: 0.7;
     height: auto;
+    position: absolute;
   }
   .cardContainer img{
     width: 75px;
