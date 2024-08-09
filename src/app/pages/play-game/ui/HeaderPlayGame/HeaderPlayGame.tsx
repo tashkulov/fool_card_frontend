@@ -8,6 +8,7 @@ import nichy from "../../../img/nicy.svg"
 import sosedi from "../../../img/sosedi.svg"
 import perevod from "../../../img/perevod.svg"
 import иконкаШута from "../../../img/coins.svg"
+import {Link} from "react-router-dom";
 
 const HeaderPlayGame = () => {
     const gameDate = useAppSelector((state: RootState) => state)
@@ -17,9 +18,9 @@ const HeaderPlayGame = () => {
     return (
         <div className={cls.main}>
             <div className={cls.left}>
-                <button>
+                <Link to={"/"}>
                     ←
-                </button>
+                </Link>
                 <img src={иконкаШута} alt=""/>
                 <div className={cls.value}>
                     <b>

@@ -10,7 +10,7 @@ export const getCurrentTableThunk = createAsyncThunk<
     'statePlayPvPGame/getCurrentTable',
     async (gameId, thunkAPI) => {
         try {
-            const url = `https://foolcard2.shop/v1/games/${gameId}/get_current_table`;
+            const url = `/v1/games/${gameId}/get_current_table`;
             const response = await $api.get<CurrentTableResponse>(url);
             return thunkAPI.fulfillWithValue(response.data);
         } catch (e) {

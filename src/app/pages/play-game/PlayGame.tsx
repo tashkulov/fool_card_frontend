@@ -1,8 +1,8 @@
 import './play-game.css';
 import {useEffect, useState} from "react";
-import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppReduxToolkitTools/redux.ts";
-import { RootState } from "../../Providers/StoreProvider/store.ts";
+import {useParams} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from "../../hooks/useAppReduxToolkitTools/redux.ts";
+import {RootState} from "../../Providers/StoreProvider/store.ts";
 import {joinInGameService} from "./statePlayGame/service/joinInGameService.ts";
 import {getPlayers} from "./statePlayGame/service/getPlayers.ts";
 import {getCurrentTableThunk} from "./statePlayGame/service/getCurrentTableThunk.ts";
@@ -16,7 +16,7 @@ import {statePlayGameSliceAction} from "./statePlayGame";
 const PlayGame = () => {
     const dispatch = useAppDispatch();
     const data = useAppSelector((state: RootState) => state.playGame)
-    const { gameId, who } = useParams<{ gameId: string, who: string, }>();
+    const {gameId, who} = useParams<{ gameId: string, who: string, }>();
     const [stateButtonReadiness, setStateButtonReadiness] = useState<boolean>(false)
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const PlayGame = () => {
 
     useEffect(() => {
         dispatch(getGames(Number(gameId)))
-    }, []);
+    }, [dispatch, gameId]);
 
     useEffect(() => {
         if (!data.stage) {
@@ -48,7 +48,7 @@ const PlayGame = () => {
                 setStateButtonReadiness(true)
             }
         }
-    },[]);
+    }, []);
 
     useEffect(() => {
 
@@ -62,8 +62,8 @@ const PlayGame = () => {
     if (gameId && who) {
         return (
             <div className={cls.main}>
-                <HeaderPlayGame />
-                <MainGame  gameId={gameId}/>
+                <HeaderPlayGame gameId={gameId}/>
+                <MainGame gameId={gameId}/>
                 <FooterPlayGame gameId={gameId} stateButtonReadiness={stateButtonReadiness}/>
 
             </div>
