@@ -4,7 +4,7 @@ import { markPlayerReadyThunk } from "../../statePlayGame/service/markPlayerRead
 import { RootState } from "../../../../Providers/StoreProvider/store.ts";
 import { useEffect } from "react";
 import { statePlayGameSliceAction } from "../../statePlayGame";
-import {endTurnThunk} from "../../statePlayGame/service/endTurnThunk.ts";
+import { startAnimation } from "../../statePlayGame/slice/statePlayGameSlice.ts";
 
 type TFooterPlayGameProps = {
     stateButtonReadiness: boolean;
@@ -16,46 +16,47 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
     const dispatch = useAppDispatch();
     const data = useAppSelector((state: RootState) => state.playGame);
 
+    // Функция для проверки наличия недобитых карт на столе
+    const hasUnbeatenCards = () => {
+        return data.tableCards.some(card => card.beaten_by_card === null);
+    };
+
     const getReady = () => {
         dispatch(markPlayerReadyThunk(Number(gameId)));
     };
-    const handleEndTurn =()=>{
-        dispatch(endTurnThunk(Number(gameId)))
-    }
+
+    const handleEndTurn = () => {
+        dispatch(startAnimation()); // Запуск анимации
+    };
 
     useEffect(() => {
         if (!data.stage) {
             const intervalId = setInterval(() => {
                 markPlayerReadyThunk(Number(gameId));
-                const res = data.players.find(player => player.is_ready === false)
+                const res = data.players.find(player => player.is_ready === false);
                 if (res === undefined) {
-                    dispatch(statePlayGameSliceAction.setStageTrue())
-                    clearInterval(intervalId)
+                    console.log("1234567890");
+                    dispatch(statePlayGameSliceAction.setStageTrue());
+                    clearInterval(intervalId);
                 }
-            }, 1000)
-
+            }, 1000);
         }
     }, [data.stage]);
-
-    const onClickButton = () => {
-
-    }
 
     return (
         <div className={cls.main}>
             <div className={cls.wrapperButton}>
                 <button
-                    onClick={data.waiting === false ? getReady : handleEndTurn } // Здесь должна быть функция для бития карты
+                    onClick={data.waiting === false ? getReady : handleEndTurn }
                     type="button"
-
                     className={stateButtonReadiness ? cls.button : cls.none}
+                    disabled={data.waiting !== false && hasUnbeatenCards()}
                 >
                     {data.waiting === false
                         ? "Готов"
                         : data.waiting === null || typeof data.waiting === "string"
                             ? "Бито"
-                            : "" // Пока что ничего не придумал
-                    }
+                            : ""}
                 </button>
             </div>
         </div>

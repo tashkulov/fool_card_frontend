@@ -23,7 +23,6 @@ export const getTranslateXStyle = (index: number, total: number) => {
 }
 
 export const getTranslateYStyle = (index: number) => {
-    // Задаем смещение по оси Y. Например, карта будет перемещаться на 150px вниз или вверх в зависимости от позиции.
     return index % 2 === 0 ? 150 : -150;
 }
 
