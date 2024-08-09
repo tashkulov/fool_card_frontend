@@ -408,6 +408,36 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                 <div className={cls.wrapperTextGetReady}>
                 </div>
             </div>
+
+            <div className={cls.bita}>
+                <div className={cls.cardContainer}>
+                    <img
+                        key={'bita1'}
+                        src={back_card}
+                        alt={"back_card"}
+                        width={64}
+                        height={90}
+                        className={cls.back_card1}
+                    />
+                    <img
+                        key={'bita2'}
+                        src={back_card}
+                        alt={"back_card"}
+                        width={64}
+                        height={90}
+                        className={cls.back_card2}
+                    />
+                    <img
+                        key={'bita3'}
+                        src={back_card}
+                        alt={"back_card"}
+                        width={64}
+                        height={90}
+                        className={cls.back_card3}
+                    />
+                </div>
+            </div>
+
             <div className={cls.deck}>
                 <h1 className={cls.freecards}>{data.currentTable?.free_cards_amount}</h1>
                 <img src={getCardImagePath(data.currentTable?.trump_card ?? "")} alt="trump_card"
