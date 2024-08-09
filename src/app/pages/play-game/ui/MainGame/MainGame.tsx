@@ -34,6 +34,48 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [draggingCardScale, setDraggingCardScale] = useState<Record<string, { scale: number }>>({});
 
+    const [rotationAngle, setRotationAngle] = useState<Record<string, { angle: number }>>({});
+
+    // const [cardToBeat, setCardToBeat] = useState<string | null>('');
+
+
+    const isAnimating = useAppSelector((state: RootState) => state.playGame.isAnimating);
+
+
+    useEffect(() => {
+        if (isAnimating) {
+            const moveToRightAnimation = async () => {
+                // Запуск анимации
+                await new Promise(resolve => setTimeout(resolve, 500)); // Ждем 500ms для завершения анимации
+                dispatch(stopAnimation()); // Останавливаем анимацию
+                dispatch(endTurnThunk(Number(props.gameId))); // Завершаем ход
+            };
+            moveToRightAnimation();
+        }
+    }, [isAnimating, dispatch, props.gameId]);
+
+    const [activeOpponentCardIndex, setActiveOpponentCardIndex] = useState<number>(-1);
+    const [activeCardIndex, setActiveCardIndex] = useState<number>(-1);
+
+
+    // const checkCardIntersection = (
+    //     cardPosition: { x: number, y: number },
+    //     tableCardElement: HTMLElement
+    // ): boolean => {
+    //     const rect = tableCardElement.getBoundingClientRect();
+    //     const cardWidth = 75; // ширина карты
+    //     const cardHeight = 105.5; // высота карты
+    
+    //     return (
+    //         // cardPosition.x < rect.right &&
+    //         // cardPosition.x + cardWidth > rect.left &&
+    //         // cardPosition.y < rect.bottom &&
+    //         // cardPosition.y + cardHeight > rect.top
+
+    //         cardPosition.x < 100
+    //     );
+    // };
+
     const getRandomValue = () => {
         return Math.floor(Math.random() * (20 - 10 + 1)) + 10;
     };
@@ -61,20 +103,45 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
 
     const handleMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (isDragging && activeCardId) {
+            const newCardPosition = {
+                x: event.clientX - (offsets[activeCardId]?.x ?? 0),
+                y: event.clientY - (offsets[activeCardId]?.y ?? 0),
+            };
+    
             setCardPositions((prevPositions) => ({
                 ...prevPositions,
-                [activeCardId]: {
-                    x: event.clientX - (offsets[activeCardId]?.x ?? 0),
-                    y: event.clientY - (offsets[activeCardId]?.y ?? 0),
-                },
+                [activeCardId]: newCardPosition,
             }));
+    
+            // Проверка пересечения с картами на столе
+            // table.forEach((cardObj) => {
+            //     const tableCardElement = document.getElementById(`${cardObj.card}`);
+                
+            //     if (tableCardElement) {
+            //         console.log(checkCardIntersection(newCardPosition, tableCardElement))
+            //         const rect = tableCardElement.getBoundingClientRect()
+            //         console.log(re)
+            //     }
+                
+            //     if (tableCardElement && checkCardIntersection(newCardPosition, tableCardElement)) {
+            //         console.log('start');
+            //     }
+            // });
         }
     };
 
     const handleMouseUp = () => {
         setIsDragging(false);
-        if (activeCardId) {
-            handleCardClick(activeCardId);
+        setActiveCardId(null);
+        handleCardClick(activeCardId)
+
+        if (activeCardId != null) {
+            setRotationAngle(() => ({
+
+                [activeCardId]: {
+                    angle: getRandomValue()
+                }
+            }));
         }
         setActiveCardId(null);
     };
@@ -104,20 +171,42 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
     const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
         if (isDragging && activeCardId) {
             const touch = event.touches[0];
+            const newCardPosition = {
+                x: touch.clientX - (offsets[activeCardId]?.x ?? 0),
+                y: touch.clientY - (offsets[activeCardId]?.y ?? 0),
+            };
+    
             setCardPositions((prevPositions) => ({
                 ...prevPositions,
-                [activeCardId]: {
-                    x: touch.clientX - (offsets[activeCardId]?.x ?? 0),
-                    y: touch.clientY - (offsets[activeCardId]?.y ?? 0),
-                },
+                [activeCardId]: newCardPosition,
             }));
+            
+    
+            // Проверка пересечения с картами на столе
+            // table.forEach((cardObj) => {
+            //     const tableCardElement = document.getElementById(`${cardObj.card}`);
+            //     // if (tableCardElement) {
+            //     //     console.log(checkCardIntersection(newCardPosition, tableCardElement))
+            //     // }
+            //     if (tableCardElement && checkCardIntersection(newCardPosition, tableCardElement)) {
+            //         console.log('start');
+            //     }
+            // });
         }
     };
 
     const handleTouchEnd = () => {
         setIsDragging(false);
-        if (activeCardId) {
-            handleCardClick(activeCardId);
+        handleCardClick(activeCardId)
+        setActiveCardId(null);
+
+        if (activeCardId != null) {
+            setRotationAngle(() => ({
+
+                [activeCardId]: {
+                    angle: getRandomValue()
+                }
+            }));
         }
         setActiveCardId(null);
     };
@@ -125,6 +214,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
     useEffect(() => {
         const fetchTableData = () => {
             dispatch(getCurrentTableThunk(Number(gameId)));
+
         };
 
         fetchTableData();
@@ -152,24 +242,39 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
     const handleBeatCard = useCallback((cardToBeatBy: string) => {
         const lastCard = table[table.length - 1];
         if (lastCard && !lastCard.beaten_by_card) {
-            dispatch(beatCardThunk({ gameId: Number(gameId), cardToBeat: lastCard.card, cardToBeatBy }));
+
+            dispatch(beatCardThunk({ gameId: Number(gameId), cardToBeat: lastCard.card, cardToBeatBy }))
+
         }
     }, [dispatch, gameId, table]);
 
     const handleCardClick = (card: string | null) => {
+        console.log(card);
         const lastCard = table[table.length - 1];
         if (card === null) {
             return;
         }
         if (currentTurn === 'creator') {
             if (lastCard && !lastCard.beaten_by_card) {
-                handleBeatCard(card);
+                if (Number((lastCard.card).split('_')[1]) < Number((card).split('_')[1])) {
+                    if ((lastCard.card).split('_')[0] === (card).split('_')[0]) {
+                        handleBeatCard(card);
+                    } else {
+                        setMovingCard(card);
+                        dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
+                        // setCurrentTurn('guest');
+                        setKey(prevKey => prevKey + 1);
+                    }
+                }
+
+
             } else {
                 setMovingCard(card);
                 dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
-                setCurrentTurn('guest');
+                // setCurrentTurn('guest');
                 setKey(prevKey => prevKey + 1);
             }
+
         }
     };
 
@@ -232,6 +337,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                     key={key}
                     isPlaying={currentTurn === 'guest'}
                     duration={30}
+
                     size={96}
                     colors={['#18ee7b', '#80776DFF']}
                     colorsTime={[30, 0]}
@@ -261,10 +367,10 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                 {playerHand.map((card: string, index: number) => (
                     index <= activeCardIndex && (
                         <div
-                            onMouseDown={(e) => handleMouseDown(card, e)}
-                            onTouchStart={(e) => handleTouchStart(card, e)}
-                            key={index}
-                            onClick={() => currentTurn === "creator" && handleCardClick(card)}
+                            key={card} // Убедитесь, что у вас уникальные ключи
+                            onMouseDown={(event) => handleMouseDown(card, event)}
+                            onTouchStart={(event) => handleTouchStart(card, event)}
+
                             style={{
                                 ...calculateCardStyles(index, playerHand.length),
 
@@ -280,15 +386,18 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                                 scale: `${draggingCardScale[card]?.scale}`,
                                 cursor: 'grab',
                             }}
+
+                        // onClick={() => currentTurn === 'creator' && handleCardClick(card)}
+
                         />
-                    )
-                ))}
+                    )))}
             </div>
             <div className={cls.MywrapperImg}>
                 <CountdownCircleTimer
                     key={key}
                     isPlaying={currentTurn === 'creator'}
                     duration={30}
+
                     size={96}
                     colors={['#18ee7b', '#80776DFF']}
                     colorsTime={[30, 0]}
@@ -314,6 +423,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                         }}
                     >
                         <img
+                            id={cardObj.card}
                             src={getCardImagePath(cardObj.card)}
                             alt={cardObj.card}
                         />
