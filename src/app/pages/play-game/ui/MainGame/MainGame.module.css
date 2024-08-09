@@ -1,21 +1,17 @@
 @charset "UTF-8";
-body {
-  overflow: hidden !important;
-}
-
 .main {
   width: 100%;
   height: calc(100vh - 136px);
   background: rgb(26, 69, 54);
   position: relative;
-  /* MainGame.module.scss */
-  overflow: hidden;
 }
 .main .wrapperImg {
   position: absolute;
   top: 0;
+  z-index: 3;
   left: 50%;
   transform: translate(-50%, -20%);
+  z-index: 1;
 }
 .main .MywrapperImg {
   position: absolute;
@@ -31,32 +27,27 @@ body {
 }
 .main .hand {
   position: absolute;
-  bottom: 10px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  align-items: flex-end;
   height: 150px;
   padding: 20px;
   z-index: 1;
-  width: 100%;
+  width: 13%;
+  perspective: 1000px;
 }
-
-.bebebe {
-  background-image: url('../../../../../assets/cards/cl/cl_11.svg');
-}
-
-/* .main .hand div {
+.main .hand div {
   position: absolute;
+  bottom: 0;
   transform-origin: bottom center;
-  transition: transform 0.3s ease, left 0.3s ease;
-  width: 224.73px;
-  height: 316.92px;
+  transition: transform 0.3s ease;
+  width: 75px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-} */
+}
 .main .hand img:hover {
   transform: scale(1.1);
 }
@@ -72,12 +63,16 @@ body {
   width: 100%;
   perspective: 1000px;
 }
+.main .opponentAva {
+  z-index: 15;
+}
 .main .opponentHand img {
   position: absolute;
   bottom: -5px;
   transform-origin: bottom center;
   transition: transform 0.3s ease, left 0.3s ease;
   width: 75px;
+  z-index: 1;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
@@ -97,6 +92,15 @@ body {
   width: 75px;
   height: auto; /* Поддержка соотношения сторон */
 }
+.main .deck h1 {
+  position: absolute;
+  top: -110px; /* Регулируйте значение, чтобы переместить текст вверх */
+  left: 30%;
+  transform: translateX(50%); /* Центрируем текст по горизонтали относительно родителя */
+  z-index: 4; /* Чтобы текст был поверх изображений */
+  font-size: 30px; /* Размер шрифта */
+  color: white; /* Цвет текста */
+}
 .main .deck img.trump {
   position: absolute;
   z-index: 0;
@@ -105,24 +109,13 @@ body {
   width: 75px;
   height: auto; /* Поддержка соотношения сторон */
 }
-.main .cardMoving {
-  animation: moveToTable 0.5s forwards;
-}
-@keyframes moveToTable {
-  from {
-    transform: scale(1) translateX(0) translateY(0);
-  }
-  to {
-    transform: scale(0.5) translateX(200px) translateY(200px);
-  }
-}
 .main .tableCard {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
-  height: 300px;
+  height: 240px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -130,19 +123,45 @@ body {
   gap: 10px;
   z-index: 10;
 }
-.main .cardMoving {
-  animation: moveToTable 0.5s forwards;
-}
-@keyframes moveToTable {
-  from {
-    transform: scale(1) translateX(0) translateY(0);
-  }
-  to {
-    transform: scale(0.5) translateX(calc(50vw - 150px)) translateY(calc(50vh - 150px));
-  }
-}
 .main .tableCard img {
   width: 75px;
+  scale: 0.7;
+  height: auto;
+  position: absolute;
+}
+.main .cardContainer img {
+  width: 75px;
+  right: -30px;
+  height: auto;
+}
+.main .back_card2 {
+  position: absolute;
+  top: 250px;
+  transform: rotate(-200deg);
+  right: -10px;
+  z-index: 1;
+  width: 10vw; /* Сделано относительным */
+  max-width: 64px; /* Ограничение максимальной ширины */
+  height: auto; /* Поддержка соотношения сторон */
+}
+.main .back_card1 {
+  position: absolute;
+  top: 300px;
+  transform: rotate(-200deg);
+  right: -10px;
+  z-index: 2;
+  width: 10vw; /* Сделано относительным */
+  max-width: 64px; /* Ограничение максимальной ширины */
+  height: auto; /* Поддержка соотношения сторон */
+}
+.main .back_card3 {
+  position: absolute;
+  top: 330px;
+  transform: rotate(190deg);
+  right: -10px;
+  z-index: 4;
+  width: 10vw;
+  max-width: 64px;
   height: auto;
 }
 
