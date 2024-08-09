@@ -1,22 +1,22 @@
 import './play-game.css';
-import { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from "../../hooks/useAppReduxToolkitTools/redux.ts";
-import { RootState } from "../../Providers/StoreProvider/store.ts";
-import { joinInGameService } from "./statePlayGame/service/joinInGameService.ts";
-import { getPlayers } from "./statePlayGame/service/getPlayers.ts";
-import { getCurrentTableThunk } from "./statePlayGame/service/getCurrentTableThunk.ts";
-import { getGames } from "./statePlayGame/service/getGames.ts";
+import {useEffect, useState} from "react";
+import {useParams} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from "../../hooks/useAppReduxToolkitTools/redux.ts";
+import {RootState} from "../../Providers/StoreProvider/store.ts";
+import {joinInGameService} from "./statePlayGame/service/joinInGameService.ts";
+import {getPlayers} from "./statePlayGame/service/getPlayers.ts";
+import {getCurrentTableThunk} from "./statePlayGame/service/getCurrentTableThunk.ts";
+import {getGames} from "./statePlayGame/service/getGames.ts";
 import cls from "./PlayGame.module.scss"
 import HeaderPlayGame from "./ui/HeaderPlayGame/HeaderPlayGame.tsx";
 import FooterPlayGame from "./ui/FooterPlayGame/FooterPlayGame.tsx";
 import MainGame from "./ui/MainGame/MainGame.tsx";
-import { statePlayGameSliceAction } from "./statePlayGame";
+import {statePlayGameSliceAction} from "./statePlayGame";
 
 const PlayGame = () => {
     const dispatch = useAppDispatch();
     const data = useAppSelector((state: RootState) => state.playGame)
-    const { gameId, who } = useParams<{ gameId: string, who: string, }>();
+    const {gameId, who} = useParams<{ gameId: string, who: string, }>();
     const [stateButtonReadiness, setStateButtonReadiness] = useState<boolean>(false)
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const PlayGame = () => {
 
     useEffect(() => {
         dispatch(getGames(Number(gameId)))
-    }, []);
+    }, [dispatch, gameId]);
 
     useEffect(() => {
         if (!data.stage) {
@@ -63,11 +63,8 @@ const PlayGame = () => {
         return (
             <div className={cls.main}>
                 <HeaderPlayGame />
-                <MainGame gameId={gameId} />
-                <FooterPlayGame
-                    gameId={gameId}
-                    stateButtonReadiness={stateButtonReadiness}
-                />
+                <MainGame gameId={gameId}/>
+                <FooterPlayGame gameId={gameId} stateButtonReadiness={stateButtonReadiness}/>
 
             </div>
         );

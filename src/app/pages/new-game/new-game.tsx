@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import HeaderRiveAnimation from '../../components/rive-conponents/header-animations/ruby-header/ruby-component';
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-animations/mode-anim';
+import {$api} from "../../../api.ts";
 
 const CreateGameForm: React.FC = () => {
 
@@ -35,7 +36,7 @@ const CreateGameForm: React.FC = () => {
     // Handle the game mode change
     const handleGameModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        setSelectedGameMode(value === 'Подкидной' ? 'throwing' : value === 'Переводной' ? 'shifting' : value);
+        setSelectedGameMode(value === 'Подкидной' ? 'throwing' : value === 'Переводной' ? 'passing' : value);
         setActive(value === 'Подкидной' ? 'casuals' : 'shift');
 
     };
@@ -108,24 +109,12 @@ const CreateGameForm: React.FC = () => {
                 setErrorString('')
                 if (betAmount >= 100) {
                     setErrorString('')
-                    const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
-                        headers: {
-                            Authorization:  localStorage.getItem('authorization')
-                            // Authorization: '646fdbaf23039e50caf3bc8f121fa0cd0e61d239a4dd975d'
-
-                        }
+                    const CreateGame = await $api.post('https://foolcard2.shop/v1/games', requestData, {
                     });
                     console.log('Game created successfully:', CreateGame.data);
                     const gameId = CreateGame.data.id;
-                    const createdById = CreateGame.data.created_by;
 
-                    // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
-                    //     headers: {
-                    //         'Authorization': localStorage.getItem('authorization')
-                    //     }
-                    // });
-                    // console.log(response.data)
-                    navigate(`/inGame/${gameId}/${createdById}`);
+                    navigate(`/inGame/${gameId}/creator`);
                 } else {
                     setErrorString('bet amount is les then 100!')
                 }
@@ -199,7 +188,7 @@ const CreateGameForm: React.FC = () => {
                                                     className={`rejim-check ${selectedGameMode === mode ? 'gameModeSelected' : ''}`}
                                                     value={mode}
                                                     name="rejim-1"
-                                                    checked={selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'shifting')}
+                                                    checked={selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'passing')}
                                                     onChange={handleGameModeChange} />
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />

@@ -1,14 +1,14 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IJoinInGame } from "../types/joinInGame";
-import { IPlayer } from "../types/players";
-import { joinInGameService } from "../service/joinInGameService";
-import { getPlayers } from "../service/getPlayers";
-import { placeCardOnTableThunk } from "../service/placeCardOnTableThunk"
-import { beatCardThunk } from "../service/beatCardThunk.ts"
-import { endTurnThunk } from "../service/endTurnThunk.ts"
-import { markPlayerReadyThunk } from "../service/markPlayerReadyThunk.ts"
-import { getCurrentTableThunk } from "../service/getCurrentTableThunk.ts";
-import { CurrentTableResponse } from "../types/CurrentTableData.ts";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {IJoinInGame} from "../types/joinInGame";
+import {IPlayer} from "../types/players";
+import {joinInGameService} from "../service/joinInGameService";
+import {getPlayers} from "../service/getPlayers";
+import {placeCardOnTableThunk} from "../service/placeCardOnTableThunk"
+import {beatCardThunk} from "../service/beatCardThunk.ts"
+import {endTurnThunk} from "../service/endTurnThunk.ts"
+import {markPlayerReadyThunk} from "../service/markPlayerReadyThunk.ts"
+import {getCurrentTableThunk} from "../service/getCurrentTableThunk.ts";
+import {CurrentTableResponse} from "../types/CurrentTableData.ts";
 import {getGames} from "../service/getGames.ts";
 import {IGame} from "../types/game.ts";
 import {MarkPlayerReadyResponse} from "../types/MarkPlayerReadyResponse.ts";
@@ -18,13 +18,12 @@ interface ErrorPayload {
     message: string;
 }
 
-
 export interface InitialStatePlayGame {
     isAnimating: boolean,
     isLoading: boolean;
     errors: string[];
     players: IPlayer[];
-    data: IJoinInGame;
+    data: IGame;
     stage: boolean;
     games: IGame[];
     participants_number: number;
@@ -33,6 +32,7 @@ export interface InitialStatePlayGame {
     myCards: string[];
     attackMode: boolean;
     waiting: boolean | null;
+    bet_value: number;
     currentTable: CurrentTableResponse | null;
 }
 
@@ -61,6 +61,7 @@ const initialState: InitialStatePlayGame = {
     myCards: [],
     attackMode: false,
     waiting: false,
+    bet_value: 0,
     currentTable: null,
 };
 
@@ -113,7 +114,6 @@ export const statePlayGameSlice = createSlice({
                     : 'Unknown error';
                 state.errors = [...state.errors, errorMessage];
             });
-
         builder
             .addCase(getPlayers.pending, (state) => {
                 state.isLoading = true;
@@ -149,10 +149,10 @@ export const statePlayGameSlice = createSlice({
             .addCase(placeCardOnTableThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(placeCardOnTableThunk.fulfilled, (state, action: PayloadAction<{ card : string }>) => {
+            .addCase(placeCardOnTableThunk.fulfilled, (state, action: PayloadAction<{ card: string }>) => {
                 state.isLoading = false;
-                const { card } = action.payload;
-                state.tableCards.push({ card, beaten_by_card: null });
+                const {card} = action.payload;
+                state.tableCards.push({card, beaten_by_card: null});
                 state.myCards = state.myCards.filter(myCard => myCard !== card);
                 state.attackMode = false;
             })
@@ -168,11 +168,14 @@ export const statePlayGameSlice = createSlice({
             .addCase(beatCardThunk.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(beatCardThunk.fulfilled, (state, action: PayloadAction<{cardToBeat: string, cardToBeatBy: string }>) => {
+            .addCase(beatCardThunk.fulfilled, (state, action: PayloadAction<{
+                cardToBeat: string,
+                cardToBeatBy: string
+            }>) => {
                 state.isLoading = false;
-                const { cardToBeat, cardToBeatBy } = action.payload;
+                const {cardToBeat, cardToBeatBy} = action.payload;
                 state.tableCards = state.tableCards.map(t =>
-                    t.card === cardToBeat ? { ...t, beaten_by_card: cardToBeatBy } : t
+                    t.card === cardToBeat ? {...t, beaten_by_card: cardToBeatBy} : t
                 );
                 state.myCards = state.myCards.filter(myCard => myCard !== cardToBeatBy);
                 state.attackMode = true;
@@ -184,7 +187,6 @@ export const statePlayGameSlice = createSlice({
                     : 'Unknown error';
                 state.errors = [...state.errors, errorMessage];
             });
-
         builder
             .addCase(endTurnThunk.pending, (state) => {
                 state.isLoading = true;
@@ -220,11 +222,20 @@ export const statePlayGameSlice = createSlice({
             .addCase(getGames.pending, (state) => {
                 state.isLoading = true
             })
-            .addCase(getGames.fulfilled, (state, action: PayloadAction<{games: IGame[], id: number}>) => {
-                state.isLoading = false
-                state.games = action.payload.games
-                state.participants_number = Number(action.payload.games.find(game => game.id === action.payload.id)?.participants_number)
+            .addCase(getGames.fulfilled, (state, action: PayloadAction<{ games: IJoinInGame[], id: number }>) => {
+                state.isLoading = false;
+
+                const game = action.payload.games.find(game => game.id === action.payload.id);
+                if (game) {
+                    state.data = game; // Присваиваем объект найденной игры
+                    state.bet_value = game.bet_value;
+                    state.participants_number = game.participants_number;
+                } else {
+                    console.log("нету данных")
+                    state.errors.push("Game not found");
+                }
             })
+
             .addCase(getGames.rejected, (state, action) => {
                 state.isLoading = false
                 const errorMessage = action.payload && typeof action.payload === 'object'
@@ -242,4 +253,3 @@ export const {
     reducer: statePlayGameSliceReducer,
     actions: statePlayGameSliceAction,
 } = statePlayGameSlice;
-

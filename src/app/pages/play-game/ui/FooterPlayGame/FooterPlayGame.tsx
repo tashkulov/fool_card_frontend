@@ -15,6 +15,12 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
     const { stateButtonReadiness, gameId } = props;
     const dispatch = useAppDispatch();
     const data = useAppSelector((state: RootState) => state.playGame);
+
+    // Функция для проверки наличия недобитых карт на столе
+    const hasUnbeatenCards = () => {
+        return data.tableCards.some(card => card.beaten_by_card === null);
+    };
+
     const getReady = () => {
         dispatch(markPlayerReadyThunk(Number(gameId)));
     };
@@ -27,14 +33,13 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
         if (!data.stage) {
             const intervalId = setInterval(() => {
                 markPlayerReadyThunk(Number(gameId));
-                const res = data.players.find(player => player.is_ready === false)
+                const res = data.players.find(player => player.is_ready === false);
                 if (res === undefined) {
-                    console.log("1234567890")
-                    dispatch(statePlayGameSliceAction.setStageTrue())
-                    clearInterval(intervalId)
+                    console.log("1234567890");
+                    dispatch(statePlayGameSliceAction.setStageTrue());
+                    clearInterval(intervalId);
                 }
-            }, 1000)
-
+            }, 1000);
         }
     }, [data.stage]);
 
@@ -45,6 +50,7 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
                     onClick={data.waiting === false ? getReady : handleEndTurn }
                     type="button"
                     className={stateButtonReadiness ? cls.button : cls.none}
+                    disabled={data.waiting !== false && hasUnbeatenCards()}
                 >
                     {data.waiting === false
                         ? "Готов"

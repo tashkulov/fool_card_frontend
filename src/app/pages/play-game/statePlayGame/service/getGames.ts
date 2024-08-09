@@ -7,6 +7,7 @@ export const getGames = createAsyncThunk<{games: IGame[], id: number}, number, {
     async (id, thunkAPI) => {
         try {
             const response = await $api.get<IGame[]>(`/v1/games`);
+            console.log(response, id)
             return thunkAPI.fulfillWithValue({games: response.data, id: id});
         } catch (e) {
             console.log(e);
