@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import './new-game.css'
 // import headerIllustration from '../../../assets/img/Header Illustration.svg';
 import NewBet from '../../../assets/img/new-stavka.svg';

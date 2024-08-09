@@ -15,6 +15,8 @@ import Card from "./ui/Card";
 import cls from "./MainGame.module.scss";
 import { getCardImagePath } from "./components/getCardImagePath/getCardImagePath";
 import {CountdownCircleTimer} from "react-countdown-circle-timer";
+import { stopAnimation } from "../../statePlayGame/slice/statePlayGameSlice";
+import { endTurnThunk } from "../../statePlayGame/service/endTurnThunk";
 
 type TMainGameProps = {
     gameId: string;
@@ -48,14 +50,12 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                 // Запуск анимации
                 await new Promise(resolve => setTimeout(resolve, 500)); // Ждем 500ms для завершения анимации
                 dispatch(stopAnimation()); // Останавливаем анимацию
-                dispatch(endTurnThunk(Number(props.gameId))); // Завершаем ход
+                dispatch(endTurnThunk(Number(gameId))); // Завершаем ход
+                console.log(rotationAngle)
             };
             moveToRightAnimation();
         }
-    }, [isAnimating, dispatch, props.gameId]);
-
-    const [activeOpponentCardIndex, setActiveOpponentCardIndex] = useState<number>(-1);
-    const [activeCardIndex, setActiveCardIndex] = useState<number>(-1);
+    }, [isAnimating, dispatch, gameId]);
 
 
     // const checkCardIntersection = (
@@ -262,7 +262,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                     } else {
                         setMovingCard(card);
                         dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
-                        // setCurrentTurn('guest');
+                        setCurrentTurn('guest');
                         setKey(prevKey => prevKey + 1);
                     }
                 }
@@ -271,7 +271,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
             } else {
                 setMovingCard(card);
                 dispatch(placeCardOnTableThunk({ gameId: Number(gameId), card }));
-                // setCurrentTurn('guest');
+                setCurrentTurn('guest');
                 setKey(prevKey => prevKey + 1);
             }
 
@@ -435,7 +435,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                                 style={{
                                     marginTop: '20px',
 
-                                    transform: `rotate(${getRandomValue()}deg)`
+                                    transform: `rotate(15deg)`
 
                                 }}
                             />
