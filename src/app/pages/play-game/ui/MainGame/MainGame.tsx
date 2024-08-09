@@ -182,6 +182,9 @@ const MainGame = (props: TMainGameProps) => {
 
 
 
+
+
+
     useEffect(() => {
         const fetchTableData = () => {
             dispatch(getCurrentTableThunk(Number(gameId)));
@@ -232,7 +235,6 @@ const MainGame = (props: TMainGameProps) => {
             }
         }
     };
-
 
     const onComplete = () => {
         if (currentTurn === 'creator') {
