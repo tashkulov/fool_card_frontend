@@ -336,7 +336,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                 <CountdownCircleTimer
                     key={key}
                     isPlaying={currentTurn === 'guest'}
-                    duration={30}
+                    duration={10}
 
                     size={96}
                     colors={['#18ee7b', '#80776DFF']}
@@ -396,7 +396,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                 <CountdownCircleTimer
                     key={key}
                     isPlaying={currentTurn === 'creator'}
-                    duration={30}
+                    duration={10}
 
                     size={96}
                     colors={['#18ee7b', '#80776DFF']}
