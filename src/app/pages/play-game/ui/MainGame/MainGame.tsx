@@ -1,5 +1,5 @@
 import ava from "../../images/Сircle Right.svg";
-import  { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useAppReduxToolkitTools/redux";
 import { RootState } from "../../../../Providers/StoreProvider/store";
 import { getCurrentTableThunk } from "../../statePlayGame/service/getCurrentTableThunk";
@@ -14,7 +14,7 @@ import { beatCardThunk } from "../../statePlayGame/service/beatCardThunk";
 import Card from "./ui/Card";
 import cls from "./MainGame.module.scss";
 import { getCardImagePath } from "./components/getCardImagePath/getCardImagePath";
-import {CountdownCircleTimer} from "react-countdown-circle-timer";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { stopAnimation } from "../../statePlayGame/slice/statePlayGameSlice";
 import { endTurnThunk } from "../../statePlayGame/service/endTurnThunk";
 
@@ -65,7 +65,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
     //     const rect = tableCardElement.getBoundingClientRect();
     //     const cardWidth = 75; // ширина карты
     //     const cardHeight = 105.5; // высота карты
-    
+
     //     return (
     //         // cardPosition.x < rect.right &&
     //         // cardPosition.x + cardWidth > rect.left &&
@@ -107,22 +107,22 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                 x: event.clientX - (offsets[activeCardId]?.x ?? 0),
                 y: event.clientY - (offsets[activeCardId]?.y ?? 0),
             };
-    
+
             setCardPositions((prevPositions) => ({
                 ...prevPositions,
                 [activeCardId]: newCardPosition,
             }));
-    
+
             // Проверка пересечения с картами на столе
             // table.forEach((cardObj) => {
             //     const tableCardElement = document.getElementById(`${cardObj.card}`);
-                
+
             //     if (tableCardElement) {
             //         console.log(checkCardIntersection(newCardPosition, tableCardElement))
             //         const rect = tableCardElement.getBoundingClientRect()
             //         console.log(re)
             //     }
-                
+
             //     if (tableCardElement && checkCardIntersection(newCardPosition, tableCardElement)) {
             //         console.log('start');
             //     }
@@ -175,13 +175,13 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                 x: touch.clientX - (offsets[activeCardId]?.x ?? 0),
                 y: touch.clientY - (offsets[activeCardId]?.y ?? 0),
             };
-    
+
             setCardPositions((prevPositions) => ({
                 ...prevPositions,
                 [activeCardId]: newCardPosition,
             }));
-            
-    
+
+
             // Проверка пересечения с картами на столе
             // table.forEach((cardObj) => {
             //     const tableCardElement = document.getElementById(`${cardObj.card}`);
@@ -327,10 +327,10 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
 
     return (
         <div className={cls.main}
-             onMouseMove={handleMouseMove}
-             onMouseUp={handleMouseUp}
-             onTouchMove={handleTouchMove}
-             onTouchEnd={handleTouchEnd}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
         >
             <div className={cls.wrapperImg}>
                 <CountdownCircleTimer
@@ -343,7 +343,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                     colorsTime={[30, 0]}
                     onComplete={onComplete}
                 >
-                    {() => <img src={ava} className={cls.opponentAva} alt="avatars players"/>}
+                    {() => <img src={ava} className={cls.opponentAva} alt="avatars players" />}
                 </CountdownCircleTimer>
                 <div className={cls.wrapperTextGetReady}>
                     Нажми Готов
@@ -403,15 +403,16 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                     colorsTime={[30, 0]}
                     onComplete={onComplete}
                 >
-                    {() => <img src={ava} className={cls.opponentAva} alt="avatars players"/>}
+                    {() => <img src={ava} className={cls.opponentAva} alt="avatars players" />}
                 </CountdownCircleTimer>
                 <div className={cls.wrapperTextGetReady}>
                 </div>
             </div>
             <div className={cls.deck}>
+                <h1 className={cls.freecards}>{data.currentTable?.free_cards_amount}</h1>
                 <img src={getCardImagePath(data.currentTable?.trump_card ?? "")} alt="trump_card"
-                     className={cls.trump}/>
-                <img src={back_card} alt="deck_card"/>
+                    className={cls.trump} />
+                <img src={back_card} alt="deck_card" />
             </div>
             <div className={cls.tableCard}>
                 {table.map((cardObj, index: number) => (
