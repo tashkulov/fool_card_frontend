@@ -11,8 +11,8 @@ body {
     font-size: 30px;
     font-weight: 900;
     width: 100%;
-    
-    
+
+
 }
 
 .wrapper {
@@ -609,7 +609,7 @@ section {
 
 .plus-block {
     height: 44px;
-    width: 44px;
+    width: 44;
     border-radius: 10px;
     display: flex;
     background: linear-gradient(180.00deg, rgb(79, 21, 21), rgb(56, 12, 12) 100%);
@@ -668,7 +668,7 @@ section {
     width: 100%;
     display: flex;
     flex-direction: column;
-    
+
     gap: 10px;
 }
 
@@ -743,7 +743,7 @@ label {
     position: absolute;
     bottom: 0;
 
-    
+
     font-weight: 400;
     font-size: 12px;
     line-height: 150%;

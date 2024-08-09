@@ -100,6 +100,15 @@
     height: auto; /* Поддержка соотношения сторон */
   }
 
+  .deck h1 {
+    position: absolute;
+    top: -110px; /* Регулируйте значение, чтобы переместить текст вверх */
+    left: 30%;
+    transform: translateX(50%); /* Центрируем текст по горизонтали относительно родителя */
+    z-index: 4; /* Чтобы текст был поверх изображений */
+    font-size: 30px; /* Размер шрифта */
+    color: white; /* Цвет текста */
+  }
   .deck img.trump {
     position: absolute;
     z-index: 0;

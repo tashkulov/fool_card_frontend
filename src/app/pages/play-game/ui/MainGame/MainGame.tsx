@@ -391,6 +391,7 @@ const MainGame = (props: TMainGameProps) => {
             </div>
 
             <div className={cls.deck}>
+                <h1 className={cls.freecards}>{data.currentTable?.free_cards_amount}</h1>
                 <img src={getCardImagePath(data.currentTable?.trump_card)} alt="trump_card" className={cls.trump} />
                 <img src={back_card} alt="deck_card" />
             </div>

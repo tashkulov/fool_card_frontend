@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './new-game.css'
 // import headerIllustration from '../../../assets/img/Header Illustration.svg';
 import NewBet from '../../../assets/img/new-stavka.svg';
@@ -11,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import HeaderRiveAnimation from '../../components/rive-conponents/header-animations/ruby-header/ruby-component';
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-animations/mode-anim';
+import {$api} from "../../../api.ts";
 
 const CreateGameForm: React.FC = () => {
 
@@ -108,12 +108,8 @@ const CreateGameForm: React.FC = () => {
                 setErrorString('')
                 if (betAmount >= 100) {
                     setErrorString('')
-                    const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
-                        headers: {
-                            Authorization:  localStorage.getItem('authorization')
-                            // Authorization: '646fdbaf23039e50caf3bc8f121fa0cd0e61d239a4dd975d'
-
-                        }
+                    const CreateGame = await $api.post('https://foolcard2.shop/v1/games', requestData, {
+                     
                     });
                     console.log('Game created successfully:', CreateGame.data);
                     const gameId = CreateGame.data.id;
