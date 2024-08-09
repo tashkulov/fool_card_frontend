@@ -30,7 +30,7 @@ const HeaderPlayGame = () => {
             </div>
             <div className={cls.right}>
                 <img src={gameDate.playGame.data.game_ending_type === "classic" ? classic : nichy} alt=""/>
-                <img src={gameDate.playGame.data.game_mode === "throwing" ?  rydom : perevod} alt=""/>
+                <img src={gameDate.playGame.data.game_mode === "throwing"  ?  rydom : perevod} alt=""/>
                 <img src={gameDate.playGame.data.toss_mode === "neighbors" ? sosedi : all} alt=""/>
             </div>
         </div>
