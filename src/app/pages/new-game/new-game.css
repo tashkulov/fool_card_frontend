@@ -613,7 +613,7 @@ section {
 
 .plus-block {
     height: 44px;
-    width: 44;
+    width: 44px;
     border-radius: 10px;
     display: flex;
     background: linear-gradient(180.00deg, rgb(79, 21, 21), rgb(56, 12, 12) 100%);
