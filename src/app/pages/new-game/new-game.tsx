@@ -36,7 +36,7 @@ const CreateGameForm: React.FC = () => {
     // Handle the game mode change
     const handleGameModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        setSelectedGameMode(value === 'Подкидной' ? 'throwing' : value === 'Переводной' ? 'shifting' : value);
+        setSelectedGameMode(value === 'Подкидной' ? 'throwing' : value === 'Переводной' ? 'passing' : value);
         setActive(value === 'Подкидной' ? 'casuals' : 'shift');
 
     };
@@ -188,7 +188,7 @@ const CreateGameForm: React.FC = () => {
                                                     className={`rejim-check ${selectedGameMode === mode ? 'gameModeSelected' : ''}`}
                                                     value={mode}
                                                     name="rejim-1"
-                                                    checked={selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'shifting')}
+                                                    checked={selectedGameMode === (mode === 'Подкидной' ? 'throwing' : 'passing')}
                                                     onChange={handleGameModeChange} />
                                                 <div className="image-radio" id="images">
                                                     <img src={Check} alt="" />
