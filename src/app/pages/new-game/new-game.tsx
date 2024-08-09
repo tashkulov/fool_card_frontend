@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './new-game.css'
 // import headerIllustration from '../../../assets/img/Header Illustration.svg';
 import NewBet from '../../../assets/img/new-stavka.svg';
@@ -10,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import HeaderRiveAnimation from '../../components/rive-conponents/header-animations/ruby-header/ruby-component';
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-animations/mode-anim';
-import {$api} from "../../../api.ts";
 
 const CreateGameForm: React.FC = () => {
 
@@ -94,10 +94,10 @@ const CreateGameForm: React.FC = () => {
 
         const requestData = {
             "bet_value": betAmount,
-            "card_amount": 36,
+            "card_amount": 36, // Update with actual value if available
             "participants_number": parseInt(selectedPlayerCount),
             "access_type": isPrivate ? 'private' : 'public',
-            "status": 'ongoing',
+            "status": 'ongoing', // This seems like a static value for now
             "game_mode": selectedGameMode,
             "toss_mode": tossMode,
             "game_ending_type": gameEndingType
@@ -108,12 +108,14 @@ const CreateGameForm: React.FC = () => {
                 setErrorString('')
                 if (betAmount >= 100) {
                     setErrorString('')
-                    const CreateGame = await $api.post('https://foolcard2.shop/v1/games', requestData, {
-                     
+                    const CreateGame = await axios.post('https://foolcard2.shop/v1/games', requestData, {
+                        headers: {
+                            Authorization: '2b40590d9788c9737b94207f340715cb0b11d09ac4643bf8'
+                        }
                     });
                     console.log('Game created successfully:', CreateGame.data);
                     const gameId = CreateGame.data.id;
-                    const createdById = CreateGame.data.created_by;
+                    // const createdById = CreateGame.data.created_by;
 
                     // const response = await axios.post(`https://foolcard2.shop/v1/games/${gameId}/start`, {"id": gameId}, {
                     //     headers: {
@@ -121,7 +123,7 @@ const CreateGameForm: React.FC = () => {
                     //     }
                     // });
                     // console.log(response.data)
-                    navigate(`/inGame/${gameId}/${createdById}`);
+                    navigate(`/inGame/${gameId}/creator`);
                 } else {
                     setErrorString('bet amount is les then 100!')
                 }
