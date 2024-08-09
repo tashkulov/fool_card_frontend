@@ -9,14 +9,15 @@ import { startAnimation } from "../../statePlayGame/slice/statePlayGameSlice.ts"
 type TFooterPlayGameProps = {
     stateButtonReadiness: boolean;
     gameId: string;
+    showWarning: boolean;
+    setShowWarning: (value: boolean) => void;
 };
 
 const FooterPlayGame = (props: TFooterPlayGameProps) => {
-    const { stateButtonReadiness, gameId } = props;
+    const { stateButtonReadiness, gameId, showWarning, setShowWarning } = props;
     const dispatch = useAppDispatch();
     const data = useAppSelector((state: RootState) => state.playGame);
 
-    // Функция для проверки наличия недобитых карт на столе
     const hasUnbeatenCards = () => {
         return data.tableCards.some(card => card.beaten_by_card === null);
     };
@@ -26,7 +27,12 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
     };
 
     const handleEndTurn = () => {
-        dispatch(startAnimation()); // Запуск анимации
+        if (hasUnbeatenCards()) {
+            setShowWarning(true);
+            setTimeout(() => setShowWarning(false), 3000);
+        } else {
+            dispatch(startAnimation());
+        }
     };
 
     useEffect(() => {
@@ -35,7 +41,6 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
                 markPlayerReadyThunk(Number(gameId));
                 const res = data.players.find(player => player.is_ready === false);
                 if (res === undefined) {
-                    console.log("1234567890");
                     dispatch(statePlayGameSliceAction.setStageTrue());
                     clearInterval(intervalId);
                 }
@@ -58,6 +63,7 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
                             ? "Бито"
                             : ""}
                 </button>
+                {showWarning && <div className={cls.warning}>Карты не побиты</div>}
             </div>
         </div>
     );
