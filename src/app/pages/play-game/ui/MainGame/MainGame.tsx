@@ -198,7 +198,6 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
     const handleTouchEnd = () => {
         setIsDragging(false);
         handleCardClick(activeCardId)
-        setActiveCardId(null);
 
         if (activeCardId != null) {
             setRotationAngle(() => ({

@@ -47,7 +47,8 @@ const FooterPlayGame = (props: TFooterPlayGameProps) => {
         <div className={cls.main}>
             <div className={cls.wrapperButton}>
                 <button
-                    onClick={data.waiting === false ? getReady : handleEndTurn }
+                    onClick={data.waiting === false ? getReady : handleEndTurn}
+                    onTouchStart={data.waiting === false ? getReady : handleEndTurn}
                     type="button"
                     className={stateButtonReadiness ? cls.button : cls.none}
                     disabled={data.waiting !== false && hasUnbeatenCards()}
