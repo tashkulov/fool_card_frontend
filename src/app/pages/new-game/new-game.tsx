@@ -194,7 +194,7 @@ const CreateGameForm: React.FC = () => {
                                                     <img src={Check} alt="" />
                                                 </div>
 
-                                                <ModeRiveAnimation active={active === (mode === 'Подкидной' ? 'throwing' : 'shifting')} path={mode === 'Подкидной' ? 'casual' : 'shift'} />
+                                                <ModeRiveAnimation active={active === (mode === 'Подкидной' ? 'casuals' : 'shift')} path={mode === 'Подкидной' ? 'casual' : 'shift'} />
                                                 <div className="rej-text">{mode}</div>
 
                                                 <div className="checkmark"></div>
