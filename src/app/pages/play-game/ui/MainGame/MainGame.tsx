@@ -217,7 +217,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
         };
 
         fetchTableData();
-        const interval = setInterval(fetchTableData, 5000);
+        const interval = setInterval(fetchTableData, 1000);
 
         return () => clearInterval(interval);
     }, [dispatch, gameId]);
@@ -245,6 +245,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
             dispatch(beatCardThunk({ gameId: Number(gameId), cardToBeat: lastCard.card, cardToBeatBy }))
 
         }
+        setCurrentTurn('guest');
     }, [dispatch, gameId, table]);
 
     const handleCardClick = (card: string | null) => {
@@ -335,7 +336,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                 <CountdownCircleTimer
                     key={key}
                     isPlaying={currentTurn === 'guest'}
-                    duration={10}
+                    duration={1}
 
                     size={96}
                     colors={['#18ee7b', '#80776DFF']}
