@@ -18,6 +18,8 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { stopAnimation } from "../../statePlayGame/slice/statePlayGameSlice";
 import { endTurnThunk } from "../../statePlayGame/service/endTurnThunk";
 
+import { store } from "../store";
+
 type TMainGameProps = {
     gameId: string;
 };
@@ -37,6 +39,8 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
     const [draggingCardScale, setDraggingCardScale] = useState<Record<string, { scale: number }>>({});
 
     const [rotationAngle, setRotationAngle] = useState<Record<string, { angle: number }>>({});
+
+    
 
     // const [cardToBeat, setCardToBeat] = useState<string | null>('');
 
@@ -335,8 +339,8 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
             <div className={cls.wrapperImg}>
                 <CountdownCircleTimer
                     key={key}
-                    isPlaying={currentTurn === 'guest'}
-                    duration={1}
+                    isPlaying={store.getState().isReady && currentTurn === 'guest'}
+                    duration={10}
 
                     size={96}
                     colors={['#18ee7b', '#80776DFF']}
@@ -395,7 +399,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
             <div className={cls.MywrapperImg}>
                 <CountdownCircleTimer
                     key={key}
-                    isPlaying={currentTurn === 'creator'}
+                    isPlaying={store.getState().isReady && currentTurn === 'creator'}
                     duration={10}
 
                     size={96}
