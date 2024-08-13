@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import MyRiveAnimation from "../../components/rive-conponents/header-animations/ruby/ruby-component"
 import axios from 'axios';
 import Hands from "./images/main-page-hand-bg.svg"
+import MenuHandsAnim from '../../components/rive-conponents/menu-hands-anim/menu-hands-anim';
 
 interface User {
     photo_url: string;
@@ -161,7 +162,10 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                     </button>
                 </div>
             </div>
-            <img src={Hands} className='main-page-hands-cards'/>
+            {/* <img src={Hands} className='main-page-hands-cards'/> */}
+
+            <MenuHandsAnim />
+
             <Modal mode={stateModeModalWindow} ref={refModalWindow}>
                 <Settings />
             </Modal>
