@@ -25,7 +25,8 @@ const reducer = (state = initialState, action: Action): State => {
             console.log(state.readyPlayers)
             return {
                 ...state,
-                readyPlayers: state.readyPlayers + 1
+                isReady: true,
+                // readyPlayers: state.readyPlayers + 1
             }
             
 
