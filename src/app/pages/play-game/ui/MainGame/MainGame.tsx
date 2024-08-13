@@ -18,6 +18,8 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { stopAnimation } from "../../statePlayGame/slice/statePlayGameSlice";
 import { endTurnThunk } from "../../statePlayGame/service/endTurnThunk";
 
+import { store } from "../store";
+
 type TMainGameProps = {
     gameId: string;
 };
@@ -37,6 +39,8 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
     const [draggingCardScale, setDraggingCardScale] = useState<Record<string, { scale: number }>>({});
 
     const [rotationAngle, setRotationAngle] = useState<Record<string, { angle: number }>>({});
+
+    
 
     // const [cardToBeat, setCardToBeat] = useState<string | null>('');
 
@@ -217,7 +221,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
         };
 
         fetchTableData();
-        const interval = setInterval(fetchTableData, 5000);
+        const interval = setInterval(fetchTableData, 1000);
 
         return () => clearInterval(interval);
     }, [dispatch, gameId]);
@@ -245,6 +249,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
             dispatch(beatCardThunk({ gameId: Number(gameId), cardToBeat: lastCard.card, cardToBeatBy }))
 
         }
+        setCurrentTurn('guest');
     }, [dispatch, gameId, table]);
 
     const handleCardClick = (card: string | null) => {
@@ -334,7 +339,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
             <div className={cls.wrapperImg}>
                 <CountdownCircleTimer
                     key={key}
-                    isPlaying={currentTurn === 'guest'}
+                    isPlaying={store.getState().isReady && currentTurn === 'guest'}
                     duration={10}
 
                     size={96}
@@ -394,7 +399,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
             <div className={cls.MywrapperImg}>
                 <CountdownCircleTimer
                     key={key}
-                    isPlaying={currentTurn === 'creator'}
+                    isPlaying={store.getState().isReady && currentTurn === 'creator'}
                     duration={10}
 
                     size={96}
