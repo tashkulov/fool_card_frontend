@@ -1,15 +1,23 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { User } from '../../home-page/home-page'
 
 type State = {
     isReady: boolean,
     playersNum: number,
     readyPlayers: number,
+    user: User,
+}
+
+const initUser = {
+    photo_url: '',
+    first_name: '',
 }
 
 const initialState: State = {
     isReady: false,
     playersNum: 2,
     readyPlayers: 0,
+    user: initUser,
 }
 
 export type setReadinessAction = {
