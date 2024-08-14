@@ -15,6 +15,7 @@ import HomePageHeader from './components/home-page-header';
 export interface User {
     photo_url: string;
     first_name: string;
+    id: number | null;
 }
 
 const HomePage: React.FC = () => {

@@ -12,6 +12,7 @@ type State = {
 const initUser = {
     photo_url: DefaultImgUrl,
     first_name: '',
+    id: null,
 }
 
 const initialState: State = {
