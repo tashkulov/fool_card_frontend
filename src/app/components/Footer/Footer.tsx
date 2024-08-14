@@ -10,7 +10,7 @@ import SpadesRiveAnimation from '../rive-conponents/footer-animations/spades/spa
 const Footer: React.FC = () => {
     const { t } = useTranslation();
     const location = useLocation();  // Получаем текущий путь
-    const [activeId, setActiveId] = useState<number | null>(null);
+    const [activeId, setActiveId] = useState<number | null>(0);
 
     // Загружаем сохраненный активный ID при загрузке компонента
     useEffect(() => {
@@ -27,9 +27,9 @@ const Footer: React.FC = () => {
 
     return (
         <footer className="main-page-navbar">
-            <div className="main-page-navbar-option menu" onClick={() => handleClick(null)}>
+            <div className="main-page-navbar-option menu" onClick={() => handleClick(0)}>
                 <Link to="/" className="main-page-navbar-link">
-                    <ClubsRiveAnimation active={activeId === null && location.pathname === "/"} />
+                    <ClubsRiveAnimation active={activeId === 0 && location.pathname === "/"} />
                     <h1>{t("Меню")}</h1>
                 </Link>
             </div>
