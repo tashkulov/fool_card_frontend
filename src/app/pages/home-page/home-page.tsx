@@ -9,8 +9,10 @@ import { useTranslation } from "react-i18next";
 import MyRiveAnimation from "../../components/rive-conponents/header-animations/ruby/ruby-component"
 import axios from 'axios';
 import Hands from "./images/main-page-hand-bg.svg"
+import MenuHandsAnim from '../../components/rive-conponents/menu-hands-anim/menu-hands-anim';
 import { store } from '../play-game/ui/store';
 import HomePageHeader from './components/home-page-header';
+
 
 export interface User {
     photo_url: string;
@@ -161,7 +163,9 @@ const HomePage: React.FC = () => {
                     </button>
                 </div>
             </div>
-            <img src={Hands} className='main-page-hands-cards' />
+        
+            <MenuHandsAnim />
+        
             <Modal mode={stateModeModalWindow} ref={refModalWindow}>
                 <Settings />
             </Modal>
