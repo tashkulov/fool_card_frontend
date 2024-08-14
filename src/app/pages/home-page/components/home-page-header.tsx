@@ -6,9 +6,8 @@ const HomePageHeader: React.FC = () => {
         <div className="main-page-header">
             <div className="main-page-header-content">
                 <div className="main-page-header-content-avatar-border">
-                    <div className="main-page-header-content-avatar">
                         <img src={store.getState().user.photo_url} />
-                    </div>
+                    
                 </div>
                 <div className="main-page-header-content-data">
                     <div className="main-page-header-content-data-username">

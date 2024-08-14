@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { User } from '../../home-page/home-page'
+import DefaultImgUrl from '../../home-page/images/default-avatar.png'
 
 type State = {
     isReady: boolean,
@@ -9,7 +10,7 @@ type State = {
 }
 
 const initUser = {
-    photo_url: '',
+    photo_url: DefaultImgUrl,
     first_name: '',
 }
 

@@ -25,16 +25,6 @@ const HomePage: React.FC = () => {
     const hasRegistered = useRef(false);
     const hasLoggedIn = useRef(false);
 
-
-    if (window.Telegram && window.Telegram.WebApp) {
-        const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-        
-
-        if (initDataUnsafe && initDataUnsafe.user) {
-            store.getState().user = initDataUnsafe.user;
-        }
-    }
-
     useEffect(() => {
         const RegisterUser = async () => {
             try {
@@ -49,7 +39,7 @@ const HomePage: React.FC = () => {
                             "language": "ru_RU",
                             "invited_by": null
                         };
-
+                        store.getState().user = initDataUnsafe.user;
                         // Отправка данных на сервер
                         const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
                         console.log('Ответ:', response.data, response.data.Authorization, userData);
@@ -82,6 +72,8 @@ const HomePage: React.FC = () => {
                         const userData = {
                             "telegram_id": initDataUnsafe.user.id.toString()
                         };
+
+                        store.getState().user = initDataUnsafe.user;
 
                         // Отправка данных на сервер
                         const response = await axios.post(`https://foolcard2.shop/v1/auth/sign_in?telegram_id=${initDataUnsafe.user.id.toString()}`, userData);
