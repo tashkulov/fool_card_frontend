@@ -139,6 +139,12 @@
     background-image: url('./images/default-avatar.png');
 }
 
+.main-page-header-content-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+
 .main-page-hands-cards {
     position: fixed;
     height: 614px;
