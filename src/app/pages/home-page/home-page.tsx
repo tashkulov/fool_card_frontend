@@ -29,11 +29,30 @@ const HomePage: React.FC = () => {
 
     if (window.Telegram && window.Telegram.WebApp) {
         const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-        
+
 
         if (initDataUnsafe && initDataUnsafe.user) {
-            store.getState().user = initDataUnsafe.user;
-            console.log(store.getState().user)
+            const user = initDataUnsafe.user;
+            store.getState().user = user;
+            console.log(store.getState().user);
+
+            const avatarUrl = `https://t.me/i/userpic/320/${user.id}.jpg`;
+
+            // Проверяем наличие аватара
+            fetch(avatarUrl)
+                .then(response => {
+                    if (response.ok) {
+                        console.log('User Avatar URL:', avatarUrl);
+                    } else {
+                        console.log('Avatar not found, using placeholder.');
+                        // Используем запасное изображение
+                        const placeholderUrl = 'URL_TO_YOUR_PLACEHOLDER_IMAGE';
+                        console.log('User Avatar URL:', placeholderUrl);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching avatar:', error);
+                });
         }
     }
 
@@ -55,7 +74,7 @@ const HomePage: React.FC = () => {
                         // Отправка данных на сервер
                         const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
                         console.log('Ответ:', response.data, response.data.Authorization, userData);
-                        
+
                         hasRegistered.current = true
 
                         localStorage.setItem("authorization", response.data.Authorization)
@@ -91,7 +110,7 @@ const HomePage: React.FC = () => {
 
 
                         hasLoggedIn.current = true
-                        
+
                         localStorage.setItem("authorization", response.data.Authorization)
                         console.log(localStorage.getItem("authorization"));
                     } else {
@@ -108,7 +127,7 @@ const HomePage: React.FC = () => {
         if (!hasLoggedIn.current) {
             LoginUser();
         }
-        
+
     }, []);
 
 
@@ -117,8 +136,8 @@ const HomePage: React.FC = () => {
     return (
         <div className="main-page-container">
             <HomePageHeader />
-            
-            
+
+
             <div className="main-page-menu">
                 <MyRiveAnimation />
                 <div className="main-page-menu-buttons">
@@ -142,7 +161,7 @@ const HomePage: React.FC = () => {
                     </button>
                 </div>
             </div>
-            <img src={Hands} className='main-page-hands-cards'/>
+            <img src={Hands} className='main-page-hands-cards' />
             <Modal mode={stateModeModalWindow} ref={refModalWindow}>
                 <Settings />
             </Modal>

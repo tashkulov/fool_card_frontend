@@ -1,14 +1,14 @@
 import cls from "./Referrals.module.scss"
 import SkeletonPage from "../../../components/SkeletonPage/ui/SkeletPage";
 import GetReferralBonuses from "./getReferralBonuses/ui/getReferralBonuses";
-import {useState} from "react";
+import { useState } from "react";
 import SkeletonCurd from "../../../components/SkeletonCurd/ui/SkeletonCurd";
 import friendsIconSvg from "../../img/FriendsIconSvg.svg"
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const Referrals = () => {
     const [str, setStr] = useState("")
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     setTimeout(() => {
         setStr("1000")
@@ -17,7 +17,7 @@ const Referrals = () => {
     return (
         <SkeletonPage textHeader={t("Рефералы")}>
             <div className={cls.main}>
-                <GetReferralBonuses bonuses={str}/>
+                <GetReferralBonuses bonuses={str} />
                 <p>
                     {t("Пользователь получает 10% от заработанного опыта приведённого реферала\n" +
                         "                    Единоразовое вознаграждение 1000 монет")}
@@ -34,7 +34,7 @@ const Referrals = () => {
                     <SkeletonCurd background={true}>
                         <div className={cls.curdFriends}>
                             <div className={cls.wrapperImgWithName}>
-                                <img src={friendsIconSvg} alt=""/>
+                                <img src={friendsIconSvg} alt="" />
                                 <div>
                                     friend_1
                                 </div>
@@ -46,7 +46,7 @@ const Referrals = () => {
                     </SkeletonCurd><SkeletonCurd background={true}>
                         <div className={cls.curdFriends}>
                             <div className={cls.wrapperImgWithName}>
-                                <img src={friendsIconSvg} alt=""/>
+                                <img src={friendsIconSvg} alt="" />
                                 <div>
                                     friend_1
                                 </div>
@@ -58,7 +58,7 @@ const Referrals = () => {
                     </SkeletonCurd><SkeletonCurd background={true}>
                         <div className={cls.curdFriends}>
                             <div className={cls.wrapperImgWithName}>
-                                <img src={friendsIconSvg} alt=""/>
+                                <img src={friendsIconSvg} alt="" />
                                 <div>
                                     friend_1
                                 </div>
@@ -70,7 +70,7 @@ const Referrals = () => {
                     </SkeletonCurd><SkeletonCurd background={true}>
                         <div className={cls.curdFriends}>
                             <div className={cls.wrapperImgWithName}>
-                                <img src={friendsIconSvg} alt=""/>
+                                <img src={friendsIconSvg} alt="" />
                                 <div>
                                     friend_1
                                 </div>
@@ -82,7 +82,7 @@ const Referrals = () => {
                     </SkeletonCurd><SkeletonCurd background={true}>
                         <div className={cls.curdFriends}>
                             <div className={cls.wrapperImgWithName}>
-                                <img src={friendsIconSvg} alt=""/>
+                                <img src={friendsIconSvg} alt="" />
                                 <div>
                                     friend_1
                                 </div>
@@ -94,7 +94,7 @@ const Referrals = () => {
                     </SkeletonCurd><SkeletonCurd background={true}>
                         <div className={cls.curdFriends}>
                             <div className={cls.wrapperImgWithName}>
-                                <img src={friendsIconSvg} alt=""/>
+                                <img src={friendsIconSvg} alt="" />
                                 <div>
                                     friend_1
                                 </div>
@@ -106,7 +106,7 @@ const Referrals = () => {
                     </SkeletonCurd><SkeletonCurd background={true}>
                         <div className={cls.curdFriends}>
                             <div className={cls.wrapperImgWithName}>
-                                <img src={friendsIconSvg} alt=""/>
+                                <img src={friendsIconSvg} alt="" />
                                 <div>
                                     friend_1
                                 </div>
@@ -118,7 +118,7 @@ const Referrals = () => {
                     </SkeletonCurd><SkeletonCurd background={true}>
                         <div className={cls.curdFriends}>
                             <div className={cls.wrapperImgWithName}>
-                                <img src={friendsIconSvg} alt=""/>
+                                <img src={friendsIconSvg} alt="" />
                                 <div>
                                     friend_1
                                 </div>
@@ -130,7 +130,7 @@ const Referrals = () => {
                     </SkeletonCurd><SkeletonCurd background={true}>
                         <div className={cls.curdFriends}>
                             <div className={cls.wrapperImgWithName}>
-                                <img src={friendsIconSvg} alt=""/>
+                                <img src={friendsIconSvg} alt="" />
                                 <div>
                                     friend_1
                                 </div>
@@ -142,7 +142,7 @@ const Referrals = () => {
                     </SkeletonCurd><SkeletonCurd background={true}>
                         <div className={cls.curdFriends}>
                             <div className={cls.wrapperImgWithName}>
-                                <img src={friendsIconSvg} alt=""/>
+                                <img src={friendsIconSvg} alt="" />
                                 <div>
                                     friend_1
                                 </div>
