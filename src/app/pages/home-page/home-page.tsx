@@ -10,17 +10,17 @@ import MyRiveAnimation from "../../components/rive-conponents/header-animations/
 import axios from 'axios';
 import Hands from "./images/main-page-hand-bg.svg"
 import MenuHandsAnim from '../../components/rive-conponents/menu-hands-anim/menu-hands-anim';
+import { store } from '../play-game/ui/store';
+import HomePageHeader from './components/home-page-header';
 
-interface User {
+
+export interface User {
     photo_url: string;
     first_name: string;
+    id: number | null;
 }
 
-interface HomePageProps {
-    user?: User | null;
-}
-
-const HomePage: React.FC<HomePageProps> = ({ user }) => {
+const HomePage: React.FC = () => {
     const [stateModeModalWindow, setSateModeModalWindow] = useState<boolean>(false)
     const refModalWindow = useRef(null)
     const { t } = useTranslation()
@@ -28,6 +28,35 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
     const hasRegistered = useRef(false);
     const hasLoggedIn = useRef(false);
 
+
+    if (window.Telegram && window.Telegram.WebApp) {
+        const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+
+
+        if (initDataUnsafe && initDataUnsafe.user) {
+            const user = initDataUnsafe.user;
+            store.getState().user = user;
+            console.log(store.getState().user);
+
+            const avatarUrl = `https://t.me/i/userpic/320/${user.id}.jpg`;
+
+            // Проверяем наличие аватара
+            fetch(avatarUrl)
+                .then(response => {
+                    if (response.ok) {
+                        console.log('User Avatar URL:', avatarUrl);
+                    } else {
+                        console.log('Avatar not found, using placeholder.');
+                        // Используем запасное изображение
+                        const placeholderUrl = 'URL_TO_YOUR_PLACEHOLDER_IMAGE';
+                        console.log('User Avatar URL:', placeholderUrl);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching avatar:', error);
+                });
+        }
+    }
 
     useEffect(() => {
         const RegisterUser = async () => {
@@ -47,7 +76,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                         // Отправка данных на сервер
                         const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
                         console.log('Ответ:', response.data, response.data.Authorization, userData);
-                        
+
                         hasRegistered.current = true
 
                         localStorage.setItem("authorization", response.data.Authorization)
@@ -83,7 +112,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
 
                         hasLoggedIn.current = true
-                        
+
                         localStorage.setItem("authorization", response.data.Authorization)
                         console.log(localStorage.getItem("authorization"));
                     } else {
@@ -100,7 +129,7 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
         if (!hasLoggedIn.current) {
             LoginUser();
         }
-        
+
     }, []);
 
 
@@ -108,37 +137,9 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
 
     return (
         <div className="main-page-container">
-            <div className="main-page-header">
-                <div className="main-page-header-content">
-                    <div className="main-page-header-content-avatar-border">
-                        <div className="main-page-header-content-avatar">
-                            {user?.photo_url}
-                        </div>
-                    </div>
-                    <div className="main-page-header-content-data">
-                        <div className="main-page-header-content-data-username">
-                            {user?.first_name || "Guest"}
-                        </div>
-                        <div className="main-page-header-content-data-credits">
-                            <div className="main-page-header-content-data-credits-1">
-                                <div className="main-page-header-content-data-credits-1-icon"></div>
-                                <div className="main-page-header-content-data-credits-1-value">
-                                    100K
-                                </div>
-                            </div>
-                            <div className="main-page-header-content-data-credits-1">
-                                <div className="main-page-header-content-data-credits-2-icon"></div>
-                                <div className="main-page-header-content-data-credits-1-value">
-                                    152.5K
-                                </div>
-                                <div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            
+            <HomePageHeader />
+
+
             <div className="main-page-menu">
                 <MyRiveAnimation />
                 <div className="main-page-menu-buttons">
@@ -162,10 +163,9 @@ const HomePage: React.FC<HomePageProps> = ({ user }) => {
                     </button>
                 </div>
             </div>
-            {/* <img src={Hands} className='main-page-hands-cards'/> */}
-
+        
             <MenuHandsAnim />
-
+        
             <Modal mode={stateModeModalWindow} ref={refModalWindow}>
                 <Settings />
             </Modal>
