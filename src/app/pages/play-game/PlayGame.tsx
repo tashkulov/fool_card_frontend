@@ -1,4 +1,3 @@
-import './play-game.css';
 import {useEffect, useState} from "react";
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppReduxToolkitTools/redux.ts";

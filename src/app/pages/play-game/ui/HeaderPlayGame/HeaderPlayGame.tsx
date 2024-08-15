@@ -1,13 +1,14 @@
 import cls from "./HeaderPlayGame.module.scss"
 import {useAppSelector} from "../../../../hooks/useAppReduxToolkitTools/redux.ts";
 import {RootState} from "../../../../Providers/StoreProvider/store.ts";
-import all from "../../../img/all.svg"
-import classic from "../../../img/card1.svg"
-import rydom from "../../../img/card3.svg"
+import all from "./svgIcon/Arrows.svg"
+import classic from "./svgIcon/Joker.svg"
+import rydom from "./svgIcon/Right Arrow.svg"
 import nichy from "../../../img/nicy.svg"
 import sosedi from "../../../img/sosedi.svg"
 import perevod from "../../../img/perevod.svg"
 import иконкаШута from "../../../img/coins.svg"
+
 import {Link} from "react-router-dom";
 
 const HeaderPlayGame = () => {

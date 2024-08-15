@@ -1,7 +1,9 @@
 .main {
   width: 100%;
   height: calc(100vh - 136px);
-  background: rgba(26, 69, 54, 1);
+  background-image: url("./svg/Group (13).svg");
+  background-position: center;
+  background-size: cover;
   position: relative;
 
   .wrapperImg {
@@ -10,7 +12,6 @@
     z-index: 3;
     left: 50%;
     transform: translate(-50%, -20%);
-    z-index: 1;
   }
 
   .MywrapperImg {
