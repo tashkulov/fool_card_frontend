@@ -1,0 +1,262 @@
+.mainPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-image: url("./images/main-page-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+
+  .mainPageHeader {
+    background-image: url("./images/main-page-header-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 126px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+
+    .mainPageHeaderContent {
+      display: flex;
+      flex-direction: row;
+      width: 80%;
+      height: 96px;
+      align-items: center;
+      justify-content: center;
+
+      .mainPageHeaderContentData {
+        width: 65%;
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .mainPageHeaderContentDataUsername {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: "Cormorant Infant", serif;
+          font-weight: bold;
+          color: white;
+          font-size: 20px;
+          height: 36px;
+          background-color: #807A7B;
+          border: #918789 solid 2px;
+          border-radius: 10px;
+          box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.411),
+          inset 0 -4px 4px rgba(255, 255, 255, 0.4);
+        }
+
+        .mainPageHeaderContentDataCredits {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          height: 32px;
+
+          .mainPageHeaderContentDataCredits1 {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 48%;
+            height: 28px;
+            background-color: #807A7B;
+            border: #918789 solid 2px;
+            border-radius: 10px;
+            box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.411),
+            inset 0 -4px 4px rgba(255, 255, 255, 0.4);
+
+            .mainPageHeaderContentDataCredits1Icon {
+              background-image: url('./images/coin.svg');
+              margin-left: 5px;
+              width: 22px;
+              height: 22px;
+            }
+
+            .mainPageHeaderContentDataCredits1Value {
+              font-weight: 400;
+              color: white;
+              font-size: 14px;
+              margin-left: 5px;
+            }
+          }
+
+          .mainPageHeaderContentDataCredits2Icon {
+            background-image: url('./images/coin-2.svg');
+            margin-left: 5px;
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
+      .mainPageHeaderContentAvatarBorder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url('./images/default-avatar-border.png');
+        height: 98px;
+        width: 96px;
+
+        .mainPageHeaderContentAvatar {
+          border-radius: 100%;
+          height: 76px;
+          width: 76px;
+          background-image: url('./images/default-avatar.png');
+
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .mainPageHandsCards {
+    position: fixed;
+    height: 614px;
+    width: 100%;
+    bottom: 0;
+    z-index: 0;
+  }
+
+  .mainPageMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    z-index: 1;
+    background-image: url('./images/main-page-mini-bg.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 90vw;
+    height: auto;
+    min-height: 60vh;
+    max-height: 75vh;
+
+    .mainPageMenuButtons {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      gap: calc(4px + 1vh);
+      width: 40%;
+      height: 100%;
+      margin-top: 90px;
+
+      @media (max-height: 750px) {
+
+        .mainPageMenuButtons {
+          align-items: center;
+          width: 47%;
+          margin-top: 6vh;
+        }
+      }
+
+      * {
+        color: rgba(0, 0, 0, 1);
+
+      }
+
+      .mainPageMenuButton {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: "Cormorant Infant", serif;
+        font-weight: bold;
+        border: none;
+        background-color: transparent;
+        background-image: url('./images/buttonsMainMenu.svg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position-y: center;
+        background-position-x: center;
+        width: 100%;
+        min-height: 57px;
+        height: auto;
+        font-size: 14px;
+
+
+        @media (max-height: 750px) {
+
+          .mainPageMenuButton {
+
+          }
+        }
+      }
+
+
+    }
+  }
+
+  .mainPageNavbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    z-index: 100;
+    height: 105px;
+    background-image: url("./images/main-page-navbar-bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    bottom: 0;
+    vertical-align: top;
+
+    .mainPageNavbarOption {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "Cormorant Infant", serif;
+      font-weight: bold;
+      font-size: 6px;
+      height: 69px;
+
+      .menuIcon {
+        width: 44px;
+        height: 46px;
+        background-image: url('./images/nav-menu.png');
+      }
+
+      .questsIcon {
+        width: 49px;
+        height: 46px;
+        background-image: url('./images/nav-quests.png');
+      }
+
+      .openIcon {
+        width: 45px;
+        height: 46px;
+        background-image: url('./images/nav-open.svg');
+      }
+
+      .newGameIcon {
+        width: 40px;
+        height: 46px;
+        background-image: url('./images/nav-new-game.png');
+      }
+    }
+  }
+
+  @media (max-height: 750px) {
+    .mainPageMenu {
+      background-image: url('./images/main-page-mini-bg.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 77vw;
+    }
+  }
+}

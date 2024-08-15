@@ -1,16 +1,16 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './home-page.css';
+import React, {useRef, useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import cls from './home-page.module.scss'; // Переименуйте файл css
 import Footer from "../../components/Footer/Footer";
-import { Modal } from "../../components/Modal";
+import {Modal} from "../../components/Modal";
 import Settings from "../Settings/ui/Settings";
 import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import MyRiveAnimation from "../../components/rive-conponents/header-animations/ruby/ruby-component"
 import axios from 'axios';
-import MenuHandsAnim from '../../components/rive-conponents/menu-hands-anim/menu-hands-anim';
-import { store } from '../play-game/ui/store';
+import {store} from '../play-game/ui/store';
 import HomePageHeader from './components/home-page-header';
+import MenuHandsAnim from "../../components/rive-conponents/menu-hands-anim/menu-hands-anim";
 
 
 export interface User {
@@ -22,7 +22,7 @@ export interface User {
 const HomePage: React.FC = () => {
     const [stateModeModalWindow, setSateModeModalWindow] = useState<boolean>(false)
     const refModalWindow = useRef(null)
-    const { t } = useTranslation()
+    const {t} = useTranslation()
 
     const hasRegistered = useRef(false);
     const hasLoggedIn = useRef(false);
@@ -135,40 +135,38 @@ const HomePage: React.FC = () => {
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))
 
     return (
-        <div className="main-page-container">
-            <HomePageHeader />
-
-
-            <div className="main-page-menu">
-                <MyRiveAnimation />
-                <div className="main-page-menu-buttons">
-                    <Link to={'/inGame'}>
-                        <div className="main-page-menu-button">
+        <div className={cls.mainPageContainer}>
+            <HomePageHeader/>
+            <div className={cls.mainPageMenu}>
+                <MyRiveAnimation/>
+                <div className={cls.mainPageMenuButtons}>
+                        <div className={cls.mainPageMenuButton}>
+                            <Link to={'/inGame'}>
                             {t("Играть")}
+                            </Link>
                         </div>
-                    </Link>
-                    <Link to={'/leaderboard'}>
-                        <div className="main-page-menu-button">
+                        <div className={cls.mainPageMenuButton}>
+                            <Link to={'/leaderboard'}>
+
                             {t("Лидерборд")}
+                            </Link>
                         </div>
-                    </Link>
-                    <Link to={"/referrals"}>
-                        <div className="main-page-menu-button">
+                        <div className={cls.mainPageMenuButton}>
+                            <Link to={"/referrals"}>
                             {t("Рефералы")}
+                            </Link>
+
                         </div>
-                    </Link>
-                    <button onClick={() => setSateModeModalWindow(prev => !prev)} className="main-page-menu-button">
+                    <button onClick={() => setSateModeModalWindow(prev => !prev)} className={cls.mainPageMenuButton}>
                         {t("Настройки")}
                     </button>
                 </div>
             </div>
-        
             <MenuHandsAnim />
-        
             <Modal mode={stateModeModalWindow} ref={refModalWindow}>
-                <Settings />
+                <Settings/>
             </Modal>
-            <Footer />
+            <Footer/>
         </div>
     );
 };
