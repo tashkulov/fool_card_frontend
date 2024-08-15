@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
 
     // Загружаем сохраненный активный ID при загрузке компонента
     useEffect(() => {
-        const savedActiveId = localStorage.getItem('activeId');
+        const savedActiveId = sessionStorage.getItem('activeId');
         if (savedActiveId !== null) {
             setActiveId(Number(savedActiveId));
         }
@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
 
     const handleClick = (id: number | null) => {
         setActiveId(id);
-        localStorage.setItem('activeId', id?.toString() || '');
+        sessionStorage.setItem('activeId', id?.toString() || '');
     };
 
     return (
