@@ -1,6 +1,9 @@
 .one-kvest {
     background-image: url("../../pages/img/titus-wrapper.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
     width: 100%;
+    min-height: 80px;
     height: 80px;
     gap: 16px;
     border-radius: 10px;
@@ -10,6 +13,7 @@
     align-items: center;
     padding: 10px;
     margin: 0;
+    border: 1px solid #7c7c7c;
 }
 
 .one-kvest .mainContent {

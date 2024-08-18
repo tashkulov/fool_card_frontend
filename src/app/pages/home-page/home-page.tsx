@@ -12,7 +12,6 @@ import {store} from '../play-game/ui/store';
 import HomePageHeader from './components/home-page-header';
 import MenuHandsAnim from "../../components/rive-conponents/menu-hands-anim/menu-hands-anim";
 
-
 export interface User {
     photo_url: string;
     first_name: string;

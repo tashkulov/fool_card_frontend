@@ -6,6 +6,7 @@ body {
 
 .main {
   width: 100vw;
+  overflow: hidden;
 }
 .main a {
   text-decoration: none;

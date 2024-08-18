@@ -6,6 +6,7 @@ import bottomCenter from "./img/Vector (6).svg"
 import Groupcoin from "./img/Groupcoin.svg"
 import coin from "./img/Coin.svg"
 import ava from "./img/Group 31 (1).svg"
+import plusCesh from "./img/Vector (7).svg"
 
 
 const HomePageHeader: React.FC = () => {
@@ -29,6 +30,7 @@ const HomePageHeader: React.FC = () => {
                 <div>
                     <img src={coin} alt=""/>
                     152.5K
+                    <img src={plusCesh} alt=""/>
                 </div>
             </div>
         </div>

@@ -7,8 +7,8 @@ export const $api = axios.create({
 
     
     headers: {
-        Authorization: localStorage.getItem('authorization')
-        // Authorization:'2a27b04eb37742fe401656f2401a780945fb7b74b65e02d7'
+        // Authorization: localStorage.getItem('authorization')
+        Authorization:'247a78d883d424869b1bb9c3897fea7186ed0786694927dd'
     }
 });
 
