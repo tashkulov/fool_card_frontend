@@ -9,36 +9,7 @@ import {hasLoggedIn, LoginUser, RegisterUser} from "./authorization.ts";
 const App: React.FC = () => {
     const location = useLocation();
 
-    useEffect(() => {
-        const initialize = async () => {
-            try {
-                // Попробуем сначала авторизоваться
-                await LoginUser();
-
-                // Если авторизация не удалась, попробуем регистрацию
-                if (!hasLoggedIn.current) {
-                    await RegisterUser();
-                }
-
-                // Получаем токен из localStorage
-                const token = localStorage.getItem("authorization");
-
-                if (token) {
-                    init_sockets(token); // Подключаемся к WebSocket серверу с токеном
-                } else {
-                    console.error("Токен не найден, WebSocket не подключен");
-                }
-            } catch (error) {
-                console.error('Ошибка при регистрации или авторизации:', error);
-            }
-        };
-
-        initialize();
-
-        return () => {
-            disconnectFromSocket(); // Отключаемся при размонтировании компонента
-        };
-    }, []);
+    RegisterUser()
 
     if (location.pathname.split("/")[1] === "inGame") {
         return (
