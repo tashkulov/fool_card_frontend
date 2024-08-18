@@ -13,6 +13,7 @@ export const RegisterUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
             const initData = window.Telegram.WebApp.initDate;
+            console.log("========================================",initData)
 
             if (initData) {
                 // Отправка данных на сервер
@@ -38,6 +39,7 @@ export const LoginUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
             const initData = window.Telegram.WebApp.initDate;
+            console.log("========================================",initData)
 
             if (initData) {
                 // Отправка данных на сервер
