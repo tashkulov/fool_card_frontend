@@ -11,7 +11,7 @@ export const hasLoggedIn = {
 // Функция регистрации пользователя
 export const RegisterUser = async () => {
     try {
-        if (window.Telegram && window.Telegram.WebApp) {
+        // if (window.Telegram && window.Telegram.WebApp) {
             const initData = window.Telegram.WebApp.initData;
             console.log("========================================", initData);
 
@@ -19,8 +19,8 @@ export const RegisterUser = async () => {
                 init_data: initData
             }
 
-            if (initData) {
-            const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', data, 
+            // if (initData) {
+            const response = await axios.post('https://138.68.100.172:8080/receiver/authorize', data, 
                 {
                     headers: {
                         "Content-Type": "application/json"
@@ -35,12 +35,12 @@ export const RegisterUser = async () => {
             // Сохраняем токен авторизации в localStorage
             localStorage.setItem("authorization", response.data.Authorization);
             console.log(localStorage.getItem("authorization"));
-            } else {
-                console.error('Не удалось получить данные пользователя');
-            }
-        } else {
-            console.error('Telegram Web App SDK не загружен');
-        }
+            // } else {
+            //     console.error('Не удалось получить данные пользователя');
+            // }
+        // } else {
+        //     console.error('Telegram Web App SDK не загружен');
+        // }
     } catch (error) {
         console.error('Ошибка при отправке запроса:', error);
     }
