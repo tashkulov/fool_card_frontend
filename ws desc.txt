@@ -1,0 +1,130 @@
+CS: Client -> Server
+SC: Server -> Client
+
+------------------
+
+Когда пользователь находится в меню и создается новая комната
+
+[SC] | room.new => {
+	max_players: number,
+	players: number,
+	deck_size: number,
+	id: string, // room_id
+}
+
+Тоже самое, но при удалении
+
+[SC] | room.del => {
+	id: string, // room_id
+}
+
+Вызывается при изменении namespace'a, пример: подключение к комнате, отключение от комнаты, вход в меню
+
+[SC] | switchNamespace => {
+	...RuntimeUser,
+	socket: 0
+}
+
+Когда пользователь находится в меню и в существующей комнате обновляется кол-во участников
+
+[SC] | room.update => {
+	id: string, // room_id
+	players: number
+}
+
+Подключиться к комнате
+
+[CS] | joinRoom => string // room_id
+
+Ответ на joinRoom
+
+[SC] | joinRoom => {
+	roomer: RoomUser,
+	state: GameState
+}
+
+Создать новую комнату
+
+[CS] | newRoom => {
+	players_amount : 2 | 3 | 4 | 5 | 6,
+	deck_size : 24 | 36 | 52,
+
+	// только 1 режим, так что можно не указывать
+	gamemode : number
+}
+
+[SC] | newRoom => RoomUser | false
+
+Выйти из комнаты
+
+[CS] | leaveRoom => void
+
+Происходит проверка готовности, для каждого игрока устанавливается тайм-аут на ответ 20 секунд
+
+[SC] | readyCheck => void
+
+Если пользователь находится в комнате и к комнате присоединяется человек
+
+[SC] | room.join => RoomUser
+
+Если пользователь находится в комнате и от комнаты отключается человек
+
+[SC] | room.leave => RoomUser
+
+------------------------------
+| ALL REQUIRED STRUCTS BELOW |
+------------------------------
+
+export interface GameState {
+    players: RoomUser[],
+
+    attacker: number;
+
+    defender: number;
+    
+    // used to determine if deck should be shown
+    cards_left: number;
+
+    last_card: Card;
+
+    table: TablePair[];
+}
+
+export class RuntimeUser {
+    constructor(public id : string) {
+        this.state = RuntimeUserState.NONE;
+    }
+
+    namespace: string;
+    state: RuntimeUserState;
+    socket: Socket;
+}
+
+export enum RuntimeUserState {
+    NONE = 'n',
+    INITING = 'i',
+    MENU = 'm',
+    INGAME_DISCONNECTED = 'ig_d',
+    INGAME_CONNECTED = 'ig_c'
+}
+
+export enum RoomState {
+    ACTIVE = 'a',
+    STARTING = 's',
+    PENDING = 'p',
+    NOT_EXISTING = 'n_e'
+}
+
+export class RoomUser {
+    constructor(public seat : number, public room_id : string) {}
+
+    isReady: boolean = false;
+
+    // seat: number;
+
+    // current amount of cards in hand
+    cards_amount: number;
+
+    // is connected to game
+    connected: boolean = true;
+}

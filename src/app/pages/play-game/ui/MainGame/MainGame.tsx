@@ -343,7 +343,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                     duration={10}
 
                     size={96}
-                    colors={['#18ee7b', '#80776DFF']}
+                    colors={['#61FFAA', '#61FFAA']}
                     colorsTime={[30, 0]}
                     onComplete={onComplete}
                 >
@@ -401,13 +401,12 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
                     key={key}
                     isPlaying={store.getState().isReady && currentTurn === 'creator'}
                     duration={10}
-
                     size={96}
-                    colors={['#18ee7b', '#80776DFF']}
+                    colors={['#61FFAA', '#61FFAA']}
                     colorsTime={[30, 0]}
                     onComplete={onComplete}
                 >
-                    {() => <img src={ava} className={cls.opponentAva} alt="avatars players" />}
+                    {() => <img src={ava} className={cls.myAva} alt="avatars players" />}
                 </CountdownCircleTimer>
                 <div className={cls.wrapperTextGetReady}>
                 </div>
