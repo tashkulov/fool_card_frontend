@@ -3,27 +3,43 @@ import { AppRouter } from "./Router";
 import cls from "./main.module.scss";
 import Footer from './components/Footer/Footer';
 import { useLocation } from "react-router-dom";
-import { init_sockets, disconnectFromSocket } from '../socket.ts'; // Импортируем функции подключения к WebSocket
+import {init_sockets , disconnectFromSocket } from '../socket.ts'; // Импортируем функции подключения к WebSocket
+import {hasLoggedIn, LoginUser, RegisterUser} from "./authorization.ts";
 
 const App: React.FC = () => {
     const location = useLocation();
 
     useEffect(() => {
-        const token = localStorage.getItem("authorization");
+        const initialize = async () => {
+            try {
+                // Попробуем сначала авторизоваться
+                await LoginUser();
 
-        if (token) {
-            init_sockets(token);
-        } else {
-            console.error("Токен не найден, WebSocket не подключен");
-        }
+                // Если авторизация не удалась, попробуем регистрацию
+                if (!hasLoggedIn.current) {
+                    await RegisterUser();
+                }
 
-        // Отключение от WebSocket при размонтировании компонента
+                // Получаем токен из localStorage
+                const token = localStorage.getItem("authorization");
+
+                if (token) {
+                    init_sockets(token); // Подключаемся к WebSocket серверу с токеном
+                } else {
+                    console.error("Токен не найден, WebSocket не подключен");
+                }
+            } catch (error) {
+                console.error('Ошибка при регистрации или авторизации:', error);
+            }
+        };
+
+        initialize();
+
         return () => {
-            disconnectFromSocket();
+            disconnectFromSocket(); // Отключаемся при размонтировании компонента
         };
     }, []);
 
-    // Если текущий маршрут содержит "/inGame", рендерим только роутер
     if (location.pathname.split("/")[1] === "inGame") {
         return (
             <div className={cls.main}>
@@ -32,7 +48,6 @@ const App: React.FC = () => {
         );
     }
 
-    // В остальных случаях рендерим роутер и футер
     return (
         <div className={cls.main}>
             <AppRouter />

@@ -2,18 +2,18 @@ import axios from "axios";
 
 export const hasRegistered = {
     current: false
-}
+};
 
 export const hasLoggedIn = {
     current: false
-}
+};
 
 // Функция регистрации пользователя
 export const RegisterUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
             const initData = window.Telegram.WebApp.initDate;
-            console.log("========================================", initData)
+            console.log("========================================", initData);
 
             if (initData) {
                 const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', initData);
@@ -35,11 +35,12 @@ export const RegisterUser = async () => {
     }
 };
 
+// Функция авторизации пользователя
 export const LoginUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
             const initData = window.Telegram.WebApp.initDate;
-            console.log("========================================", initData)
+            console.log("========================================", initData);
 
             if (initData) {
                 const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', initData);
