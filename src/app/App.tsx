@@ -1,38 +1,36 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { AppRouter } from "./Router";
 import cls from "./main.module.scss";
-import "../../src/app/I18NEXT/i18n/i18n"
 import Footer from './components/Footer/Footer';
-import {useLocation} from "react-router-dom";
-import {hasLoggedIn, hasRegistered, LoginUser, RegisterUser} from "./authorization.ts";
+import { useLocation } from "react-router-dom";
+import { connectToSocket, disconnectFromSocket } from '../socket.ts'; // Импортируем функции подключения к WebSocket
 
 const App: React.FC = () => {
-    const location = useLocation()
+    const location = useLocation();
 
     useEffect(() => {
-        if (!hasRegistered.current) {
-            RegisterUser();
-        }
-        if (!hasLoggedIn.current) {
-            LoginUser();
-        }
+        // Подключаемся к серверу при монтировании компонента
+        connectToSocket();
 
+        // Отключаемся от сервера при размонтировании компонента
+        return () => {
+            disconnectFromSocket();
+        };
     }, []);
 
     if (location.pathname.split("/")[1] === "inGame") {
         return (
             <div className={cls.main}>
-                <AppRouter/>
+                <AppRouter />
             </div>
-        )
+        );
     }
-    return (
 
+    return (
         <div className={cls.main}>
-            <AppRouter/>
+            <AppRouter />
             <Footer />
         </div>
-
     );
 };
 
