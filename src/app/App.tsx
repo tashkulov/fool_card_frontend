@@ -4,46 +4,20 @@ import cls from "./main.module.scss";
 import "../../src/app/I18NEXT/i18n/i18n"
 import Footer from './components/Footer/Footer';
 import {useLocation} from "react-router-dom";
-import axios from "axios";
+import {hasLoggedIn, hasRegistered, LoginUser, RegisterUser} from "./authorization.ts";
 
 const App: React.FC = () => {
     const location = useLocation()
 
     useEffect(() => {
-        const RegisterUser = async () => {
-            try {
-                if (window.Telegram && window.Telegram.WebApp) {
-                    const initData = window.Telegram.WebApp.initData;
-                    console.log(initData);
+        if (!hasRegistered.current) {
+            RegisterUser();
+        }
+        if (!hasLoggedIn.current) {
+            LoginUser();
+        }
 
-                    if (initData) {
-                        const userData = {
-                            init_data: initData,
-                        };
-
-                        // Отправка данных на сервер
-                        const response = await axios.post('/receiver/authorize', userData);
-                        console.log('Ответ:', response.data);
-                        console.log("-------------------------------------------")
-
-                        hasRegistered.current = true;
-
-                        localStorage.setItem("token", response.data.token);
-                        console.log(localStorage.getItem("authorization"));
-                    } else {
-                        console.error('Не удалось получить данные пользователя');
-                    }
-                } else {
-                    console.error('Telegram Web App SDK не загружен');
-                }
-            } catch (error) {
-                console.error('Ошибка при отправке запроса:', error);
-            }
-        };
-
-        RegisterUser()
     }, []);
-
 
     if (location.pathname.split("/")[1] === "inGame") {
         return (
