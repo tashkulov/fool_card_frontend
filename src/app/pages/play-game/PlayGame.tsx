@@ -18,6 +18,7 @@ const PlayGame = () => {
     const {gameId, who} = useParams<{ gameId: string, who: string, }>();
     const [stateButtonReadiness, setStateButtonReadiness] = useState<boolean>(false)
 
+
     useEffect(() => {
         if (gameId) {
             dispatch(getCurrentTableThunk(Number(gameId)));
@@ -52,7 +53,6 @@ const PlayGame = () => {
     useEffect(() => {
 
         return () => {
-
             dispatch(statePlayGameSliceAction.setReset())
         }
     }, [])

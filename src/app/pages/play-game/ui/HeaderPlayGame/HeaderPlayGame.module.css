@@ -13,16 +13,31 @@
   gap: 10px;
 }
 .main .left a {
+  position: relative;
   width: 32px;
   height: 32px;
-  border-radius: 8px;
-  background-color: #4f1515;
+  border-radius: 10px;
+  background: linear-gradient(360deg, rgb(141, 138, 138), rgb(158, 153, 152), rgb(204, 194, 191), rgb(226, 215, 210));
+  padding: 17.5px;
   border: 1px solid gray;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  z-index: 1;
+}
+.main .left a::before {
+  content: "";
+  position: absolute;
+  background-color: #4f1515;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
 }
 .main .left .value {
   display: flex;
