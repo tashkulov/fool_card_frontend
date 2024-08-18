@@ -12,7 +12,7 @@ const App: React.FC = () => {
         const token = localStorage.getItem("authorization");
 
         if (token) {
-            init_sockets();
+            init_sockets(token);
         } else {
             console.error("Токен не найден, WebSocket не подключен");
         }

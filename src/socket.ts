@@ -2,9 +2,8 @@ import { io, Socket } from "socket.io-client";
 
 let socket: Socket | null = null;
 
-export const init_sockets = () => {
+export const init_sockets = (token:string) => {
     if (!socket) {
-        const token = localStorage.getItem("authorization");
 
         if (!token) {
             console.error("Токен не найден в localStorage");
