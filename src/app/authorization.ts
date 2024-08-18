@@ -16,7 +16,7 @@ export const RegisterUser = async () => {
 
             if (initData) {
                 // Отправка данных на сервер
-                const response = await axios.post('http//138.68.100.172:8080', initData);
+                const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', initData);
                 console.log('Ответ:---------------', response);
 
                 hasRegistered.current = true
@@ -41,7 +41,7 @@ export const LoginUser = async () => {
 
             if (initData) {
                 // Отправка данных на сервер
-                const response = await axios.post('ws://138.68.100.172:8080', initData);
+                const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', initData);
                 console.log('Ответ:---------------', response);
 
                 hasLoggedIn.current = true
