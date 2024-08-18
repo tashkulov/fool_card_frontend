@@ -7,12 +7,14 @@
   margin-bottom: 0;
   padding: 0;
   width: 100vw;
+  background: linear-gradient(270deg,rgba(42, 42, 42, 1) 5%,
+          rgba(35, 35, 35, 1) 15%, rgba(15, 15, 15, 1) 30%, rgba(12, 12, 12, 1) 50%);
 }
 
 .kvestyList {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   width: 100%;
   align-items: center;
   overflow-x: auto;
