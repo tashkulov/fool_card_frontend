@@ -16,7 +16,7 @@ export const RegisterUser = async () => {
             console.log("========================================",initData)
 
             if (initData) {
-                const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', initData);
+                const response = await axios.post('wss://138.68.100.172:8080/receiver/authorize', initData);
                 console.log('Ответ:---------------', response);
 
                 hasRegistered.current = true
