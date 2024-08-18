@@ -8,9 +8,8 @@ export const connectToSocket = (token: string) => {
         socket = io("http://138.68.100.172:3000", {
             transports: ['websocket'],
             auth: {
-                token: token // Передача токена для авторизации
+                dc2_auth_key:token
             },
-            path: '/wsh', // Укажите правильный путь, если сервер использует кастомный путь
         });
 
         socket.on("connect", () => {
