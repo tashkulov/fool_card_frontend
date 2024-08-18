@@ -4,6 +4,7 @@ import cls from "./main.module.scss";
 import "../../src/app/I18NEXT/i18n/i18n"
 import Footer from './components/Footer/Footer';
 import {useLocation} from "react-router-dom";
+import axios from "axios";
 
 const App: React.FC = () => {
     const location = useLocation()
@@ -23,6 +24,7 @@ const App: React.FC = () => {
                         // Отправка данных на сервер
                         const response = await axios.post('/receiver/authorize', userData);
                         console.log('Ответ:', response.data);
+                        console.log("-------------------------------------------")
 
                         hasRegistered.current = true;
 
