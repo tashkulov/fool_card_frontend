@@ -2,11 +2,15 @@ import { io, Socket } from "socket.io-client";
 
 let socket: Socket | null = null;
 
-// Подключение к WebSocket серверу
-export const connectToSocket = () => {
+export const connectToSocket = (token: string) => {
     if (!socket) {
+        // Подключаемся к WebSocket с аутентификацией и кастомным путем
         socket = io("http://138.68.100.172:3000", {
-            transports: ['websocket'], // Гарантируем использование WebSocket транспорта
+            transports: ['websocket'],
+            auth: {
+                token: token // Передача токена для авторизации
+            },
+            path: '/wsh', // Укажите правильный путь, если сервер использует кастомный путь
         });
 
         socket.on("connect", () => {
@@ -21,7 +25,6 @@ export const connectToSocket = () => {
             console.error("Connection error:", err);
         });
 
-        // Пример обработки серверных событий
         socket.on("room.new", (data) => {
             console.log("New room created:", data);
         });
@@ -33,12 +36,9 @@ export const connectToSocket = () => {
         socket.on("switchNamespace", (data) => {
             console.log("Namespace switched:", data);
         });
-
-        // Добавляйте остальные обработчики событий по аналогии
     }
 };
 
-// Отправка сообщения на сервер
 export const sendMessage = (event: string, data: any) => {
     if (socket && socket.connected) {
         socket.emit(event, data);
@@ -47,7 +47,6 @@ export const sendMessage = (event: string, data: any) => {
     }
 };
 
-// Отключение от Socket.IO сервера
 export const disconnectFromSocket = () => {
     if (socket) {
         socket.disconnect();

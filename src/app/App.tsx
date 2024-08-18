@@ -9,12 +9,16 @@ const App: React.FC = () => {
     const location = useLocation();
 
     useEffect(() => {
-        // Подключаемся к серверу при монтировании компонента
-        connectToSocket();
+        const token = localStorage.getItem("authorization");
 
-        // Отключаемся от сервера при размонтировании компонента
+        if (token) {
+            connectToSocket(token);
+        } else {
+            console.error("Токен не найден, WebSocket не подключен",);
+        }
+
         return () => {
-            disconnectFromSocket();
+            disconnectFromSocket(); // Отключаемся при размонтировании компонента
         };
     }, []);
 

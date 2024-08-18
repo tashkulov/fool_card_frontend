@@ -41,7 +41,6 @@ export const LoginUser = async () => {
             console.log("========================================",initData)
 
             if (initData) {
-                // Отправка данных на сервер
                 const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', initData);
                 console.log('Ответ:---------------', response);
 
