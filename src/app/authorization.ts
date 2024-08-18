@@ -1,4 +1,3 @@
-import {store} from "./pages/play-game/ui/store.ts";
 import axios from "axios";
 
 export const hasRegistered = {
@@ -9,51 +8,15 @@ export const hasLoggedIn = {
     current: false
 }
 
-if (window.Telegram && window.Telegram.WebApp) {
-    const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-
-
-    if (initDataUnsafe && initDataUnsafe.user) {
-        const user = initDataUnsafe.user;
-        store.getState().user = user;
-        console.log(store.getState().user);
-
-        const avatarUrl = `https://t.me/i/userpic/320/${user.id}.jpg`;
-
-        // Проверяем наличие аватара
-        fetch(avatarUrl)
-            .then(response => {
-                if (response.ok) {
-                    console.log('User Avatar URL:', avatarUrl);
-                } else {
-                    console.log('Avatar not found, using placeholder.');
-                    // Используем запасное изображение
-                    const placeholderUrl = 'URL_TO_YOUR_PLACEHOLDER_IMAGE';
-                    console.log('User Avatar URL:', placeholderUrl);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching avatar:', error);
-            });
-    }
-}
 
 export const RegisterUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
-            const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-            console.log(initDataUnsafe.user.username);
+            const initData = window.Telegram.WebApp.initDate;
 
-            if (initDataUnsafe && initDataUnsafe.user) {
-                const userData = {
-                    "telegram_id": initDataUnsafe.user.id.toString() || "unknown",
-                    "username": initDataUnsafe.user.username || "unknown",
-                    "language": "ru_RU",
-                    "invited_by": null
-                };
-
+            if (initData) {
                 // Отправка данных на сервер
-                const response = await axios.post('ws://138.68.100.172:8080', userData);
+                const response = await axios.post('http//138.68.100.172:8080', initData);
                 console.log('Ответ:---------------', response);
 
                 hasRegistered.current = true
@@ -74,15 +37,11 @@ export const RegisterUser = async () => {
 export const LoginUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
-            const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
+            const initData = window.Telegram.WebApp.initDate;
 
-            if (initDataUnsafe && initDataUnsafe.user) {
-                const userData = {
-                    "telegram_id": initDataUnsafe.user.id.toString()
-                };
-
+            if (initData) {
                 // Отправка данных на сервер
-                const response = await axios.post('ws://138.68.100.172:8080', userData);
+                const response = await axios.post('ws://138.68.100.172:8080', initData);
                 console.log('Ответ:---------------', response);
 
                 hasLoggedIn.current = true
@@ -99,4 +58,3 @@ export const LoginUser = async () => {
         console.error('Ошибка при отправке запроса:', error);
     }
 };
-

@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import cls from './home-page.module.scss'; // Переименуйте файл css
 import Footer from "../../components/Footer/Footer";
@@ -7,8 +7,6 @@ import Settings from "../Settings/ui/Settings";
 import useOutsideClick from "../../hooks/useOutsideClick/useOutsideClick";
 import {useTranslation} from "react-i18next";
 import MyRiveAnimation from "../../components/rive-conponents/header-animations/ruby/ruby-component"
-import axios from 'axios';
-import {store} from '../play-game/ui/store';
 import HomePageHeader from './components/home-page-header';
 import MenuHandsAnim from "../../components/rive-conponents/menu-hands-anim/menu-hands-anim";
 
@@ -22,113 +20,6 @@ const HomePage: React.FC = () => {
     const [stateModeModalWindow, setSateModeModalWindow] = useState<boolean>(false)
     const refModalWindow = useRef(null)
     const {t} = useTranslation()
-
-    const hasRegistered = useRef(false);
-    const hasLoggedIn = useRef(false);
-
-
-    if (window.Telegram && window.Telegram.WebApp) {
-        const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-
-
-        if (initDataUnsafe && initDataUnsafe.user) {
-            const user = initDataUnsafe.user;
-            store.getState().user = user;
-            console.log(store.getState().user);
-
-            const avatarUrl = `https://t.me/i/userpic/320/${user.id}.jpg`;
-
-            // Проверяем наличие аватара
-            fetch(avatarUrl)
-                .then(response => {
-                    if (response.ok) {
-                        console.log('User Avatar URL:', avatarUrl);
-                    } else {
-                        console.log('Avatar not found, using placeholder.');
-                        // Используем запасное изображение
-                        const placeholderUrl = 'URL_TO_YOUR_PLACEHOLDER_IMAGE';
-                        console.log('User Avatar URL:', placeholderUrl);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching avatar:', error);
-                });
-        }
-    }
-
-    useEffect(() => {
-        const RegisterUser = async () => {
-            try {
-                if (window.Telegram && window.Telegram.WebApp) {
-                    const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-                    console.log(initDataUnsafe.user.username);
-
-                    if (initDataUnsafe && initDataUnsafe.user) {
-                        const userData = {
-                            "telegram_id": initDataUnsafe.user.id.toString() || "unknown",
-                            "username": initDataUnsafe.user.username || "unknown",
-                            "language": "ru_RU",
-                            "invited_by": null
-                        };
-
-                        // Отправка данных на сервер
-                        const response = await axios.post('https://foolcard2.shop/v1/auth/register', userData);
-                        console.log('Ответ:', response.data, response.data.Authorization, userData);
-
-                        hasRegistered.current = true
-
-                        localStorage.setItem("authorization", response.data.Authorization)
-                        console.log(localStorage.getItem("authorization"));
-                    } else {
-                        console.error('Не удалось получить данные пользователя');
-                    }
-                } else {
-                    console.error('Telegram Web App SDK не загружен');
-                }
-            } catch (error) {
-                console.error('Ошибка при отправке запроса:', error);
-            }
-        };
-
-        if (!hasRegistered.current) {
-            RegisterUser();
-        }
-
-        const LoginUser = async () => {
-            try {
-                if (window.Telegram && window.Telegram.WebApp) {
-                    const initDataUnsafe = window.Telegram.WebApp.initDataUnsafe;
-
-                    if (initDataUnsafe && initDataUnsafe.user) {
-                        const userData = {
-                            "telegram_id": initDataUnsafe.user.id.toString()
-                        };
-
-                        // Отправка данных на сервер
-                        const response = await axios.post(`https://foolcard2.shop/v1/auth/sign_in?telegram_id=${initDataUnsafe.user.id.toString()}`, userData);
-                        console.log('Ответ:', response.data, response.data.Authorization, userData);
-
-
-                        hasLoggedIn.current = true
-
-                        localStorage.setItem("authorization", response.data.Authorization)
-                        console.log(localStorage.getItem("authorization"));
-                    } else {
-                        console.error('Не удалось получить данные пользователя');
-                    }
-                } else {
-                    console.error('Telegram Web App SDK не загружен');
-                }
-            } catch (error) {
-                console.error('Ошибка при отправке запроса:', error);
-            }
-        };
-
-        if (!hasLoggedIn.current) {
-            LoginUser();
-        }
-
-    }, []);
 
 
     useOutsideClick(refModalWindow, () => setSateModeModalWindow(false))

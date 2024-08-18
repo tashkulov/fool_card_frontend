@@ -6,7 +6,7 @@ interface TelegramUser {
     language_code?: string;
 }
 
-interface TelegramWebAppInitDataUnsafe {
+export interface TelegramWebAppInitDataUnsafe {
     query_id: string;
     user?: TelegramUser;
     receiver?: any;
@@ -60,7 +60,7 @@ interface TelegramWebApp {
     sendData(data: string): void;
 }
 
-interface Window {
+export interface Window {
     Telegram: {
         WebApp: TelegramWebApp;
     };
