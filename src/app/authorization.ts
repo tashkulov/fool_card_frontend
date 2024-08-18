@@ -39,7 +39,7 @@ export const RegisterUser = async () => {
 export const LoginUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
-            const initData = window.Telegram.WebApp.initDate;
+            const initData = window.Telegram.WebApp.initDataUnsafe;
             console.log("========================================", initData);
 
             if (initData) {
