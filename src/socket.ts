@@ -5,7 +5,7 @@ let socket: Socket | null = null;
 // Подключение к WebSocket серверу
 export const connectToSocket = () => {
     if (!socket) {
-        socket = io("http://138.68.100.172:3000", {
+        socket = io("wss://138.68.100.172:3000", {
             transports: ['websocket'], // Гарантируем использование WebSocket транспорта
         });
 
