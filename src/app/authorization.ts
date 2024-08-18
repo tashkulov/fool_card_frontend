@@ -12,7 +12,7 @@ export const hasLoggedIn = {
 export const RegisterUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
-            const initData = window.Telegram.WebApp.initDate;
+            const initData = window.Telegram.WebApp.initData;
             console.log("========================================", initData);
 
             if (initData) {
