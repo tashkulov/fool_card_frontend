@@ -3,7 +3,7 @@ import { AppRouter } from "./Router";
 import cls from "./main.module.scss";
 import Footer from './components/Footer/Footer';
 import { useLocation } from "react-router-dom";
-import { connectToSocket, disconnectFromSocket } from '../socket.ts'; // Импортируем функции подключения к WebSocket
+import { init_sockets, disconnectFromSocket } from '../socket.ts'; // Импортируем функции подключения к WebSocket
 
 const App: React.FC = () => {
     const location = useLocation();
@@ -12,16 +12,18 @@ const App: React.FC = () => {
         const token = localStorage.getItem("authorization");
 
         if (token) {
-            connectToSocket(token);
+            init_sockets();
         } else {
-            console.error("Токен не найден, WebSocket не подключен",);
+            console.error("Токен не найден, WebSocket не подключен");
         }
 
+        // Отключение от WebSocket при размонтировании компонента
         return () => {
-            disconnectFromSocket(); // Отключаемся при размонтировании компонента
+            disconnectFromSocket();
         };
     }, []);
 
+    // Если текущий маршрут содержит "/inGame", рендерим только роутер
     if (location.pathname.split("/")[1] === "inGame") {
         return (
             <div className={cls.main}>
@@ -30,6 +32,7 @@ const App: React.FC = () => {
         );
     }
 
+    // В остальных случаях рендерим роутер и футер
     return (
         <div className={cls.main}>
             <AppRouter />

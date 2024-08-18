@@ -2,13 +2,20 @@ import { io, Socket } from "socket.io-client";
 
 let socket: Socket | null = null;
 
-export const connectToSocket = (token: string) => {
+export const init_sockets = () => {
     if (!socket) {
-        // Подключаемся к WebSocket с аутентификацией и кастомным путем
+        const token = localStorage.getItem("authorization");
+
+        if (!token) {
+            console.error("Токен не найден в localStorage");
+            return;
+        }
+
+        // Подключаемся к WebSocket с токеном для аутентификации
         socket = io("http://138.68.100.172:3000", {
             transports: ['websocket'],
             auth: {
-                dc2_auth_key:token
+                token: token // Передаем токен
             },
         });
 

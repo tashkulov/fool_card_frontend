@@ -8,20 +8,21 @@ export const hasLoggedIn = {
     current: false
 }
 
-
+// Функция регистрации пользователя
 export const RegisterUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
             const initData = window.Telegram.WebApp.initDate;
-            console.log("========================================",initData)
+            console.log("========================================", initData)
 
             if (initData) {
-                const response = await axios.post('wss://138.68.100.172:8080/receiver/authorize', initData);
+                const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', initData);
                 console.log('Ответ:---------------', response);
 
-                hasRegistered.current = true
+                hasRegistered.current = true;
 
-                localStorage.setItem("authorization", response.data.Authorization)
+                // Сохраняем токен авторизации в localStorage
+                localStorage.setItem("authorization", response.data.Authorization);
                 console.log(localStorage.getItem("authorization"));
             } else {
                 console.error('Не удалось получить данные пользователя');
@@ -38,15 +39,16 @@ export const LoginUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
             const initData = window.Telegram.WebApp.initDate;
-            console.log("========================================",initData)
+            console.log("========================================", initData)
 
             if (initData) {
                 const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', initData);
                 console.log('Ответ:---------------', response);
 
-                hasLoggedIn.current = true
+                hasLoggedIn.current = true;
 
-                localStorage.setItem("authorization", response.data.Authorization)
+                // Сохраняем токен авторизации в localStorage
+                localStorage.setItem("authorization", response.data.Authorization);
                 console.log(localStorage.getItem("authorization"));
             } else {
                 console.error('Не удалось получить данные пользователя');
