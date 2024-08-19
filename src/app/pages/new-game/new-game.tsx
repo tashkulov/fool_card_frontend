@@ -12,7 +12,7 @@ import HeaderRiveAnimation from '../../components/rive-conponents/header-animati
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-animations/mode-anim';
 import {$api} from "../../../api.ts";
-import { sendMessage } from '../../../socket.ts';
+import { sendMessage } from "../../socket.ts"
 
 const CreateGameForm: React.FC = () => {
 
