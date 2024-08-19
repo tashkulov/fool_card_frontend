@@ -1,9 +1,9 @@
 import { io } from "socket.io-client";
 
-export function init_sockets(jtoken : string) {
-    const socket = io('https://thundercoin.su',
+export function init_socket(jtoken : string) {
+    const socket = io('https://foolcard2.shop:3000',
         {
-            path: 'ws://138.68.100.172:8080',
+            path: '/coordinator/wsg',
             auth: {
                 token: jtoken
             }

@@ -10,6 +10,7 @@ declare module '*.scss' {
 interface Window {
     Telegram: {
         WebApp: {
+            initData: any;
             initDataUnsafe: { query_id: string;
                 user?: {
                     id: number;

@@ -1,41 +1,35 @@
-import React, { useEffect } from 'react';
+// import React, { useEffect } from 'react';
 import { AppRouter } from "./Router";
 import cls from "./main.module.scss";
 import Footer from './components/Footer/Footer';
 import { useLocation } from "react-router-dom";
-import {init_sockets , disconnectFromSocket } from './socket.ts'; // Импортируем функции подключения к WebSocket
-import {hasLoggedIn, LoginUser, RegisterUser} from "./authorization.ts";
+// import {init_sockets , disconnectFromSocket } from '../socket.ts'; // Импортируем функции подключения к WebSocket
+import {RegisterUser} from "./authorization.ts";
+import { useEffect } from "react";
+import { disconnectFromSocket, init_sockets } from "../socket.ts";
 
 const App: React.FC = () => {
     const location = useLocation();
+    const auth_token = localStorage.getItem('authorization');
 
     useEffect(() => {
-        const initialize = async () => {
-            try {
-                await LoginUser();
+        RegisterUser()
 
-                if (!hasLoggedIn.current) {
-                    await RegisterUser();
-                }
+        if (!auth_token) {
+            console.error("Токен не найден в localStorage");
+            return;
+        } 
 
-                const token = localStorage.getItem("authorization");
+        // Подключение к серверу при монтировании компонента
+        init_sockets(auth_token);
 
-                if (token) {
-                    init_sockets(token);
-                } else {
-                    console.error("Токен не найден, WebSocket не подключен");
-                }
-            } catch (error) {
-                console.error('Ошибка при регистрации или авторизации:', error);
-            }
-        };
-
-        initialize();
-
+        // Отключение от сервера при размонтировании компонента
         return () => {
-            disconnectFromSocket(); // Отключаемся при размонтировании компонента
+            disconnectFromSocket();
         };
     }, []);
+
+    
 
     if (location.pathname.split("/")[1] === "inGame") {
         return (

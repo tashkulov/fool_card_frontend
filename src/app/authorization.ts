@@ -12,18 +12,29 @@ export const hasLoggedIn = {
 export const RegisterUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
-            const initData = window.Telegram.WebApp.initDate;
+            const initData = window.Telegram.WebApp.initData;
             console.log("========================================", initData);
 
+            const data = {
+                init_data: initData
+            }
+
             if (initData) {
-                const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', initData);
-                console.log('Ответ:---------------', response);
+            const response = await axios.post('https://foolcard2.shop:8080/receiver/authorize', data, 
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                },
+                
+            );
+            console.log('Ответ:---------------', response.data);
 
-                hasRegistered.current = true;
+            hasRegistered.current = true;
 
-                // Сохраняем токен авторизации в localStorage
-                localStorage.setItem("authorization", response.data.Authorization);
-                console.log(localStorage.getItem("authorization"));
+            // Сохраняем токен авторизации в localStorage
+            localStorage.setItem("authorization", response.data);
+            console.log(localStorage.getItem("authorization"));
             } else {
                 console.error('Не удалось получить данные пользователя');
             }
@@ -39,7 +50,7 @@ export const RegisterUser = async () => {
 export const LoginUser = async () => {
     try {
         if (window.Telegram && window.Telegram.WebApp) {
-            const initData = window.Telegram.WebApp.initDate;
+            const initData = window.Telegram.WebApp.initData;
             console.log("========================================", initData);
 
             if (initData) {

@@ -37,7 +37,6 @@ const HomePage: React.FC = () => {
                         </div>
                         <div className={cls.mainPageMenuButton}>
                             <Link to={'/leaderboard'}>
-
                             {t("Лидерборд")}
                             </Link>
                         </div>
