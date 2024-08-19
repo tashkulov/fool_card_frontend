@@ -1,32 +1,48 @@
-import { io, Socket } from "socket.io-client";
+import { Socket } from "socket.io-client";
+import { init_socket } from "./init_sockets";
 
-export let socket: Socket | null = null;
+let socket: Socket | null = null;
+
+const auth_token = localStorage.getItem('authorization');
 
 export const init_sockets = (token: string) => {
     if (!socket) {
+
         if (!token) {
             console.error("Токен не найден в localStorage");
             return;
         }
 
-        socket = io("http://138.68.100.172:3000", {
-            transports: ['websocket'],
-            auth: {
-                token: token
-            },
-        });
+        if (auth_token) {
+            socket = init_socket(auth_token)
 
-        socket.on("connect", () => {
-            console.log("Connected to Socket.IO server");
-        });
+            socket.on("connect", () => {
+                console.log("Connected to Socket.IO server");
+            });
 
-        socket.on("disconnect", () => {
-            console.log("Disconnected from Socket.IO server");
-        });
+            socket.on("disconnect", () => {
+                console.log("Disconnected from Socket.IO server");
+            });
 
-        socket.on("connect_error", (err) => {
-            console.error("Connection error:", err);
-        });
+            socket.on("connect_error", (err) => {
+                console.error("Connection error:", err);
+            });
+
+            socket.on("room.new", (data) => {
+                console.log("New room created:", data);
+            });
+
+            socket.on("room.del", (data) => {
+                console.log("Room deleted:", data);
+            });
+
+            socket.on("switchNamespace", (data) => {
+                console.log("Namespace switched:", data);
+            });
+        }
+        // Подключаемся к WebSocket с токеном для аутентификации
+
+
 
     }
 };
