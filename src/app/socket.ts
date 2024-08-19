@@ -41,9 +41,6 @@ export const init_sockets = (token: string) => {
             });
         }
         // Подключаемся к WebSocket с токеном для аутентификации
-
-
-
     }
 };
 

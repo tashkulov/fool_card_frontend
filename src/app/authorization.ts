@@ -10,6 +10,9 @@ export const hasLoggedIn = {
 
 // Функция регистрации пользователя
 export const RegisterUser = async () => {
+    const initData = window.Telegram.WebApp.initData;
+    console.log("========================================", initData);
+
     try {
         if (window.Telegram && window.Telegram.WebApp) {
             const initData = window.Telegram.WebApp.initData;
