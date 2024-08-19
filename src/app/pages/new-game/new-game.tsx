@@ -10,13 +10,16 @@ import { useTranslation } from "react-i18next";
 import HeaderRiveAnimation from '../../components/rive-conponents/header-animations/ruby-header/ruby-component';
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-animations/mode-anim';
-import { sendMessage } from '../../../socket.ts';
+
 import { init_socket } from '../../init_sockets.ts';
 
 
 
 
 const auth_token = localStorage.getItem('authorization');
+
+import { sendMessage } from "../../socket.ts"
+
 
 
 
