@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 // import {init_sockets , disconnectFromSocket } from '../socket.ts'; // Импортируем функции подключения к WebSocket
 import {RegisterUser} from "./authorization.ts";
 import { useEffect } from "react";
-import { init_sockets } from "../socket.ts";
+import { disconnectFromSocket, init_sockets } from "../socket.ts";
 
 const App: React.FC = () => {
     const location = useLocation();
@@ -24,9 +24,9 @@ const App: React.FC = () => {
         init_sockets(auth_token);
 
         // Отключение от сервера при размонтировании компонента
-        // return () => {
-        //     disconnectFromSocket();
-        // };
+        return () => {
+            disconnectFromSocket();
+        };
     }, []);
 
     
