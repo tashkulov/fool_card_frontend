@@ -33,7 +33,7 @@ export const RegisterUser = async () => {
             hasRegistered.current = true;
 
             // Сохраняем токен авторизации в localStorage
-            localStorage.setItem("authorization", '2375d6c3284f6bfc5ea4c6f664146403fedf8e60c63330c5');
+            localStorage.setItem("authorization", response.data);
             console.log(localStorage.getItem("authorization"));
             } else {
                 console.error('Не удалось получить данные пользователя');
