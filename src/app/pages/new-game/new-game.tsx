@@ -14,7 +14,7 @@ import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-an
 import { init_socket } from '../../init_sockets.ts';
 
 import { useSocketHandlers } from '../../useSocketHandlers.ts';
-const { createRoom, joinRoom } = useSocketHandlers();
+
 
 
 
@@ -36,7 +36,7 @@ const CreateGameForm: React.FC = () => {
     const [active, setActive] = useState<string>('');
     const [errorString, setErrorString] = useState<string>('');
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
+    const { createRoom, joinRoom } = useSocketHandlers();
 
     const handleBetChange = (increment: boolean, valueChange: number) => {
         setBetAmount((prevAmount) => prevAmount + (increment ? valueChange : -valueChange));
