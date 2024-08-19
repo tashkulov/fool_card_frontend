@@ -100,36 +100,34 @@ const CreateGameForm: React.FC = () => {
         setIsSubmitted(true);
         event.preventDefault();
 
-        const requestData = {
-            "deck_size": 36,
-            "players_amount": parseInt(selectedPlayerCount),
-            "game_mode": 1,
-        };
+        // const requestData = {
+        //     "deck_size": 36,
+        //     "players_amount": parseInt(selectedPlayerCount),
+        //     "game_mode": 1,
+        // };
         try {
-            if (selectedPlayerCount != '' && selectedGameMode != '' && tossMode != '' && gameEndingType != '') {
-                setErrorString('')
+            if (selectedPlayerCount && selectedGameMode && tossMode && gameEndingType) {
+                setErrorString('');
                 if (betAmount >= 100) {
-                    setErrorString('')
+                    setErrorString('');
                     if (auth_token) {
-                        const socket = init_socket(auth_token)
+                        const socket = init_socket(auth_token);
 
-                        createRoom(parseInt(selectedPlayerCount), 36, 0)
+                        createRoom(parseInt(selectedPlayerCount), 36, 0);
 
                         socket.on('room.new', (data) => {
-                            const roomId = data.id
-
-                            joinRoom(roomId)
-                        })
+                            const roomId = data.id;
+                            joinRoom(roomId);
+                        });
                     }
                 } else {
-                    setErrorString('bet amount is les then 100!')
+                    setErrorString('bet amount is less than 100!');
                 }
             } else {
-                setErrorString('fill all the needed inputs!')
+                setErrorString('Fill all the required fields!');
             }
-
         } catch (error) {
-            console.error('Error creating game:', error, requestData);
+            console.error('Error creating game:', error);
         }
 
     };
