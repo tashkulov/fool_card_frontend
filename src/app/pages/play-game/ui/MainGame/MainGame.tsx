@@ -53,6 +53,7 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
 
     if (auth_token) {
         const socket = init_socket
+        console.log(socket)
     }
 
     useEffect(() => {
