@@ -3,7 +3,7 @@ import { AppRouter } from "./Router";
 import cls from "./main.module.scss";
 import Footer from './components/Footer/Footer';
 import { useLocation } from "react-router-dom";
-import {init_sockets , disconnectFromSocket } from '../socket.ts'; // Импортируем функции подключения к WebSocket
+import {init_sockets , disconnectFromSocket } from './socket.ts'; // Импортируем функции подключения к WebSocket
 import {hasLoggedIn, LoginUser, RegisterUser} from "./authorization.ts";
 
 const App: React.FC = () => {
@@ -12,19 +12,16 @@ const App: React.FC = () => {
     useEffect(() => {
         const initialize = async () => {
             try {
-                // Попробуем сначала авторизоваться
                 await LoginUser();
 
-                // Если авторизация не удалась, попробуем регистрацию
                 if (!hasLoggedIn.current) {
                     await RegisterUser();
                 }
 
-                // Получаем токен из localStorage
                 const token = localStorage.getItem("authorization");
 
                 if (token) {
-                    init_sockets(token); // Подключаемся к WebSocket серверу с токеном
+                    init_sockets(token);
                 } else {
                     console.error("Токен не найден, WebSocket не подключен");
                 }

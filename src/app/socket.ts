@@ -1,20 +1,18 @@
 import { io, Socket } from "socket.io-client";
 
-let socket: Socket | null = null;
+export let socket: Socket | null = null;
 
-    export const init_sockets = (token:string) => {
+export const init_sockets = (token: string) => {
     if (!socket) {
-
         if (!token) {
             console.error("Токен не найден в localStorage");
             return;
         }
 
-        // Подключаемся к WebSocket с токеном для аутентификации
         socket = io("http://138.68.100.172:3000", {
             transports: ['websocket'],
             auth: {
-                token: token // Передаем токен
+                token: token
             },
         });
 
@@ -30,17 +28,6 @@ let socket: Socket | null = null;
             console.error("Connection error:", err);
         });
 
-        socket.on("room.new", (data) => {
-            console.log("New room created:", data);
-        });
-
-        socket.on("room.del", (data) => {
-            console.log("Room deleted:", data);
-        });
-
-        socket.on("switchNamespace", (data) => {
-            console.log("Namespace switched:", data);
-        });
     }
 };
 
