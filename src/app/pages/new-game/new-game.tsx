@@ -113,7 +113,7 @@ const CreateGameForm: React.FC = () => {
                     if (auth_token) {
                         const socket = init_socket(auth_token)
 
-                        createRoom(36, parseInt(selectedPlayerCount))
+                        createRoom(parseInt(selectedPlayerCount), 36, 0)
 
                         socket.on('room.new', (data) => {
                             const roomId = data.id
