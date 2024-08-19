@@ -24,7 +24,7 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
-.main .MywrapperImg img {
+.main .MywrapperImg .myAva {
   width: 83px;
   height: 83px;
 }
