@@ -10,16 +10,22 @@ import perevod from "../../../img/perevod.svg"
 import иконкаШута from "../../../img/coins.svg"
 
 import {Link} from "react-router-dom";
+import { sendMessage } from "../../../../../socket.ts";
 
 const HeaderPlayGame = () => {
     const gameDate = useAppSelector((state: RootState) => state)
 
     // console.log(headerData)
+    const handleQuit = () => {
+        sendMessage('leaveRoom', () => {
+            console.log('room leaved')
+        })
+    }
 
     return (
         <div className={cls.main}>
             <div className={cls.left}>
-                <Link to={"/"}>
+                <Link to={"/"} onClick={handleQuit}>
                     ←
                 </Link>
                 <img src={иконкаШута} alt=""/>

@@ -7,16 +7,21 @@ import Minus from '../../../assets/img/minus.svg';
 import Plus from '../../../assets/img/pluss.svg';
 import Check from "../../../assets/img/check_.svg"
 import { useTranslation } from "react-i18next";
-import { useNavigate } from 'react-router-dom';
 import HeaderRiveAnimation from '../../components/rive-conponents/header-animations/ruby-header/ruby-component';
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-animations/mode-anim';
-import {$api} from "../../../api.ts";
 import { sendMessage } from '../../../socket.ts';
+import { init_socket } from '../../init_sockets.ts';
+
+
+
+
+const auth_token = localStorage.getItem('authorization');
+
+
+
 
 const CreateGameForm: React.FC = () => {
-
-    const navigate = useNavigate();
     const { t } = useTranslation();
     const [betAmount, setBetAmount] = useState<number>(1200);
     const [selectedGameMode, setSelectedGameMode] = useState<string>('');
@@ -90,19 +95,17 @@ const CreateGameForm: React.FC = () => {
         };
     }, []);
 
+
+
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         setIsSubmitted(true);
         event.preventDefault();
 
         const requestData = {
-            "bet_value": betAmount,
-            "card_amount": 36, // Update with actual value if available
-            "participants_number": parseInt(selectedPlayerCount),
-            "access_type": isPrivate ? 'private' : 'public',
-            "status": 'ongoing', // This seems like a static value for now
-            "game_mode": selectedGameMode,
-            "toss_mode": tossMode,
-            "game_ending_type": gameEndingType
+            "deck_size": 36, // Update with actual value if available
+            "players_amount": parseInt(selectedPlayerCount),
+            "game_mode": 1,
         };
 
         try {
@@ -110,14 +113,22 @@ const CreateGameForm: React.FC = () => {
                 setErrorString('')
                 if (betAmount >= 100) {
                     setErrorString('')
-                    const CreateGame = await $api.post('https://foolcard2.shop/v1/games', requestData, {
-                    });
-                    console.log('Game created successfully:', CreateGame.data);
-                    const gameId = CreateGame.data.id;
 
-                    navigate(`/inGame/${gameId}/creator`);
+                    if (auth_token) {
+                        const socket = init_socket(auth_token)
 
-                    sendMessage('room.new', requestData);
+                        sendMessage('newRoom', requestData);
+
+                        socket.on('room.new', (data) => {
+                            const roomId = data.id
+
+                            sendMessage('joinRoom', roomId);
+                        })
+                    }
+
+
+
+
                 } else {
                     setErrorString('bet amount is les then 100!')
                 }
