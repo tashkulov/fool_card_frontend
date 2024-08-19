@@ -1,7 +1,7 @@
 import { Socket } from "socket.io-client";
 import { init_socket } from "./init_sockets";
 
-let socket: Socket | null = null;
+export let socket: Socket | null = null;
 
 const auth_token = localStorage.getItem('authorization');
 

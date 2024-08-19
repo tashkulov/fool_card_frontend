@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { init_sockets, sendMessage, disconnectFromSocket, socket } from './socket';
 import { GameState, RoomUser, Room } from './types';
 
@@ -17,11 +17,11 @@ export const useSocketHandlers = () => {
                     setRooms((prevRooms) => [...prevRooms, room]);
                 });
 
-                socket.on("room.del", (room) => {
+                socket.on("room.del", (room: { id: string; }) => {
                     setRooms((prevRooms) => prevRooms.filter(r => r.id !== room.id));
                 });
 
-                socket.on("room.update", (update) => {
+                socket.on("room.update", (update: { id: string; players: any; }) => {
                     setRooms((prevRooms) => prevRooms.map(room =>
                         room.id === update.id ? { ...room, players: update.players } : room
                     ));
@@ -36,7 +36,7 @@ export const useSocketHandlers = () => {
                 });
 
                 // События для входа и выхода из комнаты
-                socket.on("joinRoom", (data) => {
+                socket.on("joinRoom", (data: { state: SetStateAction<GameState | null>; roomer: RoomUser; }) => {
                     setGameState(data.state);
                     setPlayers([data.roomer]);
                 });
@@ -65,7 +65,7 @@ export const useSocketHandlers = () => {
                 });
 
                 // Карты выданы
-                socket.on("giveCards", (cards) => {
+                socket.on("giveCards", (cards: any) => {
                     console.log("Вам выдали новые карты:", cards);
                 });
 
