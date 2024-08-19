@@ -95,6 +95,7 @@ export const useSocketHandlers = () => {
 
     const createRoom = (playersAmount: number, deckSize: number, gameMode: number) => {
         sendMessage('newRoom', { players_amount: playersAmount, deck_size: deckSize , gamemode: gameMode });
+        console.log("Игра создалась")
     };
 
     const leaveRoom = () => {
