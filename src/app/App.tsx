@@ -20,10 +20,8 @@ const App: React.FC = () => {
             return;
         } 
 
-        // Подключение к серверу при монтировании компонента
         init_sockets(auth_token);
 
-        // Отключение от сервера при размонтировании компонента
         return () => {
             disconnectFromSocket();
         };

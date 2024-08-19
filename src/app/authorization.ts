@@ -8,7 +8,6 @@ export const hasLoggedIn = {
     current: false
 };
 
-// Функция регистрации пользователя
 export const RegisterUser = async () => {
     const initData = window.Telegram.WebApp.initData;
     console.log("========================================", initData);
@@ -23,7 +22,7 @@ export const RegisterUser = async () => {
             }
 
             if (initData) {
-            const response = await axios.post('https://foolcard2.shop/receiver/authorize', data, 
+            const response = await axios.post('https://foolcard2.shop/coordinator/authorize', data,
                 {
                     headers: {
                         "Content-Type": "application/json"
@@ -57,7 +56,7 @@ export const LoginUser = async () => {
             console.log("========================================", initData);
 
             if (initData) {
-                const response = await axios.post('http://138.68.100.172:8080/receiver/authorize', initData);
+                const response = await axios.post('http://138.68.100.172:8080/coordinator/authorize', initData);
                 console.log('Ответ:---------------', response);
 
                 hasLoggedIn.current = true;

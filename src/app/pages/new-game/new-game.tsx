@@ -37,12 +37,10 @@ const CreateGameForm: React.FC = () => {
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
 
-    // Handle the bet amount change
     const handleBetChange = (increment: boolean, valueChange: number) => {
         setBetAmount((prevAmount) => prevAmount + (increment ? valueChange : -valueChange));
     };
 
-    // Handle the game mode change
     const handleGameModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSelectedGameMode(value === 'Подкидной' ? 'throwing' : value === 'Переводной' ? 'passing' : value);
@@ -50,12 +48,10 @@ const CreateGameForm: React.FC = () => {
 
     };
 
-    // Handle the player count change
     const handlePlayerCountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedPlayerCount(event.target.value);
     };
 
-    // Handle the private game checkbox
     const handlePrivateGameChange = () => {
         setIsPrivate((prev) => !prev);
     };
@@ -68,7 +64,6 @@ const CreateGameForm: React.FC = () => {
 
     };
 
-    // Handle the game ending type change
     const handleGameEndingTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setGameEndingType(value === 'Классика' ? 'classic' : value === 'Ничья' ? 'draw' : value);
@@ -76,7 +71,6 @@ const CreateGameForm: React.FC = () => {
         setActive(value === 'Классика' ? 'classic' : 'draw');
     };
 
-    // Initialize Rive animations
     useEffect(() => {
         document.querySelectorAll('.rejim-check').forEach((radio) => {
             radio.addEventListener('change', () => {
