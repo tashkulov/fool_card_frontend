@@ -5,6 +5,7 @@ export function init_socket(jtoken : string) {
 
         {
             path: '/coordinator/wsg',
+            transports: ['websocket'],
             auth: {
                 token: jtoken
             }
