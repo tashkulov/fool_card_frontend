@@ -101,17 +101,15 @@ const CreateGameForm: React.FC = () => {
         event.preventDefault();
 
         const requestData = {
-            "deck_size": 36, // Update with actual value if available
+            "deck_size": 36,
             "players_amount": parseInt(selectedPlayerCount),
             "game_mode": 1,
         };
-
         try {
             if (selectedPlayerCount != '' && selectedGameMode != '' && tossMode != '' && gameEndingType != '') {
                 setErrorString('')
                 if (betAmount >= 100) {
                     setErrorString('')
-
                     if (auth_token) {
                         const socket = init_socket(auth_token)
 
@@ -123,10 +121,6 @@ const CreateGameForm: React.FC = () => {
                             joinRoom(roomId)
                         })
                     }
-
-
-
-
                 } else {
                     setErrorString('bet amount is les then 100!')
                 }

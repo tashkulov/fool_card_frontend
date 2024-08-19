@@ -6,6 +6,8 @@ export let socket: Socket | null = null;
 const auth_token = localStorage.getItem('authorization');
 
 export const init_sockets = (token: string) => {
+
+
     if (!socket) {
 
         if (!token) {
