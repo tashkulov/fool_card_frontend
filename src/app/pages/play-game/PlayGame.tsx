@@ -23,6 +23,7 @@ const PlayGame = () => {
         if (gameId) {
             dispatch(getCurrentTableThunk(Number(gameId)));
 
+            console.log(123)
             console.log(gameId, sessionStorage.getItem("statusPlayer"))
 
             if (who === "guest") {

@@ -1,8 +1,11 @@
-import { io, Socket } from "socket.io-client";
+import { Socket } from "socket.io-client";
+import { init_socket } from "./app/init_sockets";
 
 let socket: Socket | null = null;
 
-    export const init_sockets = (token:string) => {
+const auth_token = localStorage.getItem('authorization');
+
+export const init_sockets = (token: string) => {
     if (!socket) {
 
         if (!token) {
@@ -10,37 +13,37 @@ let socket: Socket | null = null;
             return;
         }
 
+        if (auth_token) {
+            socket = init_socket(auth_token)
+
+            socket.on("connect", () => {
+                console.log("Connected to Socket.IO server");
+            });
+
+            socket.on("disconnect", () => {
+                console.log("Disconnected from Socket.IO server");
+            });
+
+            socket.on("connect_error", (err) => {
+                console.error("Connection error:", err);
+            });
+
+            socket.on("room.new", (data) => {
+                console.log("New room created:", data);
+            });
+
+            socket.on("room.del", (data) => {
+                console.log("Room deleted:", data);
+            });
+
+            socket.on("switchNamespace", (data) => {
+                console.log("Namespace switched:", data);
+            });
+        }
         // Подключаемся к WebSocket с токеном для аутентификации
-        socket = io("http://138.68.100.172:3000", {
-            transports: ['websocket'],
-            auth: {
-                token: token // Передаем токен
-            },
-        });
 
-        socket.on("connect", () => {
-            console.log("Connected to Socket.IO server");
-        });
 
-        socket.on("disconnect", () => {
-            console.log("Disconnected from Socket.IO server");
-        });
 
-        socket.on("connect_error", (err) => {
-            console.error("Connection error:", err);
-        });
-
-        socket.on("room.new", (data) => {
-            console.log("New room created:", data);
-        });
-
-        socket.on("room.del", (data) => {
-            console.log("Room deleted:", data);
-        });
-
-        socket.on("switchNamespace", (data) => {
-            console.log("Namespace switched:", data);
-        });
     }
 };
 
