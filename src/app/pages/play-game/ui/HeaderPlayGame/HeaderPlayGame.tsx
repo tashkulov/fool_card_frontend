@@ -10,7 +10,7 @@ import perevod from "../../../img/perevod.svg"
 import иконкаШута from "../../../img/coins.svg"
 
 import {Link} from "react-router-dom";
-import { sendMessage } from "../../../../../socket.ts";
+import { sendMessage } from "../../../../socket.ts";
 
 const HeaderPlayGame = () => {
     const gameDate = useAppSelector((state: RootState) => state)
