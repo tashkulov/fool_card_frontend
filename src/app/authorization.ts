@@ -22,7 +22,7 @@ export const RegisterUser = async () => {
             }
 
             if (initData) {
-            const response = await axios.post('https://foolcard2.shop/reciever/authorize', data,
+            const response = await axios.post('https://foolcard2.shop/receiver/authorize', data,
                 {
                     headers: {
                         "Content-Type": "application/json"
