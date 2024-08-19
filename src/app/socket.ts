@@ -30,14 +30,6 @@ export const init_sockets = (token: string) => {
                 console.error("Connection error:", err);
             });
 
-            socket.on("room.new", (data) => {
-                console.log("New room created:", data);
-            });
-
-            socket.on("room.del", (data) => {
-                console.log("Room deleted:", data);
-            });
-
             socket.on("switchNamespace", (data) => {
                 console.log("Namespace switched:", data);
             });
