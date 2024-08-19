@@ -93,8 +93,8 @@ export const useSocketHandlers = () => {
         sendMessage('joinRoom', roomId);
     };
 
-    const createRoom = (playersAmount: number, deckSize: number) => {
-        sendMessage('newRoom', { players_amount: playersAmount, deck_size: deckSize });
+    const createRoom = (playersAmount: number, deckSize: number, gameMode: number) => {
+        sendMessage('newRoom', { players_amount: playersAmount, deck_size: deckSize , gamemode: gameMode });
     };
 
     const leaveRoom = () => {

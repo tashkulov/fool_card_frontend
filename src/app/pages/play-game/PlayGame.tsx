@@ -11,12 +11,18 @@ import HeaderPlayGame from "./ui/HeaderPlayGame/HeaderPlayGame.tsx";
 import FooterPlayGame from "./ui/FooterPlayGame/FooterPlayGame.tsx";
 import MainGame from "./ui/MainGame/MainGame.tsx";
 import {statePlayGameSliceAction} from "./statePlayGame";
+import { useSocketHandlers } from "../../useSocketHandlers.ts";
+
 
 const PlayGame = () => {
     const dispatch = useAppDispatch();
     const data = useAppSelector((state: RootState) => state.playGame)
     const {gameId, who} = useParams<{ gameId: string, who: string, }>();
     const [stateButtonReadiness, setStateButtonReadiness] = useState<boolean>(false)
+
+    // const { readyCh } = useSocketHandlers
+
+
 
 
     useEffect(() => {
