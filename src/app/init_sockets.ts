@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 export function init_socket(jtoken : string) {
-    const socket = io('https://foolcard2.shop/',
+    const socket = io('https://foolcard2.shop:8080/',
         {
             path: '/coordinator/wsg',
             auth: {
