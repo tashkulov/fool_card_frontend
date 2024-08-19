@@ -13,12 +13,13 @@ import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-an
 
 import { init_socket } from '../../init_sockets.ts';
 
+import { useSocketHandlers } from '../../useSocketHandlers.ts';
+
 
 
 
 const auth_token = localStorage.getItem('authorization');
 
-import { sendMessage } from "../../socket.ts"
 
 
 
@@ -35,7 +36,7 @@ const CreateGameForm: React.FC = () => {
     const [active, setActive] = useState<string>('');
     const [errorString, setErrorString] = useState<string>('');
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
+    const { createRoom, joinRoom } = useSocketHandlers();
 
     const handleBetChange = (increment: boolean, valueChange: number) => {
         setBetAmount((prevAmount) => prevAmount + (increment ? valueChange : -valueChange));
@@ -114,12 +115,12 @@ const CreateGameForm: React.FC = () => {
                     if (auth_token) {
                         const socket = init_socket(auth_token)
 
-                        sendMessage('newRoom', requestData);
+                        createRoom(36, parseInt(selectedPlayerCount))
 
                         socket.on('room.new', (data) => {
                             const roomId = data.id
 
-                            sendMessage('joinRoom', roomId);
+                            joinRoom(roomId)
                         })
                     }
 
