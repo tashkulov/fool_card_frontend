@@ -19,6 +19,7 @@ import { stopAnimation } from "../../statePlayGame/slice/statePlayGameSlice";
 import { endTurnThunk } from "../../statePlayGame/service/endTurnThunk";
 
 import { store } from "../store";
+import { init_socket } from "../../../../init_sockets";
 
 type TMainGameProps = {
     gameId: string;
@@ -47,6 +48,12 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
 
     const isAnimating = useAppSelector((state: RootState) => state.playGame.isAnimating);
 
+
+    const auth_token = localStorage.getItem('authorization');
+
+    if (auth_token) {
+        const socket = init_socket
+    }
 
     useEffect(() => {
         if (isAnimating) {
