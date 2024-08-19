@@ -326,9 +326,6 @@ const MainGame: React.FC<TMainGameProps> = ({ gameId }) => {
         setKey(prevKey => prevKey + 1);
     };
 
-
-    console.log(``)
-
     return (
         <div className={cls.main}
             onMouseMove={handleMouseMove}

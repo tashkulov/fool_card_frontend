@@ -12,6 +12,7 @@ import HeaderRiveAnimation from '../../components/rive-conponents/header-animati
 import HeaderMainSvgIcon from '../Widgets/Header/ui/SvgIcons/HeaderMainSvgIcon';
 import ModeRiveAnimation from '../../components/rive-conponents/new-game-page-animations/mode-anim';
 import {$api} from "../../../api.ts";
+import { sendMessage } from '../../../socket.ts';
 
 const CreateGameForm: React.FC = () => {
 
@@ -115,6 +116,8 @@ const CreateGameForm: React.FC = () => {
                     const gameId = CreateGame.data.id;
 
                     navigate(`/inGame/${gameId}/creator`);
+
+                    sendMessage('room.new', requestData);
                 } else {
                     setErrorString('bet amount is les then 100!')
                 }

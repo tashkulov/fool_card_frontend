@@ -5,11 +5,31 @@ import Footer from './components/Footer/Footer';
 import { useLocation } from "react-router-dom";
 // import {init_sockets , disconnectFromSocket } from '../socket.ts'; // Импортируем функции подключения к WebSocket
 import {RegisterUser} from "./authorization.ts";
+import { useEffect } from "react";
+import { init_sockets } from "../socket.ts";
 
 const App: React.FC = () => {
     const location = useLocation();
+    const auth_token = localStorage.getItem('authorization');
 
-    RegisterUser()
+    useEffect(() => {
+        RegisterUser()
+
+        if (!auth_token) {
+            console.error("Токен не найден в localStorage");
+            return;
+        } 
+
+        // Подключение к серверу при монтировании компонента
+        init_sockets(auth_token);
+
+        // Отключение от сервера при размонтировании компонента
+        // return () => {
+        //     disconnectFromSocket();
+        // };
+    }, []);
+
+    
 
     if (location.pathname.split("/")[1] === "inGame") {
         return (
