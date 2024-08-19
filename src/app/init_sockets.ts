@@ -4,7 +4,7 @@ export function init_socket(jtoken : string) {
     const socket = io('https://foolcard2.shop/',
 
         {
-            path: '/receiver/wsg',
+            path: '/coordinator/wsg',
             transports: ['websocket'],
             auth: {
                 token: jtoken
