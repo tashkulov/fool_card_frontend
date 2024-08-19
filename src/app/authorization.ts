@@ -28,7 +28,7 @@ export const RegisterUser = async () => {
                 },
                 
             );
-            console.log('Ответ:---------------', response);
+            console.log('Ответ:---------------', response.data);
 
             hasRegistered.current = true;
 
