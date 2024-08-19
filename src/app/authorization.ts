@@ -56,7 +56,7 @@ export const LoginUser = async () => {
             console.log("========================================", initData);
 
             if (initData) {
-                const response = await axios.post('http://138.68.100.172:8080/coordinator/authorize', initData);
+                const response = await axios.post('https://foolcard2.shop/coordinator/authorize', initData);
                 console.log('Ответ:---------------', response);
 
                 hasLoggedIn.current = true;
