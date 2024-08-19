@@ -11,7 +11,7 @@ import HeaderPlayGame from "./ui/HeaderPlayGame/HeaderPlayGame.tsx";
 import FooterPlayGame from "./ui/FooterPlayGame/FooterPlayGame.tsx";
 import MainGame from "./ui/MainGame/MainGame.tsx";
 import {statePlayGameSliceAction} from "./statePlayGame";
-import { useSocketHandlers } from "../../useSocketHandlers.ts";
+// import { useSocketHandlers } from "../../useSocketHandlers.ts";
 
 
 const PlayGame = () => {
